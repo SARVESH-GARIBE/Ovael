@@ -6,7 +6,7 @@
 
 Ovael is a research-oriented network security system built around a simple idea:
 
-**Known attacks can be detected from what the system has already learned. Unknown attacks require the system to recognize that something does not fit its existing knowledge — and then learn from validated discoveries.**
+**Known attacks can be detected from what the system has already learned. Unknown attacks require the system to recognize that something does not fit its existing knowledge - and then learn from validated discoveries.**
 
 Traditional intrusion detection systems are generally evaluated on their ability to classify attacks that are already represented in their training data. This works well when the future resembles the past.
 
