@@ -14,9 +14,9 @@ Ovael explores a different approach.
 
 Instead of making one model responsible for the entire decision, Ovael separates the problem into two perspectives:
 
-**Recognition** — *What does this traffic look like?*
+**Recognition** - *What does this traffic look like?*
 
-**Novelty** — *Does this traffic look familiar at all?*
+**Novelty** - *Does this traffic look familiar at all?*
 
 These perspectives are then brought together by an orchestration layer to produce a more informed security assessment.
 
