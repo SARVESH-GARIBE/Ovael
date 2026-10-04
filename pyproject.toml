@@ -7,6 +7,15 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
+# Stage 2: offline CICIDS2017 dataset pipeline (research/datasets/cicids2017/).
+# Not needed by ovael/ itself - only by code under research/.
+research = [
+    "huggingface_hub>=0.24",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "scikit-learn>=1.3",
+    "pyyaml>=6.0",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

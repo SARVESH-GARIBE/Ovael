@@ -36,6 +36,13 @@ class RawTraffic:
     payload_size: int
     timestamp: float
     metadata: dict[str, Any] = field(default_factory=dict)
+    # Optional, additive: precomputed numeric flow features a caller
+    # already has (e.g. an offline dataset pipeline reading real
+    # flow-statistics columns). Empty by default - existing callers
+    # that never set this are unaffected. See
+    # ovael/ingestion/feature_extraction.py for how extract_features()
+    # uses it.
+    flow_features: dict[str, float] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)

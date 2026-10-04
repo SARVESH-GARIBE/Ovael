@@ -8,6 +8,10 @@ venv/
 dist/
 build/
 
+# Downloaded/generated dataset artifacts - never committed; see
+# docs/stage2.md for how to reproduce them.
+/data/
+
 # Editor / OS
 .vscode/
 .idea/
