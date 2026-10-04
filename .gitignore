@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+dist/
+build/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Sibling project directories that live under this same folder on disk
+# but are not part of this repository (each has its own git history).
+/ovael-ai-backend/
+/ovael-ai-frontend/
+/Ovael.code-workspace
