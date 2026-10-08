@@ -19,7 +19,7 @@ under data/processed/cicids2017/_intermediate/) are scratch - not a
 deliverable - and are removed once the run completes successfully.
 
 Run with:
-    PYTHONPATH=. python -m research.datasets.cicids2017.pipeline
+    PYTHONPATH=. python -m ml.research.datasets.cicids2017.pipeline
 """
 
 from __future__ import annotations
@@ -28,15 +28,15 @@ import datetime
 import shutil
 from pathlib import Path
 
-from research.datasets.cicids2017.clean import HELD_OUT_LABEL, clean_dataset
-from research.datasets.cicids2017.download import (
+from ml.research.datasets.cicids2017.clean import HELD_OUT_LABEL, clean_dataset
+from ml.research.datasets.cicids2017.download import (
     REPO_ROOT,
     DataSourceConfig,
     HF_LICENSE,
     HF_REPO_ID,
 )
-from research.datasets.cicids2017.featurize import featurize_file
-from research.datasets.cicids2017.manifest_schema import (
+from ml.research.datasets.cicids2017.featurize import featurize_file
+from ml.research.datasets.cicids2017.manifest_schema import (
     CleaningInfo,
     FeaturizationInfo,
     Manifest,
@@ -45,12 +45,12 @@ from research.datasets.cicids2017.manifest_schema import (
     SplitInfo,
     write_manifest,
 )
-from research.datasets.cicids2017.scale import (
+from ml.research.datasets.cicids2017.scale import (
     apply_scaler_streaming,
     fit_scaler_streaming,
     save_scaler,
 )
-from research.datasets.cicids2017.split import SEED, TEST_FRACTION, split_dataset
+from ml.research.datasets.cicids2017.split import SEED, TEST_FRACTION, split_dataset
 
 DEFAULT_PROCESSED_DIR = REPO_ROOT / "data" / "processed" / "cicids2017"
 SPLIT_ORDER = ("train", "test", "test_unknown")

@@ -15,9 +15,9 @@ column-limited helpers, not by loading a full file into one dataframe.
 
 import pytest
 
-from research.datasets.cicids2017.clean import clean_dataset
-from research.datasets.cicids2017.featurize import featurize_file
-from research.datasets.cicids2017.split import split_dataset
+from ml.research.datasets.cicids2017.clean import clean_dataset
+from ml.research.datasets.cicids2017.featurize import featurize_file
+from ml.research.datasets.cicids2017.split import split_dataset
 
 
 @pytest.fixture(scope="session")

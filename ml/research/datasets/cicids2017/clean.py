@@ -48,7 +48,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from research.datasets.cicids2017.download import REPO_ROOT, DataSourceConfig, iter_raw_batches
+from ml.research.datasets.cicids2017.download import REPO_ROOT, DataSourceConfig, iter_raw_batches
 
 DEFAULT_CLEANED_PATH = REPO_ROOT / "data" / "processed" / "cicids2017" / "_intermediate" / "cleaned.parquet"
 

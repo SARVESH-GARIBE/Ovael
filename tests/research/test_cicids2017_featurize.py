@@ -2,9 +2,9 @@
 ovael.ingestion.extract_features() - not a reimplementation."""
 
 import ovael.ingestion.feature_extraction as real_module
-import research.datasets.cicids2017.featurize as featurize_module
+import ml.research.datasets.cicids2017.featurize as featurize_module
 from ovael.ingestion.feature_extraction import extract_features as real_extract_features
-from research.datasets.cicids2017.featurize import (
+from ml.research.datasets.cicids2017.featurize import (
     feature_columns,
     featurize_split,
     row_to_raw_traffic,

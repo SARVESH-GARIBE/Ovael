@@ -7,8 +7,8 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
-# Stage 2: offline CICIDS2017 dataset pipeline (research/datasets/cicids2017/).
-# Not needed by ovael/ itself - only by code under research/.
+# Stage 2: offline CICIDS2017 dataset pipeline (ml/research/datasets/cicids2017/).
+# Not needed by ovael/ itself - only by code under ml/research/.
 research = [
     "huggingface_hub>=0.24",
     "pandas>=2.0",

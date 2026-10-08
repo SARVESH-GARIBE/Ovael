@@ -7,8 +7,8 @@ applied unchanged to test and test_unknown."""
 import numpy as np
 import pytest
 
-from research.datasets.cicids2017.featurize import feature_columns
-from research.datasets.cicids2017.scale import (
+from ml.research.datasets.cicids2017.featurize import feature_columns
+from ml.research.datasets.cicids2017.scale import (
     apply_scaler_streaming,
     fit_scaler_streaming,
     load_scaler,

@@ -73,8 +73,8 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from research.datasets.cicids2017.clean import BENIGN_LABEL, DEFAULT_CLEANED_PATH, HELD_OUT_LABEL
-from research.datasets.cicids2017.download import REPO_ROOT
+from ml.research.datasets.cicids2017.clean import BENIGN_LABEL, DEFAULT_CLEANED_PATH, HELD_OUT_LABEL
+from ml.research.datasets.cicids2017.download import REPO_ROOT
 
 SEED = 42
 TEST_FRACTION = 0.2

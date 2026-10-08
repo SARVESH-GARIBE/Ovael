@@ -40,7 +40,7 @@ from pathlib import Path
 
 import pandas as pd
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_RAW_DIR = REPO_ROOT / "data" / "raw" / "cicids2017"
 OFFICIAL_CSV_DIR = DEFAULT_RAW_DIR / "official"
 

@@ -12,7 +12,7 @@ This stage does not select or train any Detection or Novelty algorithm.
 
 ```bash
 pip install -e ".[research]"   # huggingface_hub, pandas, pyarrow, scikit-learn, pyyaml
-PYTHONPATH=. python -m research.datasets.cicids2017.pipeline
+PYTHONPATH=. python -m ml.research.datasets.cicids2017.pipeline
 ```
 
 The raw file is downloaded to `data/raw/cicids2017/` on first run and reused

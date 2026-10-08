@@ -45,7 +45,7 @@ def test_cleaning_stats_are_internally_consistent(cleaned_result):
 
 
 def test_held_out_and_benign_labels_present_and_normalized(cleaned_result):
-    from research.datasets.cicids2017.clean import BENIGN_LABEL, HELD_OUT_LABEL
+    from ml.research.datasets.cicids2017.clean import BENIGN_LABEL, HELD_OUT_LABEL
 
     cleaned_path, _ = cleaned_result
     labels = set(label_counts(cleaned_path).keys())

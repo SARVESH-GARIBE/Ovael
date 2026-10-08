@@ -10,8 +10,8 @@ reads only the flow_id column (a few tens of MB at this dataset's
 scale), and label_counts() only the label column - neither loads a
 split's 79 feature columns."""
 
-from research.datasets.cicids2017.clean import BENIGN_LABEL, HELD_OUT_LABEL
-from research.datasets.cicids2017.split import TEST_FRACTION
+from ml.research.datasets.cicids2017.clean import BENIGN_LABEL, HELD_OUT_LABEL
+from ml.research.datasets.cicids2017.split import TEST_FRACTION
 from _helpers import count_rows, flow_id_set, label_counts
 
 
@@ -78,7 +78,7 @@ def test_stratification_matches_test_fraction_within_tolerance(cleaned_result, s
 
 
 def test_split_is_reproducible_with_the_same_seed(cleaned_result, tmp_path_factory):
-    from research.datasets.cicids2017.split import split_dataset
+    from ml.research.datasets.cicids2017.split import split_dataset
 
     cleaned_path, _ = cleaned_result
     paths_a, _ = split_dataset(
