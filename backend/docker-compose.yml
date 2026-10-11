@@ -1,0 +1,158 @@
+# ovael.ai - full deployment.
+#
+#   cp .env.example .env               # set tokens and passwords
+#   docker compose up -d --build       # core platform at http://localhost
+#   docker compose --profile monitoring up -d   # + Prometheus (http://localhost:9090) and Grafana (:3000)
+#   docker compose up -d --scale api=4 --scale scan-worker=3   # scale the bottleneck
+#
+# Networks (who can talk to whom):
+#   edge      nginx <-> api                        (only nginx publishes a port)
+#   backend   api, workers <-> postgres, redis
+#   scan_ctl  scan workers <-> scanner             (scanner cannot reach postgres/redis)
+#   scan_out  scanner -> internet
+#   control   sensor / defense agent <-> nginx (flows in, block commands out)
+
+name: ovael
+
+x-app: &app
+  build:
+    context: ..
+    dockerfile: backend/Dockerfile
+    target: api
+  image: ovael/api:latest
+  env_file: .env
+  environment: &app-env
+    OVAEL_ENV: prod
+    OVAEL_LOG_JSON: "true"
+    OVAEL_DATABASE_URL: postgresql+asyncpg://ovael:${POSTGRES_PASSWORD:-ovael}@postgres:5432/ovael
+    OVAEL_REDIS_URL: redis://redis:6379/0
+    OVAEL_CELERY_BROKER_URL: redis://redis:6379/1
+    OVAEL_SCANNER_URL: http://scanner:9200
+    OVAEL_AUTO_CREATE_SCHEMA: "false"
+  volumes:
+    - models:/models
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_healthy }
+    migrate: { condition: service_completed_successfully }
+  restart: unless-stopped
+
+services:
+  # ------------------------------------------------------------------ edge
+  nginx:
+    build:
+      context: ..
+      dockerfile: backend/deploy/nginx/Dockerfile
+    image: ovael/web:latest
+    ports: ["80:80"]
+    depends_on: [api]
+    networks: [edge, control]
+    restart: unless-stopped
+
+  # ------------------------------------------------------------------ app
+  api:
+    <<: *app
+    deploy:
+      replicas: 2
+      resources:
+        limits: { cpus: "1.5", memory: 1g }
+    environment:
+      <<: *app-env
+      OVAEL_DEFENSE_AGENT_URL: ${OVAEL_DEFENSE_AGENT_URL:-}
+    networks: [edge, backend, control]
+
+  scan-worker:
+    <<: *app
+    command: celery -A ovael.workers.celery_app worker -Q scans -c 2 --without-gossip --without-mingle
+    networks: [backend, scan_ctl]
+
+  train-worker:
+    <<: *app
+    command: celery -A ovael.workers.celery_app worker -Q training -c 1 --without-gossip --without-mingle
+    networks: [backend]
+
+  # one-shot: create schema, train bootstrap models if none exist
+  migrate:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+      target: api
+    image: ovael/api:latest
+    env_file: .env
+    environment:
+      OVAEL_DATABASE_URL: postgresql+asyncpg://ovael:${POSTGRES_PASSWORD:-ovael}@postgres:5432/ovael
+    command: sh -c "python -m ovael.cli init-db && python -m ovael.cli train all"
+    volumes: [models:/models]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [backend]
+    restart: "no"
+
+  scanner:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+      target: scanner
+    image: ovael/scanner:latest
+    environment:
+      OVAEL_MAX_CONCURRENT_SCANS: "2"
+      OVAEL_SCANNER_TOKEN: ${OVAEL_SCANNER_TOKEN:-}
+    shm_size: 1g
+    deploy:
+      resources:
+        limits: { cpus: "2", memory: 2g }
+    networks: [scan_ctl, scan_out]
+    restart: unless-stopped
+
+  # ------------------------------------------------------------------ data
+  postgres:
+    image: postgres:16.6-alpine
+    environment:
+      POSTGRES_USER: ovael
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ovael}
+      POSTGRES_DB: ovael
+    command: ["postgres", "-c", "max_connections=200", "-c", "shared_buffers=256MB"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ovael"]
+      interval: 5s
+      retries: 10
+    networks: [backend]
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "noeviction"]
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+    networks: [backend]
+    restart: unless-stopped
+
+  # ------------------------------------------------------------------ monitoring (profile)
+  prometheus:
+    profiles: [monitoring]
+    image: prom/prometheus:v3.1.0
+    volumes: [./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro]
+    ports: ["9090:9090"]
+    networks: [edge]
+
+  grafana:
+    profiles: [monitoring]
+    image: grafana/grafana:11.4.0
+    ports: ["3000:3000"]
+    networks: [edge]
+
+networks:
+  edge: {}
+  backend: { internal: true }
+  control: { internal: true }
+  scan_ctl: { internal: true }
+  scan_out: {}
+
+volumes:
+  models: {}
+  pgdata: {}
+  redisdata: {}
