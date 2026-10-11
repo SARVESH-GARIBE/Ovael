@@ -44,7 +44,7 @@ class Settings(BaseSettings):
 
     # Models
     model_dir: Path = BACKEND_DIR / "model_store"
-    anomaly_threshold: float = 0.97  # anomaly_score above this = "unusual"
+    anomaly_threshold: float = 0.99  # anomaly_score above this = "unusual" (~1% of normal traffic)
     website_dataset: Path = REPO_DIR / "dataset_collection" / "output" / "website_features.csv"
     network_dataset: Path = BACKEND_DIR / "data" / "network_flows.csv"
     crawler_path: Path = REPO_DIR / "dataset_collection"

@@ -62,7 +62,7 @@ detect(module, features) -> {label, confidence, anomaly_score, risk_level, top_f
 ```
 
 * `anomaly_score` is the Isolation Forest score as a percentile of normal training traffic
-  (0.97 = more unusual than 97% of normal). Above `OVAEL_ANOMALY_THRESHOLD` it counts as "unusual".
+  (0.99 = more unusual than 99% of normal). Above `OVAEL_ANOMALY_THRESHOLD` it counts as "unusual".
 * A classifier attack label below 50% confidence is treated as *not recognised*. Its family
   becomes `unknown`, and it goes to review instead of auto-defense.
 

@@ -20,11 +20,12 @@ def test_health_and_contract(client, make_flow):
 
 
 def test_flood_is_detected_blocked_and_undoable(client, make_flow):
-    flows = [make_flow("dos_flood", seed=i) for i in range(5)]
+    # Not every flood flow is "unusual" at the 0.99 threshold, but a second of flood always has some.
+    flows = [make_flow("dos_flood", seed=i) for i in range(30)]
     with client.websocket_connect("/ws") as ws:
         assert ws.receive_json()["type"] == "hello"
         res = post_flows(client, flows)
-        assert res["alerts"] == 5
+        assert res["alerts"] == 30
         assert res["blocked_sources"] == [flows[0]["src_ip"]]
         types = set()
         for _ in range(4):
@@ -32,7 +33,7 @@ def test_flood_is_detected_blocked_and_undoable(client, make_flow):
         assert {"new_detection", "defense_action"} <= types
 
     incidents = client.get("/api/incidents").json()
-    assert len(incidents) == 1 and incidents[0]["detection_count"] == 5
+    assert len(incidents) == 1 and incidents[0]["detection_count"] == 30
     assert incidents[0]["status"] == "mitigated"
 
     [action] = client.get("/api/actions").json()
@@ -42,7 +43,7 @@ def test_flood_is_detected_blocked_and_undoable(client, make_flow):
     assert client.post(f"/api/actions/{action['id']}/undo").status_code == 409
 
     # unblocked: the next flood is blocked again
-    assert post_flows(client, [make_flow("dos_flood", seed=99)])["blocked_sources"]
+    assert post_flows(client, [make_flow("dos_flood", seed=100 + i) for i in range(30)])["blocked_sources"]
 
 
 def test_benign_traffic_is_low_and_not_blocked(client, make_flow):

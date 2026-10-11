@@ -30,10 +30,15 @@ CONNECT_TIMEOUT_S = 15.0
 HOP_HEADERS = {"proxy-connection", "proxy-authorization", "connection", "keep-alive"}
 
 
+NAT64_PREFIX = ipaddress.ip_network("64:ff9b::/96")
+
+
 def is_public_ip(ip: ipaddress.IPv4Address | ipaddress.IPv6Address) -> bool:
     if isinstance(ip, ipaddress.IPv6Address):
         if ip.ipv4_mapped:
             return is_public_ip(ip.ipv4_mapped)
+        if ip in NAT64_PREFIX:  # NAT64 (RFC 6052): judge the IPv4 address embedded in the last 32 bits
+            return is_public_ip(ipaddress.IPv4Address(int(ip) & 0xFFFFFFFF))
         if ip.sixtofour or ip.teredo:
             return False
     return ip.is_global and not ip.is_multicast and not ip.is_reserved and not ip.is_unspecified

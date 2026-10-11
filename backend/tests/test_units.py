@@ -121,3 +121,11 @@ def test_retrain_promotes_only_when_not_worse(tmp_path, monkeypatch):
     # Versions are kept, so rolling back is a promote.
     reg.promote("network", "network-v1")
     assert reg.active("network").version == "network-v1"
+
+
+def test_nat64_addresses_are_judged_by_embedded_ipv4():
+    import ipaddress
+
+    assert is_public_ip(ipaddress.ip_address("64:ff9b::c7e8:6851"))  # 199.232.104.81
+    assert not is_public_ip(ipaddress.ip_address("64:ff9b::7f00:1"))  # 127.0.0.1
+    assert not is_public_ip(ipaddress.ip_address("64:ff9b::a9fe:a9fe"))  # 169.254.169.254
