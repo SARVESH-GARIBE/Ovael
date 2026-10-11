@@ -11,22 +11,8 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5173,
       proxy: {
-        '/v1': {
-          target: backendTarget,
-          changeOrigin: true,
-          ws: true,
-        },
-      },
-    },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('three') || id.includes('@react-three')) {
-              return 'three-theater';
-            }
-          },
-        },
+        '/api': { target: backendTarget, changeOrigin: true },
+        '/ws': { target: backendTarget.replace(/^http/, 'ws'), ws: true },
       },
     },
   };
