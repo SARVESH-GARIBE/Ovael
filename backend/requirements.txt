@@ -1,0 +1,28 @@
+# API
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+pydantic==2.11.4
+pydantic-settings==2.9.1
+httpx==0.28.1
+prometheus-client==0.21.1
+
+# Data layer
+sqlalchemy[asyncio]==2.0.40
+asyncpg==0.30.0
+aiosqlite==0.21.0
+alembic==1.15.2
+redis==5.2.1
+
+# Jobs
+celery==5.5.2
+
+# ML (versions are pinned so the backend loads exactly what was trained)
+scikit-learn==1.6.1
+numpy==2.2.5
+pandas==2.2.3
+joblib==1.4.2
+shap==0.47.2
+
+# Website scanner (reuses ../dataset_collection/ovael_crawler)
+playwright==1.63.0
+tldextract==5.4.0

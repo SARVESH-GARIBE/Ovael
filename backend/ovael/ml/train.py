@@ -1,0 +1,120 @@
+"""Training and evaluation for one module.
+
+The held-out split is deterministic (fixed seed over the base dataset), so every retrain is scored
+on the same held-out rows. Reviewed samples from the learning loop are only ever added to the
+training side. That is what makes "promote only if it beats the current model on the same held-out
+set" a fair comparison.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import logging
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import IsolationForest, RandomForestClassifier
+from sklearn.impute import SimpleImputer
+from sklearn.metrics import accuracy_score, f1_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+
+from ..feature_extraction import SCHEMAS
+from ..orchestrator.taxonomy import is_benign_label
+from .bundle import ModelBundle
+
+log = logging.getLogger(__name__)
+SEED = 42
+MIN_CLASS_ROWS = 4
+
+
+def dataset_fingerprint(df: pd.DataFrame) -> str:
+    return hashlib.sha256(pd.util.hash_pandas_object(df, index=False).values.tobytes()).hexdigest()[:16]
+
+
+def split(df: pd.DataFrame, test_size: float = 0.2) -> tuple[pd.DataFrame, pd.DataFrame]:
+    counts = df["label"].value_counts()
+    keep = df[df["label"].isin(counts[counts >= MIN_CLASS_ROWS].index)]
+    dropped = sorted(set(df["label"]) - set(keep["label"]))
+    if dropped:
+        log.warning("classes with fewer than %d rows left out of the split: %s", MIN_CLASS_ROWS, dropped)
+    train, test = train_test_split(keep, test_size=test_size, random_state=SEED, stratify=keep["label"])
+    return train, test
+
+
+def _xy(module: str, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+    cols = SCHEMAS[module]
+    X = df.reindex(columns=cols).apply(pd.to_numeric, errors="coerce").astype(float)
+    return X, df["label"].astype(str)
+
+
+def evaluate(bundle: ModelBundle, holdout: pd.DataFrame, novel: pd.DataFrame | None = None) -> dict:
+    X, y = _xy(bundle.module, holdout)
+    preds = bundle.predict(X.to_dict("records"))
+    y_pred = [p.label for p in preds]
+    anomaly = np.array([p.anomaly_score for p in preds])
+    benign = y.apply(lambda v: is_benign_label(bundle.module, v)).to_numpy()
+    labels = sorted(set(y))
+    metrics = {
+        "accuracy": round(float(accuracy_score(y, y_pred)), 4),
+        "macro_f1": round(float(f1_score(y, y_pred, average="macro", labels=labels, zero_division=0)), 4),
+        "per_class_f1": {c: round(float(s), 4) for c, s in zip(
+            labels, f1_score(y, y_pred, average=None, labels=labels, zero_division=0))},
+        "holdout_rows": int(len(holdout)),
+        # Share of normal held-out rows the anomaly detector calls unusual (false alarms).
+        "anomaly_false_alarm_rate": round(float((anomaly[benign] > bundle.threshold).mean()), 4) if benign.any() else None,
+        # Share of attack held-out rows it calls unusual.
+        "anomaly_attack_rate": round(float((anomaly[~benign] > bundle.threshold).mean()), 4) if (~benign).any() else None,
+    }
+    if novel is not None and len(novel):
+        nX, _ = _xy(bundle.module, novel)
+        metrics["novel_detection_rate"] = round(float((bundle.anomaly_scores(nX) > bundle.threshold).mean()), 4)
+    return metrics
+
+
+def train_bundle(module: str, train_df: pd.DataFrame, holdout: pd.DataFrame, *, version: str,
+                 threshold: float, label_source: str, novel: pd.DataFrame | None = None,
+                 extra_meta: dict | None = None) -> ModelBundle:
+    X, y = _xy(module, train_df)
+    benign = y.apply(lambda v: is_benign_label(module, v)).to_numpy()
+    if not benign.any():
+        raise ValueError(f"{module}: no normal rows to train the anomaly detector on")
+
+    classifier = Pipeline([
+        ("impute", SimpleImputer(strategy="median", keep_empty_features=True)),
+        ("rf", RandomForestClassifier(n_estimators=200, class_weight="balanced_subsample",
+                                      min_samples_leaf=2, n_jobs=-1, random_state=SEED)),
+    ])
+    classifier.fit(X, y)
+
+    anomaly = Pipeline([
+        ("impute", SimpleImputer(strategy="median", keep_empty_features=True)),
+        ("iforest", IsolationForest(n_estimators=200, random_state=SEED, n_jobs=-1)),
+    ])
+    Xb = X[benign]
+    anomaly.fit(Xb)
+    calibration = np.sort(-anomaly.score_samples(Xb))
+    # Training uses every core; serving uses one. Per-call thread fan-out costs more than it saves
+    # on request-sized batches, and the API already serves requests concurrently.
+    classifier[-1].n_jobs = 1
+    anomaly[-1].n_jobs = 1
+    baseline = {c: float(v) for c, v in Xb.median(numeric_only=True).fillna(0).items()}
+
+    bundle = ModelBundle(
+        module=module, version=version, features=list(X.columns), classes=sorted(set(y)),
+        benign_labels=sorted({v for v in y if is_benign_label(module, v)}),
+        classifier=classifier, anomaly=anomaly, calibration=calibration, baseline=baseline,
+        threshold=threshold,
+        metadata={
+            "trained_at": datetime.now(timezone.utc).isoformat(),
+            "label_source": label_source,
+            "train_rows": int(len(train_df)),
+            "class_counts": {k: int(v) for k, v in y.value_counts().items()},
+            "dataset_fingerprint": dataset_fingerprint(train_df.reindex(columns=[*X.columns, "label"])),
+            **(extra_meta or {}),
+        },
+    )
+    bundle.metadata["metrics"] = evaluate(bundle, holdout, novel)
+    log.info("trained %s: %s", version, bundle.metadata["metrics"])
+    return bundle

@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #000000; /* Noir */
+  color: #FBF9E4;           /* Pearl Perfect */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar in Midnight on Noir */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #122C4F;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1b3e6e;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-midnight-800 bg-midnight-950;
+  }
+  .label {
+    @apply text-[11px] font-medium uppercase tracking-[0.08em] text-pearl-dim;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors
+      disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean;
+  }
+  .btn-primary {
+    @apply btn bg-pearl text-noir hover:bg-pearl-muted;
+  }
+  .btn-ghost {
+    @apply btn border border-midnight-700 text-pearl-muted hover:border-ocean hover:text-pearl;
+  }
+  .input {
+    @apply rounded-lg border border-midnight-700 bg-noir px-3 py-2 text-sm text-pearl placeholder:text-pearl-dim
+      focus:border-ocean focus:outline-none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
