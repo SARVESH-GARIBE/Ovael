@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #06080e;
+  color: #e2e8f0;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for dark security ops look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0d17;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2844;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d3b63;
+}
