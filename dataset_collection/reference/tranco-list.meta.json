@@ -1,0 +1,35 @@
+{
+  "source_file": "top-1m.csv",
+  "source_file_sha256": "55ccde892634a876b81e6964a5d4843c2a9f333779ae639771af4dd6b14e99d0",
+  "source_file_mtime_utc": "2026-10-10T16:52:34+00:00",
+  "list_id": "8PXYV",
+  "verified": true,
+  "verification_method": "first 1000 rows identical to tranco-list.eu download",
+  "list_date": "2026-10-10",
+  "list_created_on": "2026-10-10T22:00:02.102152",
+  "list_configuration": {
+    "filterPLD": "on",
+    "filterTLD": "false",
+    "providers": [
+      "crux",
+      "farsight",
+      "majestic",
+      "radar",
+      "umbrella"
+    ],
+    "combinationMethod": "dowdall",
+    "startDate": "2026-09-11",
+    "isDailyList": true,
+    "endDate": "2026-10-10",
+    "listPrefix": "1000000"
+  },
+  "list_permalink": "https://tranco-list.eu/list/8PXYV/1000000",
+  "candidates_checked": [
+    {
+      "date": "2026-10-10",
+      "list_id": "8PXYV",
+      "match": true
+    }
+  ],
+  "checked_at": "2026-10-11T12:58:34+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "url": "https://staticcdn.duckduckgo.com/trackerblocking/v5/current/extension-tds.json",
+  "retrieved_at": "2026-10-11T12:58:06+00:00",
+  "http_last_modified": "Mon, 21 Sep 2026 14:41:22 GMT",
+  "http_etag": "\"584d5e04e38c06beffa36f1312705bf9\"",
+  "sha256": "4a6b10061018be3e2fadee3c9bad422e9c11ee1d6b13685881ed5b8f26dec5b6",
+  "bytes": 1481745,
+  "built_with": {
+    "tracker-radar": "9ce6785f8b474c0d182c2f4cc5064288ab30615663a1c33a411894b011a0b470-6253f5a053513120c61ad8221dc30a0e2cdbfeb9",
+    "tracker-surrogates": "2575c6e058fb02420399fe459418319af2fb93a7"
+  },
+  "tracker_count": 999,
+  "entity_count": 760
+}

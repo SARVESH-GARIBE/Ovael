@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "project": "AI-Based Website Behavioral Analysis and Tracker Detection System",
+  "run_type": "smoke",
+  "created_at": "2026-10-11T13:04:56+00:00",
+  "source": {
+    "type": "smoke-test list",
+    "source_file": "smoke_sites.txt"
+  },
+  "selection": {
+    "method": "Smoke-test list (smoke_sites.txt) in file order, de-duplicated by registrable domain.",
+    "requested": null,
+    "selected_count": 13,
+    "skipped_count": 1,
+    "skipped": [
+      {
+        "line": 14,
+        "domain": "www.example.com",
+        "reason": "duplicate_registrable_domain:example.com"
+      }
+    ],
+    "public_suffix_list": "tldextract 5.4.0 bundled Public Suffix List snapshot (ICANN section)",
+    "malware_host_check": {
+      "source": "URLhaus hostfile (abuse.ch)",
+      "url": "https://urlhaus.abuse.ch/downloads/hostfile/",
+      "retrieved_at": "2026-10-11T12:58:07+00:00",
+      "http_last_modified": "Sun, 11 Oct 2026 12:50:03 GMT",
+      "http_etag": "\"2f0e-65d90052c309d\"",
+      "sha256": "0e9ed05aecfd05cd1e3f725175a857f816d89a63e9b22fff6f4bd1c6cd2d7ea3",
+      "bytes": 12046
+    }
+  },
+  "reference": {
+    "source": "DuckDuckGo Tracker Data Set (extension-tds.json, built from DuckDuckGo Tracker Radar)",
+    "url": "https://staticcdn.duckduckgo.com/trackerblocking/v5/current/extension-tds.json",
+    "retrieved_at": "2026-10-11T12:58:06+00:00",
+    "http_last_modified": "Mon, 21 Sep 2026 14:41:22 GMT",
+    "sha256": "4a6b10061018be3e2fadee3c9bad422e9c11ee1d6b13685881ed5b8f26dec5b6",
+    "built_with": {
+      "tracker-radar": "9ce6785f8b474c0d182c2f4cc5064288ab30615663a1c33a411894b011a0b470-6253f5a053513120c61ad8221dc30a0e2cdbfeb9",
+      "tracker-surrogates": "2575c6e058fb02420399fe459418319af2fb93a7"
+    },
+    "tracker_entries": 999
+  },
+  "crawl_config": {
+    "workers": 3,
+    "headless": true,
+    "navigation_timeout_s": 30.0,
+    "load_event_timeout_s": 15.0,
+    "settle_s": 5.0,
+    "overall_timeout_s": 150.0,
+    "max_retries": 2,
+    "backoff_base_s": 3.0,
+    "max_retry_after_s": 30.0,
+    "inter_site_delay_s": 1.0,
+    "max_consecutive_server_errors": 20,
+    "viewport_width": 1366,
+    "viewport_height": 768,
+    "locale": "en-US",
+    "max_evidence_events": 25,
+    "max_path_chars": 200,
+    "launch_args": [
+      "--disable-quic",
+      "--force-webrtc-ip-handling-policy=disable_non_proxied_udp",
+      "--disable-background-networking"
+    ]
+  },
+  "selected": [
+    {
+      "website_id": "S0001",
+      "tranco_rank": null,
+      "original_domain": "example.com",
+      "original_url": "https://example.com/",
+      "candidate_urls": [
+        "https://example.com/",
+        "https://www.example.com/",
+        "http://example.com/"
+      ],
+      "initial_registrable_domain": "example.com"
+    },
+    {
+      "website_id": "S0002",
+      "tranco_rank": null,
+      "original_domain": "wikipedia.org",
+      "original_url": "https://wikipedia.org/",
+      "candidate_urls": [
+        "https://wikipedia.org/",
+        "https://www.wikipedia.org/",
+        "http://wikipedia.org/"
+      ],
+      "initial_registrable_domain": "wikipedia.org"
+    },
+    {
+      "website_id": "S0003",
+      "tranco_rank": null,
+      "original_domain": "python.org",
+      "original_url": "https://python.org/",
+      "candidate_urls": [
+        "https://python.org/",
+        "https://www.python.org/",
+        "http://python.org/"
+      ],
+      "initial_registrable_domain": "python.org"
+    },
+    {
+      "website_id": "S0004",
+      "tranco_rank": null,
+      "original_domain": "mozilla.org",
+      "original_url": "https://mozilla.org/",
+      "candidate_urls": [
+        "https://mozilla.org/",
+        "https://www.mozilla.org/",
+        "http://mozilla.org/"
+      ],
+      "initial_registrable_domain": "mozilla.org"
+    },
+    {
+      "website_id": "S0005",
+      "tranco_rank": null,
+      "original_domain": "github.com",
+      "original_url": "https://github.com/",
+      "candidate_urls": [
+        "https://github.com/",
+        "https://www.github.com/",
+        "http://github.com/"
+      ],
+      "initial_registrable_domain": "github.com"
+    },
+    {
+      "website_id": "S0006",
+      "tranco_rank": null,
+      "original_domain": "bbc.com",
+      "original_url": "https://bbc.com/",
+      "candidate_urls": [
+        "https://bbc.com/",
+        "https://www.bbc.com/",
+        "http://bbc.com/"
+      ],
+      "initial_registrable_domain": "bbc.com"
+    },
+    {
+      "website_id": "S0007",
+      "tranco_rank": null,
+      "original_domain": "w3.org",
+      "original_url": "https://w3.org/",
+      "candidate_urls": [
+        "https://w3.org/",
+        "https://www.w3.org/",
+        "http://w3.org/"
+      ],
+      "initial_registrable_domain": "w3.org"
+    },
+    {
+      "website_id": "S0008",
+      "tranco_rank": null,
+      "original_domain": "stackoverflow.com",
+      "original_url": "https://stackoverflow.com/",
+      "candidate_urls": [
+        "https://stackoverflow.com/",
+        "https://www.stackoverflow.com/",
+        "http://stackoverflow.com/"
+      ],
+      "initial_registrable_domain": "stackoverflow.com"
+    },
+    {
+      "website_id": "S0009",
+      "tranco_rank": null,
+      "original_domain": "cnn.com",
+      "original_url": "https://cnn.com/",
+      "candidate_urls": [
+        "https://cnn.com/",
+        "https://www.cnn.com/",
+        "http://cnn.com/"
+      ],
+      "initial_registrable_domain": "cnn.com"
+    },
+    {
+      "website_id": "S0010",
+      "tranco_rank": null,
+      "original_domain": "theguardian.com",
+      "original_url": "https://theguardian.com/",
+      "candidate_urls": [
+        "https://theguardian.com/",
+        "https://www.theguardian.com/",
+        "http://theguardian.com/"
+      ],
+      "initial_registrable_domain": "theguardian.com"
+    },
+    {
+      "website_id": "S0011",
+      "tranco_rank": null,
+      "original_domain": "ovael-smoke-test-nonexistent.invalid",
+      "original_url": "https://ovael-smoke-test-nonexistent.invalid/",
+      "candidate_urls": [
+        "https://ovael-smoke-test-nonexistent.invalid/",
+        "https://www.ovael-smoke-test-nonexistent.invalid/",
+        "http://ovael-smoke-test-nonexistent.invalid/"
+      ],
+      "initial_registrable_domain": null
+    },
+    {
+      "website_id": "S0012",
+      "tranco_rank": null,
+      "original_domain": "127.0.0.1.nip.io",
+      "original_url": "https://127.0.0.1.nip.io/",
+      "candidate_urls": [
+        "https://127.0.0.1.nip.io/"
+      ],
+      "initial_registrable_domain": "nip.io"
+    },
+    {
+      "website_id": "S0013",
+      "tranco_rank": null,
+      "original_domain": "httpbin.org",
+      "original_url": "https://httpbin.org/redirect-to?url=http%3A%2F%2F127.0.0.1%2F",
+      "candidate_urls": [
+        "https://httpbin.org/redirect-to?url=http%3A%2F%2F127.0.0.1%2F"
+      ],
+      "initial_registrable_domain": "httpbin.org"
+    }
+  ],
+  "status": {
+    "selected": 13,
+    "attempted": 13,
+    "completed_observed": 10,
+    "success": 9,
+    "http_error": 1,
+    "failed": 1,
+    "blocked_unsafe": 2,
+    "pending": 0,
+    "complete": true
+  },
+  "runs": [
+    {
+      "started_at": "2026-10-11T13:04:59+00:00",
+      "pending_at_start": 13,
+      "scheduled": 13,
+      "config": {
+        "workers": 3,
+        "headless": true,
+        "navigation_timeout_s": 30.0,
+        "load_event_timeout_s": 15.0,
+        "settle_s": 5.0,
+        "overall_timeout_s": 150.0,
+        "max_retries": 2,
+        "backoff_base_s": 3.0,
+        "max_retry_after_s": 30.0,
+        "inter_site_delay_s": 1.0,
+        "max_consecutive_server_errors": 20,
+        "viewport_width": 1366,
+        "viewport_height": 768,
+        "locale": "en-US",
+        "max_evidence_events": 25,
+        "max_path_chars": 200,
+        "launch_args": [
+          "--disable-quic",
+          "--force-webrtc-ip-handling-policy=disable_non_proxied_udp",
+          "--disable-background-networking"
+        ]
+      },
+      "finished_at": "2026-10-11T13:05:34+00:00",
+      "stop_reason": "completed"
+    }
+  ],
+  "updated_at": "2026-10-11T13:05:34+00:00",
+  "environment": {
+    "python": "3.14.7",
+    "platform": "Linux-7.1.13-200.fc44.x86_64-x86_64-with-glibc2.43",
+    "playwright": "1.63.0",
+    "browser": "chromium",
+    "browser_version": "153.0.8010.12",
+    "headless": true,
+    "user_agent": "Playwright Chromium default (headless)"
+  }
+}

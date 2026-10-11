@@ -1,0 +1,17 @@
+# Smoke-test list: one hostname or full URL per line.
+# 10 well-known, safe websites:
+example.com
+wikipedia.org
+python.org
+mozilla.org
+github.com
+bbc.com
+w3.org
+stackoverflow.com
+cnn.com
+theguardian.com
+# Test fixtures (expected behaviour in comments):
+www.example.com                                   # duplicate of example.com -> skipped at selection
+ovael-smoke-test-nonexistent.invalid              # DNS failure -> recorded as failed, crawl continues
+https://127.0.0.1.nip.io/                         # resolves to loopback -> blocked_unsafe
+https://httpbin.org/redirect-to?url=http%3A%2F%2F127.0.0.1%2F   # redirect to loopback -> blocked_unsafe

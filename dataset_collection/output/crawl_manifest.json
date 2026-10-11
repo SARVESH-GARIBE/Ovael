@@ -1,0 +1,6149 @@
+{
+  "schema_version": "1.0.0",
+  "project": "AI-Based Website Behavioral Analysis and Tracker Detection System",
+  "run_type": "tranco",
+  "created_at": "2026-10-11T13:06:03+00:00",
+  "source": {
+    "type": "Tranco",
+    "source_file": "top-1m.csv",
+    "source_file_sha256": "55ccde892634a876b81e6964a5d4843c2a9f333779ae639771af4dd6b14e99d0",
+    "source_file_mtime_utc": "2026-10-10T16:52:34+00:00",
+    "list_id": "8PXYV",
+    "verified": true,
+    "verification_method": "first 1000 rows identical to tranco-list.eu download",
+    "list_date": "2026-10-10",
+    "list_created_on": "2026-10-10T22:00:02.102152",
+    "list_configuration": {
+      "filterPLD": "on",
+      "filterTLD": "false",
+      "providers": [
+        "crux",
+        "farsight",
+        "majestic",
+        "radar",
+        "umbrella"
+      ],
+      "combinationMethod": "dowdall",
+      "startDate": "2026-09-11",
+      "isDailyList": true,
+      "endDate": "2026-10-10",
+      "listPrefix": "1000000"
+    },
+    "list_permalink": "https://tranco-list.eu/list/8PXYV/1000000",
+    "candidates_checked": [
+      {
+        "date": "2026-10-10",
+        "list_id": "8PXYV",
+        "match": true
+      }
+    ],
+    "checked_at": "2026-10-11T12:58:34+00:00",
+    "download_date": "2026-10-10T22:00:02.102152"
+  },
+  "selection": {
+    "method": "Iterate the Tranco list in ascending rank order; normalise each hostname (lower-case, strip trailing dot); compute its registrable domain (eTLD+1, Public Suffix List). Skip entries whose registrable domain was already selected (so www.example.com and example.com count once), IP literals/unparseable hosts, and hosts listed in the URLhaus malware host list. Take the first N remaining entries.",
+    "requested": 500,
+    "selected_count": 500,
+    "skipped_count": 0,
+    "skipped": [],
+    "public_suffix_list": "tldextract 5.4.0 bundled Public Suffix List snapshot (ICANN section)",
+    "malware_host_check": {
+      "source": "URLhaus hostfile (abuse.ch)",
+      "url": "https://urlhaus.abuse.ch/downloads/hostfile/",
+      "retrieved_at": "2026-10-11T12:58:07+00:00",
+      "http_last_modified": "Sun, 11 Oct 2026 12:50:03 GMT",
+      "http_etag": "\"2f0e-65d90052c309d\"",
+      "sha256": "0e9ed05aecfd05cd1e3f725175a857f816d89a63e9b22fff6f4bd1c6cd2d7ea3",
+      "bytes": 12046
+    }
+  },
+  "reference": {
+    "source": "DuckDuckGo Tracker Data Set (extension-tds.json, built from DuckDuckGo Tracker Radar)",
+    "url": "https://staticcdn.duckduckgo.com/trackerblocking/v5/current/extension-tds.json",
+    "retrieved_at": "2026-10-11T12:58:06+00:00",
+    "http_last_modified": "Mon, 21 Sep 2026 14:41:22 GMT",
+    "sha256": "4a6b10061018be3e2fadee3c9bad422e9c11ee1d6b13685881ed5b8f26dec5b6",
+    "built_with": {
+      "tracker-radar": "9ce6785f8b474c0d182c2f4cc5064288ab30615663a1c33a411894b011a0b470-6253f5a053513120c61ad8221dc30a0e2cdbfeb9",
+      "tracker-surrogates": "2575c6e058fb02420399fe459418319af2fb93a7"
+    },
+    "tracker_entries": 999
+  },
+  "crawl_config": {
+    "workers": 3,
+    "headless": true,
+    "navigation_timeout_s": 30.0,
+    "load_event_timeout_s": 15.0,
+    "settle_s": 5.0,
+    "overall_timeout_s": 150.0,
+    "max_retries": 2,
+    "backoff_base_s": 3.0,
+    "max_retry_after_s": 30.0,
+    "inter_site_delay_s": 1.0,
+    "max_consecutive_server_errors": 20,
+    "viewport_width": 1366,
+    "viewport_height": 768,
+    "locale": "en-US",
+    "max_evidence_events": 25,
+    "max_path_chars": 200,
+    "launch_args": [
+      "--disable-quic",
+      "--force-webrtc-ip-handling-policy=disable_non_proxied_udp",
+      "--disable-background-networking"
+    ]
+  },
+  "selected": [
+    {
+      "website_id": "T0000001",
+      "tranco_rank": 1,
+      "original_domain": "google.com",
+      "original_url": "https://google.com/",
+      "candidate_urls": [
+        "https://google.com/",
+        "https://www.google.com/",
+        "http://google.com/"
+      ],
+      "initial_registrable_domain": "google.com"
+    },
+    {
+      "website_id": "T0000002",
+      "tranco_rank": 2,
+      "original_domain": "cloudflare.com",
+      "original_url": "https://cloudflare.com/",
+      "candidate_urls": [
+        "https://cloudflare.com/",
+        "https://www.cloudflare.com/",
+        "http://cloudflare.com/"
+      ],
+      "initial_registrable_domain": "cloudflare.com"
+    },
+    {
+      "website_id": "T0000003",
+      "tranco_rank": 3,
+      "original_domain": "gstatic.com",
+      "original_url": "https://gstatic.com/",
+      "candidate_urls": [
+        "https://gstatic.com/",
+        "https://www.gstatic.com/",
+        "http://gstatic.com/"
+      ],
+      "initial_registrable_domain": "gstatic.com"
+    },
+    {
+      "website_id": "T0000004",
+      "tranco_rank": 4,
+      "original_domain": "facebook.com",
+      "original_url": "https://facebook.com/",
+      "candidate_urls": [
+        "https://facebook.com/",
+        "https://www.facebook.com/",
+        "http://facebook.com/"
+      ],
+      "initial_registrable_domain": "facebook.com"
+    },
+    {
+      "website_id": "T0000005",
+      "tranco_rank": 5,
+      "original_domain": "amazonaws.com",
+      "original_url": "https://amazonaws.com/",
+      "candidate_urls": [
+        "https://amazonaws.com/",
+        "https://www.amazonaws.com/",
+        "http://amazonaws.com/"
+      ],
+      "initial_registrable_domain": "amazonaws.com"
+    },
+    {
+      "website_id": "T0000006",
+      "tranco_rank": 6,
+      "original_domain": "googleapis.com",
+      "original_url": "https://googleapis.com/",
+      "candidate_urls": [
+        "https://googleapis.com/",
+        "https://www.googleapis.com/",
+        "http://googleapis.com/"
+      ],
+      "initial_registrable_domain": "googleapis.com"
+    },
+    {
+      "website_id": "T0000007",
+      "tranco_rank": 7,
+      "original_domain": "akamai.net",
+      "original_url": "https://akamai.net/",
+      "candidate_urls": [
+        "https://akamai.net/",
+        "https://www.akamai.net/",
+        "http://akamai.net/"
+      ],
+      "initial_registrable_domain": "akamai.net"
+    },
+    {
+      "website_id": "T0000008",
+      "tranco_rank": 8,
+      "original_domain": "microsoft.com",
+      "original_url": "https://microsoft.com/",
+      "candidate_urls": [
+        "https://microsoft.com/",
+        "https://www.microsoft.com/",
+        "http://microsoft.com/"
+      ],
+      "initial_registrable_domain": "microsoft.com"
+    },
+    {
+      "website_id": "T0000009",
+      "tranco_rank": 9,
+      "original_domain": "apple.com",
+      "original_url": "https://apple.com/",
+      "candidate_urls": [
+        "https://apple.com/",
+        "https://www.apple.com/",
+        "http://apple.com/"
+      ],
+      "initial_registrable_domain": "apple.com"
+    },
+    {
+      "website_id": "T0000010",
+      "tranco_rank": 10,
+      "original_domain": "youtube.com",
+      "original_url": "https://youtube.com/",
+      "candidate_urls": [
+        "https://youtube.com/",
+        "https://www.youtube.com/",
+        "http://youtube.com/"
+      ],
+      "initial_registrable_domain": "youtube.com"
+    },
+    {
+      "website_id": "T0000011",
+      "tranco_rank": 11,
+      "original_domain": "instagram.com",
+      "original_url": "https://instagram.com/",
+      "candidate_urls": [
+        "https://instagram.com/",
+        "https://www.instagram.com/",
+        "http://instagram.com/"
+      ],
+      "initial_registrable_domain": "instagram.com"
+    },
+    {
+      "website_id": "T0000012",
+      "tranco_rank": 12,
+      "original_domain": "fbcdn.net",
+      "original_url": "https://fbcdn.net/",
+      "candidate_urls": [
+        "https://fbcdn.net/",
+        "https://www.fbcdn.net/",
+        "http://fbcdn.net/"
+      ],
+      "initial_registrable_domain": "fbcdn.net"
+    },
+    {
+      "website_id": "T0000013",
+      "tranco_rank": 13,
+      "original_domain": "mail.ru",
+      "original_url": "https://mail.ru/",
+      "candidate_urls": [
+        "https://mail.ru/",
+        "https://www.mail.ru/",
+        "http://mail.ru/"
+      ],
+      "initial_registrable_domain": "mail.ru"
+    },
+    {
+      "website_id": "T0000014",
+      "tranco_rank": 14,
+      "original_domain": "ezviz7.com",
+      "original_url": "https://ezviz7.com/",
+      "candidate_urls": [
+        "https://ezviz7.com/",
+        "https://www.ezviz7.com/",
+        "http://ezviz7.com/"
+      ],
+      "initial_registrable_domain": "ezviz7.com"
+    },
+    {
+      "website_id": "T0000015",
+      "tranco_rank": 15,
+      "original_domain": "domaincontrol.com",
+      "original_url": "https://domaincontrol.com/",
+      "candidate_urls": [
+        "https://domaincontrol.com/",
+        "https://www.domaincontrol.com/",
+        "http://domaincontrol.com/"
+      ],
+      "initial_registrable_domain": "domaincontrol.com"
+    },
+    {
+      "website_id": "T0000016",
+      "tranco_rank": 16,
+      "original_domain": "twitter.com",
+      "original_url": "https://twitter.com/",
+      "candidate_urls": [
+        "https://twitter.com/",
+        "https://www.twitter.com/",
+        "http://twitter.com/"
+      ],
+      "initial_registrable_domain": "twitter.com"
+    },
+    {
+      "website_id": "T0000017",
+      "tranco_rank": 17,
+      "original_domain": "dzen.ru",
+      "original_url": "https://dzen.ru/",
+      "candidate_urls": [
+        "https://dzen.ru/",
+        "https://www.dzen.ru/",
+        "http://dzen.ru/"
+      ],
+      "initial_registrable_domain": "dzen.ru"
+    },
+    {
+      "website_id": "T0000018",
+      "tranco_rank": 18,
+      "original_domain": "linkedin.com",
+      "original_url": "https://linkedin.com/",
+      "candidate_urls": [
+        "https://linkedin.com/",
+        "https://www.linkedin.com/",
+        "http://linkedin.com/"
+      ],
+      "initial_registrable_domain": "linkedin.com"
+    },
+    {
+      "website_id": "T0000019",
+      "tranco_rank": 19,
+      "original_domain": "akamaiedge.net",
+      "original_url": "https://akamaiedge.net/",
+      "candidate_urls": [
+        "https://akamaiedge.net/",
+        "https://www.akamaiedge.net/",
+        "http://akamaiedge.net/"
+      ],
+      "initial_registrable_domain": "akamaiedge.net"
+    },
+    {
+      "website_id": "T0000020",
+      "tranco_rank": 20,
+      "original_domain": "googlevideo.com",
+      "original_url": "https://googlevideo.com/",
+      "candidate_urls": [
+        "https://googlevideo.com/",
+        "https://www.googlevideo.com/",
+        "http://googlevideo.com/"
+      ],
+      "initial_registrable_domain": "googlevideo.com"
+    },
+    {
+      "website_id": "T0000021",
+      "tranco_rank": 21,
+      "original_domain": "googletagmanager.com",
+      "original_url": "https://googletagmanager.com/",
+      "candidate_urls": [
+        "https://googletagmanager.com/",
+        "https://www.googletagmanager.com/",
+        "http://googletagmanager.com/"
+      ],
+      "initial_registrable_domain": "googletagmanager.com"
+    },
+    {
+      "website_id": "T0000022",
+      "tranco_rank": 22,
+      "original_domain": "office.com",
+      "original_url": "https://office.com/",
+      "candidate_urls": [
+        "https://office.com/",
+        "https://www.office.com/",
+        "http://office.com/"
+      ],
+      "initial_registrable_domain": "office.com"
+    },
+    {
+      "website_id": "T0000023",
+      "tranco_rank": 23,
+      "original_domain": "akadns.net",
+      "original_url": "https://akadns.net/",
+      "candidate_urls": [
+        "https://akadns.net/",
+        "https://www.akadns.net/",
+        "http://akadns.net/"
+      ],
+      "initial_registrable_domain": "akadns.net"
+    },
+    {
+      "website_id": "T0000024",
+      "tranco_rank": 24,
+      "original_domain": "hicloudcam.com",
+      "original_url": "https://hicloudcam.com/",
+      "candidate_urls": [
+        "https://hicloudcam.com/",
+        "https://www.hicloudcam.com/",
+        "http://hicloudcam.com/"
+      ],
+      "initial_registrable_domain": "hicloudcam.com"
+    },
+    {
+      "website_id": "T0000025",
+      "tranco_rank": 25,
+      "original_domain": "live.com",
+      "original_url": "https://live.com/",
+      "candidate_urls": [
+        "https://live.com/",
+        "https://www.live.com/",
+        "http://live.com/"
+      ],
+      "initial_registrable_domain": "live.com"
+    },
+    {
+      "website_id": "T0000026",
+      "tranco_rank": 26,
+      "original_domain": "azure.com",
+      "original_url": "https://azure.com/",
+      "candidate_urls": [
+        "https://azure.com/",
+        "https://www.azure.com/",
+        "http://azure.com/"
+      ],
+      "initial_registrable_domain": "azure.com"
+    },
+    {
+      "website_id": "T0000027",
+      "tranco_rank": 27,
+      "original_domain": "amazon.com",
+      "original_url": "https://amazon.com/",
+      "candidate_urls": [
+        "https://amazon.com/",
+        "https://www.amazon.com/",
+        "http://amazon.com/"
+      ],
+      "initial_registrable_domain": "amazon.com"
+    },
+    {
+      "website_id": "T0000028",
+      "tranco_rank": 28,
+      "original_domain": "gtld-servers.net",
+      "original_url": "https://gtld-servers.net/",
+      "candidate_urls": [
+        "https://gtld-servers.net/",
+        "https://www.gtld-servers.net/",
+        "http://gtld-servers.net/"
+      ],
+      "initial_registrable_domain": "gtld-servers.net"
+    },
+    {
+      "website_id": "T0000029",
+      "tranco_rank": 29,
+      "original_domain": "github.com",
+      "original_url": "https://github.com/",
+      "candidate_urls": [
+        "https://github.com/",
+        "https://www.github.com/",
+        "http://github.com/"
+      ],
+      "initial_registrable_domain": "github.com"
+    },
+    {
+      "website_id": "T0000030",
+      "tranco_rank": 30,
+      "original_domain": "appsflyersdk.com",
+      "original_url": "https://appsflyersdk.com/",
+      "candidate_urls": [
+        "https://appsflyersdk.com/",
+        "https://www.appsflyersdk.com/",
+        "http://appsflyersdk.com/"
+      ],
+      "initial_registrable_domain": "appsflyersdk.com"
+    },
+    {
+      "website_id": "T0000031",
+      "tranco_rank": 31,
+      "original_domain": "wikipedia.org",
+      "original_url": "https://wikipedia.org/",
+      "candidate_urls": [
+        "https://wikipedia.org/",
+        "https://www.wikipedia.org/",
+        "http://wikipedia.org/"
+      ],
+      "initial_registrable_domain": "wikipedia.org"
+    },
+    {
+      "website_id": "T0000032",
+      "tranco_rank": 32,
+      "original_domain": "whatsapp.net",
+      "original_url": "https://whatsapp.net/",
+      "candidate_urls": [
+        "https://whatsapp.net/",
+        "https://www.whatsapp.net/",
+        "http://whatsapp.net/"
+      ],
+      "initial_registrable_domain": "whatsapp.net"
+    },
+    {
+      "website_id": "T0000033",
+      "tranco_rank": 33,
+      "original_domain": "aaplimg.com",
+      "original_url": "https://aaplimg.com/",
+      "candidate_urls": [
+        "https://aaplimg.com/",
+        "https://www.aaplimg.com/",
+        "http://aaplimg.com/"
+      ],
+      "initial_registrable_domain": "aaplimg.com"
+    },
+    {
+      "website_id": "T0000034",
+      "tranco_rank": 34,
+      "original_domain": "bing.com",
+      "original_url": "https://bing.com/",
+      "candidate_urls": [
+        "https://bing.com/",
+        "https://www.bing.com/",
+        "http://bing.com/"
+      ],
+      "initial_registrable_domain": "bing.com"
+    },
+    {
+      "website_id": "T0000035",
+      "tranco_rank": 35,
+      "original_domain": "cloudfront.net",
+      "original_url": "https://cloudfront.net/",
+      "candidate_urls": [
+        "https://cloudfront.net/",
+        "https://www.cloudfront.net/",
+        "http://cloudfront.net/"
+      ],
+      "initial_registrable_domain": "cloudfront.net"
+    },
+    {
+      "website_id": "T0000036",
+      "tranco_rank": 36,
+      "original_domain": "fastly.net",
+      "original_url": "https://fastly.net/",
+      "candidate_urls": [
+        "https://fastly.net/",
+        "https://www.fastly.net/",
+        "http://fastly.net/"
+      ],
+      "initial_registrable_domain": "fastly.net"
+    },
+    {
+      "website_id": "T0000037",
+      "tranco_rank": 37,
+      "original_domain": "apple-dns.net",
+      "original_url": "https://apple-dns.net/",
+      "candidate_urls": [
+        "https://apple-dns.net/",
+        "https://www.apple-dns.net/",
+        "http://apple-dns.net/"
+      ],
+      "initial_registrable_domain": "apple-dns.net"
+    },
+    {
+      "website_id": "T0000038",
+      "tranco_rank": 38,
+      "original_domain": "cloud.microsoft",
+      "original_url": "https://cloud.microsoft/",
+      "candidate_urls": [
+        "https://cloud.microsoft/",
+        "https://www.cloud.microsoft/",
+        "http://cloud.microsoft/"
+      ],
+      "initial_registrable_domain": "cloud.microsoft"
+    },
+    {
+      "website_id": "T0000039",
+      "tranco_rank": 39,
+      "original_domain": "office.net",
+      "original_url": "https://office.net/",
+      "candidate_urls": [
+        "https://office.net/",
+        "https://www.office.net/",
+        "http://office.net/"
+      ],
+      "initial_registrable_domain": "office.net"
+    },
+    {
+      "website_id": "T0000040",
+      "tranco_rank": 40,
+      "original_domain": "trafficmanager.net",
+      "original_url": "https://trafficmanager.net/",
+      "candidate_urls": [
+        "https://trafficmanager.net/",
+        "https://www.trafficmanager.net/",
+        "http://trafficmanager.net/"
+      ],
+      "initial_registrable_domain": "trafficmanager.net"
+    },
+    {
+      "website_id": "T0000041",
+      "tranco_rank": 41,
+      "original_domain": "googleusercontent.com",
+      "original_url": "https://googleusercontent.com/",
+      "candidate_urls": [
+        "https://googleusercontent.com/",
+        "https://www.googleusercontent.com/",
+        "http://googleusercontent.com/"
+      ],
+      "initial_registrable_domain": "googleusercontent.com"
+    },
+    {
+      "website_id": "T0000042",
+      "tranco_rank": 42,
+      "original_domain": "sharepoint.com",
+      "original_url": "https://sharepoint.com/",
+      "candidate_urls": [
+        "https://sharepoint.com/",
+        "https://www.sharepoint.com/",
+        "http://sharepoint.com/"
+      ],
+      "initial_registrable_domain": "sharepoint.com"
+    },
+    {
+      "website_id": "T0000043",
+      "tranco_rank": 43,
+      "original_domain": "gandi.net",
+      "original_url": "https://gandi.net/",
+      "candidate_urls": [
+        "https://gandi.net/",
+        "https://www.gandi.net/",
+        "http://gandi.net/"
+      ],
+      "initial_registrable_domain": "gandi.net"
+    },
+    {
+      "website_id": "T0000044",
+      "tranco_rank": 44,
+      "original_domain": "doubleclick.net",
+      "original_url": "https://doubleclick.net/",
+      "candidate_urls": [
+        "https://doubleclick.net/",
+        "https://www.doubleclick.net/",
+        "http://doubleclick.net/"
+      ],
+      "initial_registrable_domain": "doubleclick.net"
+    },
+    {
+      "website_id": "T0000045",
+      "tranco_rank": 45,
+      "original_domain": "microsoftonline.com",
+      "original_url": "https://microsoftonline.com/",
+      "candidate_urls": [
+        "https://microsoftonline.com/",
+        "https://www.microsoftonline.com/",
+        "http://microsoftonline.com/"
+      ],
+      "initial_registrable_domain": "microsoftonline.com"
+    },
+    {
+      "website_id": "T0000046",
+      "tranco_rank": 46,
+      "original_domain": "netflix.com",
+      "original_url": "https://netflix.com/",
+      "candidate_urls": [
+        "https://netflix.com/",
+        "https://www.netflix.com/",
+        "http://netflix.com/"
+      ],
+      "initial_registrable_domain": "netflix.com"
+    },
+    {
+      "website_id": "T0000047",
+      "tranco_rank": 47,
+      "original_domain": "youtu.be",
+      "original_url": "https://youtu.be/",
+      "candidate_urls": [
+        "https://youtu.be/",
+        "https://www.youtu.be/",
+        "http://youtu.be/"
+      ],
+      "initial_registrable_domain": "youtu.be"
+    },
+    {
+      "website_id": "T0000048",
+      "tranco_rank": 48,
+      "original_domain": "x.com",
+      "original_url": "https://x.com/",
+      "candidate_urls": [
+        "https://x.com/",
+        "https://www.x.com/",
+        "http://x.com/"
+      ],
+      "initial_registrable_domain": "x.com"
+    },
+    {
+      "website_id": "T0000049",
+      "tranco_rank": 49,
+      "original_domain": "wordpress.org",
+      "original_url": "https://wordpress.org/",
+      "candidate_urls": [
+        "https://wordpress.org/",
+        "https://www.wordpress.org/",
+        "http://wordpress.org/"
+      ],
+      "initial_registrable_domain": "wordpress.org"
+    },
+    {
+      "website_id": "T0000050",
+      "tranco_rank": 50,
+      "original_domain": "skype.com",
+      "original_url": "https://skype.com/",
+      "candidate_urls": [
+        "https://skype.com/",
+        "https://www.skype.com/",
+        "http://skype.com/"
+      ],
+      "initial_registrable_domain": "skype.com"
+    },
+    {
+      "website_id": "T0000051",
+      "tranco_rank": 51,
+      "original_domain": "icloud.com",
+      "original_url": "https://icloud.com/",
+      "candidate_urls": [
+        "https://icloud.com/",
+        "https://www.icloud.com/",
+        "http://icloud.com/"
+      ],
+      "initial_registrable_domain": "icloud.com"
+    },
+    {
+      "website_id": "T0000052",
+      "tranco_rank": 52,
+      "original_domain": "digicert.com",
+      "original_url": "https://digicert.com/",
+      "candidate_urls": [
+        "https://digicert.com/",
+        "https://www.digicert.com/",
+        "http://digicert.com/"
+      ],
+      "initial_registrable_domain": "digicert.com"
+    },
+    {
+      "website_id": "T0000053",
+      "tranco_rank": 53,
+      "original_domain": "pinterest.com",
+      "original_url": "https://pinterest.com/",
+      "candidate_urls": [
+        "https://pinterest.com/",
+        "https://www.pinterest.com/",
+        "http://pinterest.com/"
+      ],
+      "initial_registrable_domain": "pinterest.com"
+    },
+    {
+      "website_id": "T0000054",
+      "tranco_rank": 54,
+      "original_domain": "googledomains.com",
+      "original_url": "https://googledomains.com/",
+      "candidate_urls": [
+        "https://googledomains.com/",
+        "https://www.googledomains.com/",
+        "http://googledomains.com/"
+      ],
+      "initial_registrable_domain": "googledomains.com"
+    },
+    {
+      "website_id": "T0000055",
+      "tranco_rank": 55,
+      "original_domain": "googlesyndication.com",
+      "original_url": "https://googlesyndication.com/",
+      "candidate_urls": [
+        "https://googlesyndication.com/",
+        "https://www.googlesyndication.com/",
+        "http://googlesyndication.com/"
+      ],
+      "initial_registrable_domain": "googlesyndication.com"
+    },
+    {
+      "website_id": "T0000056",
+      "tranco_rank": 56,
+      "original_domain": "cloudflare.net",
+      "original_url": "https://cloudflare.net/",
+      "candidate_urls": [
+        "https://cloudflare.net/",
+        "https://www.cloudflare.net/",
+        "http://cloudflare.net/"
+      ],
+      "initial_registrable_domain": "cloudflare.net"
+    },
+    {
+      "website_id": "T0000057",
+      "tranco_rank": 57,
+      "original_domain": "whatsapp.com",
+      "original_url": "https://whatsapp.com/",
+      "candidate_urls": [
+        "https://whatsapp.com/",
+        "https://www.whatsapp.com/",
+        "http://whatsapp.com/"
+      ],
+      "initial_registrable_domain": "whatsapp.com"
+    },
+    {
+      "website_id": "T0000058",
+      "tranco_rank": 58,
+      "original_domain": "tiktok.com",
+      "original_url": "https://tiktok.com/",
+      "candidate_urls": [
+        "https://tiktok.com/",
+        "https://www.tiktok.com/",
+        "http://tiktok.com/"
+      ],
+      "initial_registrable_domain": "tiktok.com"
+    },
+    {
+      "website_id": "T0000059",
+      "tranco_rank": 59,
+      "original_domain": "goo.gl",
+      "original_url": "https://goo.gl/",
+      "candidate_urls": [
+        "https://goo.gl/",
+        "https://www.goo.gl/",
+        "http://goo.gl/"
+      ],
+      "initial_registrable_domain": "goo.gl"
+    },
+    {
+      "website_id": "T0000060",
+      "tranco_rank": 60,
+      "original_domain": "gvt1.com",
+      "original_url": "https://gvt1.com/",
+      "candidate_urls": [
+        "https://gvt1.com/",
+        "https://www.gvt1.com/",
+        "http://gvt1.com/"
+      ],
+      "initial_registrable_domain": "gvt1.com"
+    },
+    {
+      "website_id": "T0000061",
+      "tranco_rank": 61,
+      "original_domain": "yahoo.com",
+      "original_url": "https://yahoo.com/",
+      "candidate_urls": [
+        "https://yahoo.com/",
+        "https://www.yahoo.com/",
+        "http://yahoo.com/"
+      ],
+      "initial_registrable_domain": "yahoo.com"
+    },
+    {
+      "website_id": "T0000062",
+      "tranco_rank": 62,
+      "original_domain": "windowsupdate.com",
+      "original_url": "https://windowsupdate.com/",
+      "candidate_urls": [
+        "https://windowsupdate.com/",
+        "https://www.windowsupdate.com/",
+        "http://windowsupdate.com/"
+      ],
+      "initial_registrable_domain": "windowsupdate.com"
+    },
+    {
+      "website_id": "T0000063",
+      "tranco_rank": 63,
+      "original_domain": "adobe.com",
+      "original_url": "https://adobe.com/",
+      "candidate_urls": [
+        "https://adobe.com/",
+        "https://www.adobe.com/",
+        "http://adobe.com/"
+      ],
+      "initial_registrable_domain": "adobe.com"
+    },
+    {
+      "website_id": "T0000064",
+      "tranco_rank": 64,
+      "original_domain": "windows.net",
+      "original_url": "https://windows.net/",
+      "candidate_urls": [
+        "https://windows.net/",
+        "https://www.windows.net/",
+        "http://windows.net/"
+      ],
+      "initial_registrable_domain": "windows.net"
+    },
+    {
+      "website_id": "T0000065",
+      "tranco_rank": 65,
+      "original_domain": "endpoints.news",
+      "original_url": "https://endpoints.news/",
+      "candidate_urls": [
+        "https://endpoints.news/",
+        "https://www.endpoints.news/",
+        "http://endpoints.news/"
+      ],
+      "initial_registrable_domain": "endpoints.news"
+    },
+    {
+      "website_id": "T0000066",
+      "tranco_rank": 66,
+      "original_domain": "roblox.com",
+      "original_url": "https://roblox.com/",
+      "candidate_urls": [
+        "https://roblox.com/",
+        "https://www.roblox.com/",
+        "http://roblox.com/"
+      ],
+      "initial_registrable_domain": "roblox.com"
+    },
+    {
+      "website_id": "T0000067",
+      "tranco_rank": 67,
+      "original_domain": "wa.me",
+      "original_url": "https://wa.me/",
+      "candidate_urls": [
+        "https://wa.me/",
+        "https://www.wa.me/",
+        "http://wa.me/"
+      ],
+      "initial_registrable_domain": "wa.me"
+    },
+    {
+      "website_id": "T0000068",
+      "tranco_rank": 68,
+      "original_domain": "pv-cdn.net",
+      "original_url": "https://pv-cdn.net/",
+      "candidate_urls": [
+        "https://pv-cdn.net/",
+        "https://www.pv-cdn.net/",
+        "http://pv-cdn.net/"
+      ],
+      "initial_registrable_domain": "pv-cdn.net"
+    },
+    {
+      "website_id": "T0000069",
+      "tranco_rank": 69,
+      "original_domain": "zoom.us",
+      "original_url": "https://zoom.us/",
+      "candidate_urls": [
+        "https://zoom.us/",
+        "https://www.zoom.us/",
+        "http://zoom.us/"
+      ],
+      "initial_registrable_domain": "zoom.us"
+    },
+    {
+      "website_id": "T0000070",
+      "tranco_rank": 70,
+      "original_domain": "spotify.com",
+      "original_url": "https://spotify.com/",
+      "candidate_urls": [
+        "https://spotify.com/",
+        "https://www.spotify.com/",
+        "http://spotify.com/"
+      ],
+      "initial_registrable_domain": "spotify.com"
+    },
+    {
+      "website_id": "T0000071",
+      "tranco_rank": 71,
+      "original_domain": "myfritz.net",
+      "original_url": "https://myfritz.net/",
+      "candidate_urls": [
+        "https://myfritz.net/",
+        "https://www.myfritz.net/",
+        "http://myfritz.net/"
+      ],
+      "initial_registrable_domain": "myfritz.net"
+    },
+    {
+      "website_id": "T0000072",
+      "tranco_rank": 72,
+      "original_domain": "tiktokcdn.com",
+      "original_url": "https://tiktokcdn.com/",
+      "candidate_urls": [
+        "https://tiktokcdn.com/",
+        "https://www.tiktokcdn.com/",
+        "http://tiktokcdn.com/"
+      ],
+      "initial_registrable_domain": "tiktokcdn.com"
+    },
+    {
+      "website_id": "T0000073",
+      "tranco_rank": 73,
+      "original_domain": "edgekey.net",
+      "original_url": "https://edgekey.net/",
+      "candidate_urls": [
+        "https://edgekey.net/",
+        "https://www.edgekey.net/",
+        "http://edgekey.net/"
+      ],
+      "initial_registrable_domain": "edgekey.net"
+    },
+    {
+      "website_id": "T0000074",
+      "tranco_rank": 74,
+      "original_domain": "akam.net",
+      "original_url": "https://akam.net/",
+      "candidate_urls": [
+        "https://akam.net/",
+        "https://www.akam.net/",
+        "http://akam.net/"
+      ],
+      "initial_registrable_domain": "akam.net"
+    },
+    {
+      "website_id": "T0000075",
+      "tranco_rank": 75,
+      "original_domain": "msn.com",
+      "original_url": "https://msn.com/",
+      "candidate_urls": [
+        "https://msn.com/",
+        "https://www.msn.com/",
+        "http://msn.com/"
+      ],
+      "initial_registrable_domain": "msn.com"
+    },
+    {
+      "website_id": "T0000076",
+      "tranco_rank": 76,
+      "original_domain": "opera.com",
+      "original_url": "https://opera.com/",
+      "candidate_urls": [
+        "https://opera.com/",
+        "https://www.opera.com/",
+        "http://opera.com/"
+      ],
+      "initial_registrable_domain": "opera.com"
+    },
+    {
+      "website_id": "T0000077",
+      "tranco_rank": 77,
+      "original_domain": "root-servers.net",
+      "original_url": "https://root-servers.net/",
+      "candidate_urls": [
+        "https://root-servers.net/",
+        "https://www.root-servers.net/",
+        "http://root-servers.net/"
+      ],
+      "initial_registrable_domain": "root-servers.net"
+    },
+    {
+      "website_id": "T0000078",
+      "tranco_rank": 78,
+      "original_domain": "nginx.org",
+      "original_url": "https://nginx.org/",
+      "candidate_urls": [
+        "https://nginx.org/",
+        "https://www.nginx.org/",
+        "http://nginx.org/"
+      ],
+      "initial_registrable_domain": "nginx.org"
+    },
+    {
+      "website_id": "T0000079",
+      "tranco_rank": 79,
+      "original_domain": "ntp.org",
+      "original_url": "https://ntp.org/",
+      "candidate_urls": [
+        "https://ntp.org/",
+        "https://www.ntp.org/",
+        "http://ntp.org/"
+      ],
+      "initial_registrable_domain": "ntp.org"
+    },
+    {
+      "website_id": "T0000080",
+      "tranco_rank": 80,
+      "original_domain": "qq.com",
+      "original_url": "https://qq.com/",
+      "candidate_urls": [
+        "https://qq.com/",
+        "https://www.qq.com/",
+        "http://qq.com/"
+      ],
+      "initial_registrable_domain": "qq.com"
+    },
+    {
+      "website_id": "T0000081",
+      "tranco_rank": 81,
+      "original_domain": "baidu.com",
+      "original_url": "https://baidu.com/",
+      "candidate_urls": [
+        "https://baidu.com/",
+        "https://www.baidu.com/",
+        "http://baidu.com/"
+      ],
+      "initial_registrable_domain": "baidu.com"
+    },
+    {
+      "website_id": "T0000082",
+      "tranco_rank": 82,
+      "original_domain": "workers.dev",
+      "original_url": "https://workers.dev/",
+      "candidate_urls": [
+        "https://workers.dev/",
+        "https://www.workers.dev/",
+        "http://workers.dev/"
+      ],
+      "initial_registrable_domain": "workers.dev"
+    },
+    {
+      "website_id": "T0000083",
+      "tranco_rank": 83,
+      "original_domain": "tiktokv.com",
+      "original_url": "https://tiktokv.com/",
+      "candidate_urls": [
+        "https://tiktokv.com/",
+        "https://www.tiktokv.com/",
+        "http://tiktokv.com/"
+      ],
+      "initial_registrable_domain": "tiktokv.com"
+    },
+    {
+      "website_id": "T0000084",
+      "tranco_rank": 84,
+      "original_domain": "yandex.net",
+      "original_url": "https://yandex.net/",
+      "candidate_urls": [
+        "https://yandex.net/",
+        "https://www.yandex.net/",
+        "http://yandex.net/"
+      ],
+      "initial_registrable_domain": "yandex.net"
+    },
+    {
+      "website_id": "T0000085",
+      "tranco_rank": 85,
+      "original_domain": "vimeo.com",
+      "original_url": "https://vimeo.com/",
+      "candidate_urls": [
+        "https://vimeo.com/",
+        "https://www.vimeo.com/",
+        "http://vimeo.com/"
+      ],
+      "initial_registrable_domain": "vimeo.com"
+    },
+    {
+      "website_id": "T0000086",
+      "tranco_rank": 86,
+      "original_domain": "f5.com",
+      "original_url": "https://f5.com/",
+      "candidate_urls": [
+        "https://f5.com/",
+        "https://www.f5.com/",
+        "http://f5.com/"
+      ],
+      "initial_registrable_domain": "f5.com"
+    },
+    {
+      "website_id": "T0000087",
+      "tranco_rank": 87,
+      "original_domain": "chatgpt.com",
+      "original_url": "https://chatgpt.com/",
+      "candidate_urls": [
+        "https://chatgpt.com/",
+        "https://www.chatgpt.com/",
+        "http://chatgpt.com/"
+      ],
+      "initial_registrable_domain": "chatgpt.com"
+    },
+    {
+      "website_id": "T0000088",
+      "tranco_rank": 88,
+      "original_domain": "a2z.com",
+      "original_url": "https://a2z.com/",
+      "candidate_urls": [
+        "https://a2z.com/",
+        "https://www.a2z.com/",
+        "http://a2z.com/"
+      ],
+      "initial_registrable_domain": "a2z.com"
+    },
+    {
+      "website_id": "T0000089",
+      "tranco_rank": 89,
+      "original_domain": "mozilla.org",
+      "original_url": "https://mozilla.org/",
+      "candidate_urls": [
+        "https://mozilla.org/",
+        "https://www.mozilla.org/",
+        "http://mozilla.org/"
+      ],
+      "initial_registrable_domain": "mozilla.org"
+    },
+    {
+      "website_id": "T0000090",
+      "tranco_rank": 90,
+      "original_domain": "gvt2.com",
+      "original_url": "https://gvt2.com/",
+      "candidate_urls": [
+        "https://gvt2.com/",
+        "https://www.gvt2.com/",
+        "http://gvt2.com/"
+      ],
+      "initial_registrable_domain": "gvt2.com"
+    },
+    {
+      "website_id": "T0000091",
+      "tranco_rank": 91,
+      "original_domain": "nginx.com",
+      "original_url": "https://nginx.com/",
+      "candidate_urls": [
+        "https://nginx.com/",
+        "https://www.nginx.com/",
+        "http://nginx.com/"
+      ],
+      "initial_registrable_domain": "nginx.com"
+    },
+    {
+      "website_id": "T0000092",
+      "tranco_rank": 92,
+      "original_domain": "blogspot.com",
+      "original_url": "https://blogspot.com/",
+      "candidate_urls": [
+        "https://blogspot.com/",
+        "https://www.blogspot.com/",
+        "http://blogspot.com/"
+      ],
+      "initial_registrable_domain": "blogspot.com"
+    },
+    {
+      "website_id": "T0000093",
+      "tranco_rank": 93,
+      "original_domain": "highwebmedia.com",
+      "original_url": "https://highwebmedia.com/",
+      "candidate_urls": [
+        "https://highwebmedia.com/",
+        "https://www.highwebmedia.com/",
+        "http://highwebmedia.com/"
+      ],
+      "initial_registrable_domain": "highwebmedia.com"
+    },
+    {
+      "website_id": "T0000094",
+      "tranco_rank": 94,
+      "original_domain": "yandex.ru",
+      "original_url": "https://yandex.ru/",
+      "candidate_urls": [
+        "https://yandex.ru/",
+        "https://www.yandex.ru/",
+        "http://yandex.ru/"
+      ],
+      "initial_registrable_domain": "yandex.ru"
+    },
+    {
+      "website_id": "T0000095",
+      "tranco_rank": 95,
+      "original_domain": "gwfb.net",
+      "original_url": "https://gwfb.net/",
+      "candidate_urls": [
+        "https://gwfb.net/",
+        "https://www.gwfb.net/",
+        "http://gwfb.net/"
+      ],
+      "initial_registrable_domain": "gwfb.net"
+    },
+    {
+      "website_id": "T0000096",
+      "tranco_rank": 96,
+      "original_domain": "cloudflare-dns.com",
+      "original_url": "https://cloudflare-dns.com/",
+      "candidate_urls": [
+        "https://cloudflare-dns.com/",
+        "https://www.cloudflare-dns.com/",
+        "http://cloudflare-dns.com/"
+      ],
+      "initial_registrable_domain": "cloudflare-dns.com"
+    },
+    {
+      "website_id": "T0000097",
+      "tranco_rank": 97,
+      "original_domain": "b-cdn.net",
+      "original_url": "https://b-cdn.net/",
+      "candidate_urls": [
+        "https://b-cdn.net/",
+        "https://www.b-cdn.net/",
+        "http://b-cdn.net/"
+      ],
+      "initial_registrable_domain": "b-cdn.net"
+    },
+    {
+      "website_id": "T0000098",
+      "tranco_rank": 98,
+      "original_domain": "sentry.io",
+      "original_url": "https://sentry.io/",
+      "candidate_urls": [
+        "https://sentry.io/",
+        "https://www.sentry.io/",
+        "http://sentry.io/"
+      ],
+      "initial_registrable_domain": "sentry.io"
+    },
+    {
+      "website_id": "T0000099",
+      "tranco_rank": 99,
+      "original_domain": "dellemc.com",
+      "original_url": "https://dellemc.com/",
+      "candidate_urls": [
+        "https://dellemc.com/",
+        "https://www.dellemc.com/",
+        "http://dellemc.com/"
+      ],
+      "initial_registrable_domain": "dellemc.com"
+    },
+    {
+      "website_id": "T0000100",
+      "tranco_rank": 100,
+      "original_domain": "yuga.com",
+      "original_url": "https://yuga.com/",
+      "candidate_urls": [
+        "https://yuga.com/",
+        "https://www.yuga.com/",
+        "http://yuga.com/"
+      ],
+      "initial_registrable_domain": "yuga.com"
+    },
+    {
+      "website_id": "T0000101",
+      "tranco_rank": 101,
+      "original_domain": "yccdn.ru",
+      "original_url": "https://yccdn.ru/",
+      "candidate_urls": [
+        "https://yccdn.ru/",
+        "https://www.yccdn.ru/",
+        "http://yccdn.ru/"
+      ],
+      "initial_registrable_domain": "yccdn.ru"
+    },
+    {
+      "website_id": "T0000102",
+      "tranco_rank": 102,
+      "original_domain": "wordpress.com",
+      "original_url": "https://wordpress.com/",
+      "candidate_urls": [
+        "https://wordpress.com/",
+        "https://www.wordpress.com/",
+        "http://wordpress.com/"
+      ],
+      "initial_registrable_domain": "wordpress.com"
+    },
+    {
+      "website_id": "T0000103",
+      "tranco_rank": 103,
+      "original_domain": "cdninstagram.com",
+      "original_url": "https://cdninstagram.com/",
+      "candidate_urls": [
+        "https://cdninstagram.com/",
+        "https://www.cdninstagram.com/",
+        "http://cdninstagram.com/"
+      ],
+      "initial_registrable_domain": "cdninstagram.com"
+    },
+    {
+      "website_id": "T0000104",
+      "tranco_rank": 104,
+      "original_domain": "t.me",
+      "original_url": "https://t.me/",
+      "candidate_urls": [
+        "https://t.me/",
+        "https://www.t.me/",
+        "http://t.me/"
+      ],
+      "initial_registrable_domain": "t.me"
+    },
+    {
+      "website_id": "T0000105",
+      "tranco_rank": 105,
+      "original_domain": "reddit.com",
+      "original_url": "https://reddit.com/",
+      "candidate_urls": [
+        "https://reddit.com/",
+        "https://www.reddit.com/",
+        "http://reddit.com/"
+      ],
+      "initial_registrable_domain": "reddit.com"
+    },
+    {
+      "website_id": "T0000106",
+      "tranco_rank": 106,
+      "original_domain": "openai.com",
+      "original_url": "https://openai.com/",
+      "candidate_urls": [
+        "https://openai.com/",
+        "https://www.openai.com/",
+        "http://openai.com/"
+      ],
+      "initial_registrable_domain": "openai.com"
+    },
+    {
+      "website_id": "T0000107",
+      "tranco_rank": 107,
+      "original_domain": "amazonvideo.com",
+      "original_url": "https://amazonvideo.com/",
+      "candidate_urls": [
+        "https://amazonvideo.com/",
+        "https://www.amazonvideo.com/",
+        "http://amazonvideo.com/"
+      ],
+      "initial_registrable_domain": "amazonvideo.com"
+    },
+    {
+      "website_id": "T0000108",
+      "tranco_rank": 108,
+      "original_domain": "edgesuite.net",
+      "original_url": "https://edgesuite.net/",
+      "candidate_urls": [
+        "https://edgesuite.net/",
+        "https://www.edgesuite.net/",
+        "http://edgesuite.net/"
+      ],
+      "initial_registrable_domain": "edgesuite.net"
+    },
+    {
+      "website_id": "T0000109",
+      "tranco_rank": 109,
+      "original_domain": "nic.ru",
+      "original_url": "https://nic.ru/",
+      "candidate_urls": [
+        "https://nic.ru/",
+        "https://www.nic.ru/",
+        "http://nic.ru/"
+      ],
+      "initial_registrable_domain": "nic.ru"
+    },
+    {
+      "website_id": "T0000110",
+      "tranco_rank": 110,
+      "original_domain": "office365.com",
+      "original_url": "https://office365.com/",
+      "candidate_urls": [
+        "https://office365.com/",
+        "https://www.office365.com/",
+        "http://office365.com/"
+      ],
+      "initial_registrable_domain": "office365.com"
+    },
+    {
+      "website_id": "T0000111",
+      "tranco_rank": 111,
+      "original_domain": "ui.com",
+      "original_url": "https://ui.com/",
+      "candidate_urls": [
+        "https://ui.com/",
+        "https://www.ui.com/",
+        "http://ui.com/"
+      ],
+      "initial_registrable_domain": "ui.com"
+    },
+    {
+      "website_id": "T0000112",
+      "tranco_rank": 112,
+      "original_domain": "samsung.com",
+      "original_url": "https://samsung.com/",
+      "candidate_urls": [
+        "https://samsung.com/",
+        "https://www.samsung.com/",
+        "http://samsung.com/"
+      ],
+      "initial_registrable_domain": "samsung.com"
+    },
+    {
+      "website_id": "T0000113",
+      "tranco_rank": 113,
+      "original_domain": "ytimg.com",
+      "original_url": "https://ytimg.com/",
+      "candidate_urls": [
+        "https://ytimg.com/",
+        "https://www.ytimg.com/",
+        "http://ytimg.com/"
+      ],
+      "initial_registrable_domain": "ytimg.com"
+    },
+    {
+      "website_id": "T0000114",
+      "tranco_rank": 114,
+      "original_domain": "windows.com",
+      "original_url": "https://windows.com/",
+      "candidate_urls": [
+        "https://windows.com/",
+        "https://www.windows.com/",
+        "http://windows.com/"
+      ],
+      "initial_registrable_domain": "windows.com"
+    },
+    {
+      "website_id": "T0000115",
+      "tranco_rank": 115,
+      "original_domain": "epicgames.com",
+      "original_url": "https://epicgames.com/",
+      "candidate_urls": [
+        "https://epicgames.com/",
+        "https://www.epicgames.com/",
+        "http://epicgames.com/"
+      ],
+      "initial_registrable_domain": "epicgames.com"
+    },
+    {
+      "website_id": "T0000116",
+      "tranco_rank": 116,
+      "original_domain": "europa.eu",
+      "original_url": "https://europa.eu/",
+      "candidate_urls": [
+        "https://europa.eu/",
+        "https://www.europa.eu/",
+        "http://europa.eu/"
+      ],
+      "initial_registrable_domain": "europa.eu"
+    },
+    {
+      "website_id": "T0000117",
+      "tranco_rank": 117,
+      "original_domain": "aws.dev",
+      "original_url": "https://aws.dev/",
+      "candidate_urls": [
+        "https://aws.dev/",
+        "https://www.aws.dev/",
+        "http://aws.dev/"
+      ],
+      "initial_registrable_domain": "aws.dev"
+    },
+    {
+      "website_id": "T0000118",
+      "tranco_rank": 118,
+      "original_domain": "triplinkintl.com",
+      "original_url": "https://triplinkintl.com/",
+      "candidate_urls": [
+        "https://triplinkintl.com/",
+        "https://www.triplinkintl.com/",
+        "http://triplinkintl.com/"
+      ],
+      "initial_registrable_domain": "triplinkintl.com"
+    },
+    {
+      "website_id": "T0000119",
+      "tranco_rank": 119,
+      "original_domain": "3gppnetwork.org",
+      "original_url": "https://3gppnetwork.org/",
+      "candidate_urls": [
+        "https://3gppnetwork.org/",
+        "https://www.3gppnetwork.org/",
+        "http://3gppnetwork.org/"
+      ],
+      "initial_registrable_domain": "3gppnetwork.org"
+    },
+    {
+      "website_id": "T0000120",
+      "tranco_rank": 120,
+      "original_domain": "registrar-servers.com",
+      "original_url": "https://registrar-servers.com/",
+      "candidate_urls": [
+        "https://registrar-servers.com/",
+        "https://www.registrar-servers.com/",
+        "http://registrar-servers.com/"
+      ],
+      "initial_registrable_domain": "registrar-servers.com"
+    },
+    {
+      "website_id": "T0000121",
+      "tranco_rank": 121,
+      "original_domain": "bit.ly",
+      "original_url": "https://bit.ly/",
+      "candidate_urls": [
+        "https://bit.ly/",
+        "https://www.bit.ly/",
+        "http://bit.ly/"
+      ],
+      "initial_registrable_domain": "bit.ly"
+    },
+    {
+      "website_id": "T0000122",
+      "tranco_rank": 122,
+      "original_domain": "okcdn.ru",
+      "original_url": "https://okcdn.ru/",
+      "candidate_urls": [
+        "https://okcdn.ru/",
+        "https://www.okcdn.ru/",
+        "http://okcdn.ru/"
+      ],
+      "initial_registrable_domain": "okcdn.ru"
+    },
+    {
+      "website_id": "T0000123",
+      "tranco_rank": 123,
+      "original_domain": "outlook.com",
+      "original_url": "https://outlook.com/",
+      "candidate_urls": [
+        "https://outlook.com/",
+        "https://www.outlook.com/",
+        "http://outlook.com/"
+      ],
+      "initial_registrable_domain": "outlook.com"
+    },
+    {
+      "website_id": "T0000124",
+      "tranco_rank": 124,
+      "original_domain": "trbcdn.net",
+      "original_url": "https://trbcdn.net/",
+      "candidate_urls": [
+        "https://trbcdn.net/",
+        "https://www.trbcdn.net/",
+        "http://trbcdn.net/"
+      ],
+      "initial_registrable_domain": "trbcdn.net"
+    },
+    {
+      "website_id": "T0000125",
+      "tranco_rank": 125,
+      "original_domain": "reg.ru",
+      "original_url": "https://reg.ru/",
+      "candidate_urls": [
+        "https://reg.ru/",
+        "https://www.reg.ru/",
+        "http://reg.ru/"
+      ],
+      "initial_registrable_domain": "reg.ru"
+    },
+    {
+      "website_id": "T0000126",
+      "tranco_rank": 126,
+      "original_domain": "cdn77.org",
+      "original_url": "https://cdn77.org/",
+      "candidate_urls": [
+        "https://cdn77.org/",
+        "https://www.cdn77.org/",
+        "http://cdn77.org/"
+      ],
+      "initial_registrable_domain": "cdn77.org"
+    },
+    {
+      "website_id": "T0000127",
+      "tranco_rank": 127,
+      "original_domain": "dnsowl.com",
+      "original_url": "https://dnsowl.com/",
+      "candidate_urls": [
+        "https://dnsowl.com/",
+        "https://www.dnsowl.com/",
+        "http://dnsowl.com/"
+      ],
+      "initial_registrable_domain": "dnsowl.com"
+    },
+    {
+      "website_id": "T0000128",
+      "tranco_rank": 128,
+      "original_domain": "github.io",
+      "original_url": "https://github.io/",
+      "candidate_urls": [
+        "https://github.io/",
+        "https://www.github.io/",
+        "http://github.io/"
+      ],
+      "initial_registrable_domain": "github.io"
+    },
+    {
+      "website_id": "T0000129",
+      "tranco_rank": 129,
+      "original_domain": "dropbox.com",
+      "original_url": "https://dropbox.com/",
+      "candidate_urls": [
+        "https://dropbox.com/",
+        "https://www.dropbox.com/",
+        "http://dropbox.com/"
+      ],
+      "initial_registrable_domain": "dropbox.com"
+    },
+    {
+      "website_id": "T0000130",
+      "tranco_rank": 130,
+      "original_domain": "lencr.org",
+      "original_url": "https://lencr.org/",
+      "candidate_urls": [
+        "https://lencr.org/",
+        "https://www.lencr.org/",
+        "http://lencr.org/"
+      ],
+      "initial_registrable_domain": "lencr.org"
+    },
+    {
+      "website_id": "T0000131",
+      "tranco_rank": 131,
+      "original_domain": "intuit.com",
+      "original_url": "https://intuit.com/",
+      "candidate_urls": [
+        "https://intuit.com/",
+        "https://www.intuit.com/",
+        "http://intuit.com/"
+      ],
+      "initial_registrable_domain": "intuit.com"
+    },
+    {
+      "website_id": "T0000132",
+      "tranco_rank": 132,
+      "original_domain": "google-analytics.com",
+      "original_url": "https://google-analytics.com/",
+      "candidate_urls": [
+        "https://google-analytics.com/",
+        "https://www.google-analytics.com/",
+        "http://google-analytics.com/"
+      ],
+      "initial_registrable_domain": "google-analytics.com"
+    },
+    {
+      "website_id": "T0000133",
+      "tranco_rank": 133,
+      "original_domain": "apache.org",
+      "original_url": "https://apache.org/",
+      "candidate_urls": [
+        "https://apache.org/",
+        "https://www.apache.org/",
+        "http://apache.org/"
+      ],
+      "initial_registrable_domain": "apache.org"
+    },
+    {
+      "website_id": "T0000134",
+      "tranco_rank": 134,
+      "original_domain": "aliyuncs.com",
+      "original_url": "https://aliyuncs.com/",
+      "candidate_urls": [
+        "https://aliyuncs.com/",
+        "https://www.aliyuncs.com/",
+        "http://aliyuncs.com/"
+      ],
+      "initial_registrable_domain": "aliyuncs.com"
+    },
+    {
+      "website_id": "T0000135",
+      "tranco_rank": 135,
+      "original_domain": "amazon.dev",
+      "original_url": "https://amazon.dev/",
+      "candidate_urls": [
+        "https://amazon.dev/",
+        "https://www.amazon.dev/",
+        "http://amazon.dev/"
+      ],
+      "initial_registrable_domain": "amazon.dev"
+    },
+    {
+      "website_id": "T0000136",
+      "tranco_rank": 136,
+      "original_domain": "snapchat.com",
+      "original_url": "https://snapchat.com/",
+      "candidate_urls": [
+        "https://snapchat.com/",
+        "https://www.snapchat.com/",
+        "http://snapchat.com/"
+      ],
+      "initial_registrable_domain": "snapchat.com"
+    },
+    {
+      "website_id": "T0000137",
+      "tranco_rank": 137,
+      "original_domain": "static.microsoft",
+      "original_url": "https://static.microsoft/",
+      "candidate_urls": [
+        "https://static.microsoft/",
+        "https://www.static.microsoft/",
+        "http://static.microsoft/"
+      ],
+      "initial_registrable_domain": "static.microsoft"
+    },
+    {
+      "website_id": "T0000138",
+      "tranco_rank": 138,
+      "original_domain": "dns-parking.com",
+      "original_url": "https://dns-parking.com/",
+      "candidate_urls": [
+        "https://dns-parking.com/",
+        "https://www.dns-parking.com/",
+        "http://dns-parking.com/"
+      ],
+      "initial_registrable_domain": "dns-parking.com"
+    },
+    {
+      "website_id": "T0000139",
+      "tranco_rank": 139,
+      "original_domain": "nih.gov",
+      "original_url": "https://nih.gov/",
+      "candidate_urls": [
+        "https://nih.gov/",
+        "https://www.nih.gov/",
+        "http://nih.gov/"
+      ],
+      "initial_registrable_domain": "nih.gov"
+    },
+    {
+      "website_id": "T0000140",
+      "tranco_rank": 140,
+      "original_domain": "discord.gg",
+      "original_url": "https://discord.gg/",
+      "candidate_urls": [
+        "https://discord.gg/",
+        "https://www.discord.gg/",
+        "http://discord.gg/"
+      ],
+      "initial_registrable_domain": "discord.gg"
+    },
+    {
+      "website_id": "T0000141",
+      "tranco_rank": 141,
+      "original_domain": "vk.com",
+      "original_url": "https://vk.com/",
+      "candidate_urls": [
+        "https://vk.com/",
+        "https://www.vk.com/",
+        "http://vk.com/"
+      ],
+      "initial_registrable_domain": "vk.com"
+    },
+    {
+      "website_id": "T0000142",
+      "tranco_rank": 142,
+      "original_domain": "archive.org",
+      "original_url": "https://archive.org/",
+      "candidate_urls": [
+        "https://archive.org/",
+        "https://www.archive.org/",
+        "http://archive.org/"
+      ],
+      "initial_registrable_domain": "archive.org"
+    },
+    {
+      "website_id": "T0000143",
+      "tranco_rank": 143,
+      "original_domain": "afternic.com",
+      "original_url": "https://afternic.com/",
+      "candidate_urls": [
+        "https://afternic.com/",
+        "https://www.afternic.com/",
+        "http://afternic.com/"
+      ],
+      "initial_registrable_domain": "afternic.com"
+    },
+    {
+      "website_id": "T0000144",
+      "tranco_rank": 144,
+      "original_domain": "kaspersky.com",
+      "original_url": "https://kaspersky.com/",
+      "candidate_urls": [
+        "https://kaspersky.com/",
+        "https://www.kaspersky.com/",
+        "http://kaspersky.com/"
+      ],
+      "initial_registrable_domain": "kaspersky.com"
+    },
+    {
+      "website_id": "T0000145",
+      "tranco_rank": 145,
+      "original_domain": "azurefd.net",
+      "original_url": "https://azurefd.net/",
+      "candidate_urls": [
+        "https://azurefd.net/",
+        "https://www.azurefd.net/",
+        "http://azurefd.net/"
+      ],
+      "initial_registrable_domain": "azurefd.net"
+    },
+    {
+      "website_id": "T0000146",
+      "tranco_rank": 146,
+      "original_domain": "amazon-adsystem.com",
+      "original_url": "https://amazon-adsystem.com/",
+      "candidate_urls": [
+        "https://amazon-adsystem.com/",
+        "https://www.amazon-adsystem.com/",
+        "http://amazon-adsystem.com/"
+      ],
+      "initial_registrable_domain": "amazon-adsystem.com"
+    },
+    {
+      "website_id": "T0000147",
+      "tranco_rank": 147,
+      "original_domain": "adobe.io",
+      "original_url": "https://adobe.io/",
+      "candidate_urls": [
+        "https://adobe.io/",
+        "https://www.adobe.io/",
+        "http://adobe.io/"
+      ],
+      "initial_registrable_domain": "adobe.io"
+    },
+    {
+      "website_id": "T0000148",
+      "tranco_rank": 148,
+      "original_domain": "forms.gle",
+      "original_url": "https://forms.gle/",
+      "candidate_urls": [
+        "https://forms.gle/",
+        "https://www.forms.gle/",
+        "http://forms.gle/"
+      ],
+      "initial_registrable_domain": "forms.gle"
+    },
+    {
+      "website_id": "T0000149",
+      "tranco_rank": 149,
+      "original_domain": "fastly-edge.com",
+      "original_url": "https://fastly-edge.com/",
+      "candidate_urls": [
+        "https://fastly-edge.com/",
+        "https://www.fastly-edge.com/",
+        "http://fastly-edge.com/"
+      ],
+      "initial_registrable_domain": "fastly-edge.com"
+    },
+    {
+      "website_id": "T0000150",
+      "tranco_rank": 150,
+      "original_domain": "godaddy.com",
+      "original_url": "https://godaddy.com/",
+      "candidate_urls": [
+        "https://godaddy.com/",
+        "https://www.godaddy.com/",
+        "http://godaddy.com/"
+      ],
+      "initial_registrable_domain": "godaddy.com"
+    },
+    {
+      "website_id": "T0000151",
+      "tranco_rank": 151,
+      "original_domain": "2mdn.net",
+      "original_url": "https://2mdn.net/",
+      "candidate_urls": [
+        "https://2mdn.net/",
+        "https://www.2mdn.net/",
+        "http://2mdn.net/"
+      ],
+      "initial_registrable_domain": "2mdn.net"
+    },
+    {
+      "website_id": "T0000152",
+      "tranco_rank": 152,
+      "original_domain": "app-measurement.com",
+      "original_url": "https://app-measurement.com/",
+      "candidate_urls": [
+        "https://app-measurement.com/",
+        "https://www.app-measurement.com/",
+        "http://app-measurement.com/"
+      ],
+      "initial_registrable_domain": "app-measurement.com"
+    },
+    {
+      "website_id": "T0000153",
+      "tranco_rank": 153,
+      "original_domain": "gravatar.com",
+      "original_url": "https://gravatar.com/",
+      "candidate_urls": [
+        "https://gravatar.com/",
+        "https://www.gravatar.com/",
+        "http://gravatar.com/"
+      ],
+      "initial_registrable_domain": "gravatar.com"
+    },
+    {
+      "website_id": "T0000154",
+      "tranco_rank": 154,
+      "original_domain": "tumblr.com",
+      "original_url": "https://tumblr.com/",
+      "candidate_urls": [
+        "https://tumblr.com/",
+        "https://www.tumblr.com/",
+        "http://tumblr.com/"
+      ],
+      "initial_registrable_domain": "tumblr.com"
+    },
+    {
+      "website_id": "T0000155",
+      "tranco_rank": 155,
+      "original_domain": "unity3d.com",
+      "original_url": "https://unity3d.com/",
+      "candidate_urls": [
+        "https://unity3d.com/",
+        "https://www.unity3d.com/",
+        "http://unity3d.com/"
+      ],
+      "initial_registrable_domain": "unity3d.com"
+    },
+    {
+      "website_id": "T0000156",
+      "tranco_rank": 156,
+      "original_domain": "nytimes.com",
+      "original_url": "https://nytimes.com/",
+      "candidate_urls": [
+        "https://nytimes.com/",
+        "https://www.nytimes.com/",
+        "http://nytimes.com/"
+      ],
+      "initial_registrable_domain": "nytimes.com"
+    },
+    {
+      "website_id": "T0000157",
+      "tranco_rank": 157,
+      "original_domain": "criteo.com",
+      "original_url": "https://criteo.com/",
+      "candidate_urls": [
+        "https://criteo.com/",
+        "https://www.criteo.com/",
+        "http://criteo.com/"
+      ],
+      "initial_registrable_domain": "criteo.com"
+    },
+    {
+      "website_id": "T0000158",
+      "tranco_rank": 158,
+      "original_domain": "app-analytics-services.com",
+      "original_url": "https://app-analytics-services.com/",
+      "candidate_urls": [
+        "https://app-analytics-services.com/",
+        "https://www.app-analytics-services.com/",
+        "http://app-analytics-services.com/"
+      ],
+      "initial_registrable_domain": "app-analytics-services.com"
+    },
+    {
+      "website_id": "T0000159",
+      "tranco_rank": 159,
+      "original_domain": "jomodns.com",
+      "original_url": "https://jomodns.com/",
+      "candidate_urls": [
+        "https://jomodns.com/",
+        "https://www.jomodns.com/",
+        "http://jomodns.com/"
+      ],
+      "initial_registrable_domain": "jomodns.com"
+    },
+    {
+      "website_id": "T0000160",
+      "tranco_rank": 160,
+      "original_domain": "iiko.it",
+      "original_url": "https://iiko.it/",
+      "candidate_urls": [
+        "https://iiko.it/",
+        "https://www.iiko.it/",
+        "http://iiko.it/"
+      ],
+      "initial_registrable_domain": "iiko.it"
+    },
+    {
+      "website_id": "T0000161",
+      "tranco_rank": 161,
+      "original_domain": "ipify.org",
+      "original_url": "https://ipify.org/",
+      "candidate_urls": [
+        "https://ipify.org/",
+        "https://www.ipify.org/",
+        "http://ipify.org/"
+      ],
+      "initial_registrable_domain": "ipify.org"
+    },
+    {
+      "website_id": "T0000162",
+      "tranco_rank": 162,
+      "original_domain": "webex.com",
+      "original_url": "https://webex.com/",
+      "candidate_urls": [
+        "https://webex.com/",
+        "https://www.webex.com/",
+        "http://webex.com/"
+      ],
+      "initial_registrable_domain": "webex.com"
+    },
+    {
+      "website_id": "T0000163",
+      "tranco_rank": 163,
+      "original_domain": "tm-azurefd.net",
+      "original_url": "https://tm-azurefd.net/",
+      "candidate_urls": [
+        "https://tm-azurefd.net/",
+        "https://www.tm-azurefd.net/",
+        "http://tm-azurefd.net/"
+      ],
+      "initial_registrable_domain": "tm-azurefd.net"
+    },
+    {
+      "website_id": "T0000164",
+      "tranco_rank": 164,
+      "original_domain": "shiabank.com",
+      "original_url": "https://shiabank.com/",
+      "candidate_urls": [
+        "https://shiabank.com/",
+        "https://www.shiabank.com/",
+        "http://shiabank.com/"
+      ],
+      "initial_registrable_domain": "shiabank.com"
+    },
+    {
+      "website_id": "T0000165",
+      "tranco_rank": 165,
+      "original_domain": "mts.ru",
+      "original_url": "https://mts.ru/",
+      "candidate_urls": [
+        "https://mts.ru/",
+        "https://www.mts.ru/",
+        "http://mts.ru/"
+      ],
+      "initial_registrable_domain": "mts.ru"
+    },
+    {
+      "website_id": "T0000166",
+      "tranco_rank": 166,
+      "original_domain": "akamaized.net",
+      "original_url": "https://akamaized.net/",
+      "candidate_urls": [
+        "https://akamaized.net/",
+        "https://www.akamaized.net/",
+        "http://akamaized.net/"
+      ],
+      "initial_registrable_domain": "akamaized.net"
+    },
+    {
+      "website_id": "T0000167",
+      "tranco_rank": 167,
+      "original_domain": "hichina.com",
+      "original_url": "https://hichina.com/",
+      "candidate_urls": [
+        "https://hichina.com/",
+        "https://www.hichina.com/",
+        "http://hichina.com/"
+      ],
+      "initial_registrable_domain": "hichina.com"
+    },
+    {
+      "website_id": "T0000168",
+      "tranco_rank": 168,
+      "original_domain": "android.com",
+      "original_url": "https://android.com/",
+      "candidate_urls": [
+        "https://android.com/",
+        "https://www.android.com/",
+        "http://android.com/"
+      ],
+      "initial_registrable_domain": "android.com"
+    },
+    {
+      "website_id": "T0000169",
+      "tranco_rank": 169,
+      "original_domain": "example.com",
+      "original_url": "https://example.com/",
+      "candidate_urls": [
+        "https://example.com/",
+        "https://www.example.com/",
+        "http://example.com/"
+      ],
+      "initial_registrable_domain": "example.com"
+    },
+    {
+      "website_id": "T0000170",
+      "tranco_rank": 170,
+      "original_domain": "paypal.com",
+      "original_url": "https://paypal.com/",
+      "candidate_urls": [
+        "https://paypal.com/",
+        "https://www.paypal.com/",
+        "http://paypal.com/"
+      ],
+      "initial_registrable_domain": "paypal.com"
+    },
+    {
+      "website_id": "T0000171",
+      "tranco_rank": 171,
+      "original_domain": "shopify.com",
+      "original_url": "https://shopify.com/",
+      "candidate_urls": [
+        "https://shopify.com/",
+        "https://www.shopify.com/",
+        "http://shopify.com/"
+      ],
+      "initial_registrable_domain": "shopify.com"
+    },
+    {
+      "website_id": "T0000172",
+      "tranco_rank": 172,
+      "original_domain": "azurewebsites.net",
+      "original_url": "https://azurewebsites.net/",
+      "candidate_urls": [
+        "https://azurewebsites.net/",
+        "https://www.azurewebsites.net/",
+        "http://azurewebsites.net/"
+      ],
+      "initial_registrable_domain": "azurewebsites.net"
+    },
+    {
+      "website_id": "T0000173",
+      "tranco_rank": 173,
+      "original_domain": "ax-msedge.net",
+      "original_url": "https://ax-msedge.net/",
+      "candidate_urls": [
+        "https://ax-msedge.net/",
+        "https://www.ax-msedge.net/",
+        "http://ax-msedge.net/"
+      ],
+      "initial_registrable_domain": "ax-msedge.net"
+    },
+    {
+      "website_id": "T0000174",
+      "tranco_rank": 174,
+      "original_domain": "yandexcloud.net",
+      "original_url": "https://yandexcloud.net/",
+      "candidate_urls": [
+        "https://yandexcloud.net/",
+        "https://www.yandexcloud.net/",
+        "http://yandexcloud.net/"
+      ],
+      "initial_registrable_domain": "yandexcloud.net"
+    },
+    {
+      "website_id": "T0000175",
+      "tranco_rank": 175,
+      "original_domain": "nflxso.net",
+      "original_url": "https://nflxso.net/",
+      "candidate_urls": [
+        "https://nflxso.net/",
+        "https://www.nflxso.net/",
+        "http://nflxso.net/"
+      ],
+      "initial_registrable_domain": "nflxso.net"
+    },
+    {
+      "website_id": "T0000176",
+      "tranco_rank": 176,
+      "original_domain": "xiaomi.com",
+      "original_url": "https://xiaomi.com/",
+      "candidate_urls": [
+        "https://xiaomi.com/",
+        "https://www.xiaomi.com/",
+        "http://xiaomi.com/"
+      ],
+      "initial_registrable_domain": "xiaomi.com"
+    },
+    {
+      "website_id": "T0000177",
+      "tranco_rank": 177,
+      "original_domain": "vk.ru",
+      "original_url": "https://vk.ru/",
+      "candidate_urls": [
+        "https://vk.ru/",
+        "https://www.vk.ru/",
+        "http://vk.ru/"
+      ],
+      "initial_registrable_domain": "vk.ru"
+    },
+    {
+      "website_id": "T0000178",
+      "tranco_rank": 178,
+      "original_domain": "discord.com",
+      "original_url": "https://discord.com/",
+      "candidate_urls": [
+        "https://discord.com/",
+        "https://www.discord.com/",
+        "http://discord.com/"
+      ],
+      "initial_registrable_domain": "discord.com"
+    },
+    {
+      "website_id": "T0000179",
+      "tranco_rank": 179,
+      "original_domain": "msftconnecttest.com",
+      "original_url": "https://msftconnecttest.com/",
+      "candidate_urls": [
+        "https://msftconnecttest.com/",
+        "https://www.msftconnecttest.com/",
+        "http://msftconnecttest.com/"
+      ],
+      "initial_registrable_domain": "msftconnecttest.com"
+    },
+    {
+      "website_id": "T0000180",
+      "tranco_rank": 180,
+      "original_domain": "macromedia.com",
+      "original_url": "https://macromedia.com/",
+      "candidate_urls": [
+        "https://macromedia.com/",
+        "https://www.macromedia.com/",
+        "http://macromedia.com/"
+      ],
+      "initial_registrable_domain": "macromedia.com"
+    },
+    {
+      "website_id": "T0000181",
+      "tranco_rank": 181,
+      "original_domain": "hosting24.com",
+      "original_url": "https://hosting24.com/",
+      "candidate_urls": [
+        "https://hosting24.com/",
+        "https://www.hosting24.com/",
+        "http://hosting24.com/"
+      ],
+      "initial_registrable_domain": "hosting24.com"
+    },
+    {
+      "website_id": "T0000182",
+      "tranco_rank": 182,
+      "original_domain": "doctolib.net",
+      "original_url": "https://doctolib.net/",
+      "candidate_urls": [
+        "https://doctolib.net/",
+        "https://www.doctolib.net/",
+        "http://doctolib.net/"
+      ],
+      "initial_registrable_domain": "doctolib.net"
+    },
+    {
+      "website_id": "T0000183",
+      "tranco_rank": 183,
+      "original_domain": "vkuserphoto.ru",
+      "original_url": "https://vkuserphoto.ru/",
+      "candidate_urls": [
+        "https://vkuserphoto.ru/",
+        "https://www.vkuserphoto.ru/",
+        "http://vkuserphoto.ru/"
+      ],
+      "initial_registrable_domain": "vkuserphoto.ru"
+    },
+    {
+      "website_id": "T0000184",
+      "tranco_rank": 184,
+      "original_domain": "w3.org",
+      "original_url": "https://w3.org/",
+      "candidate_urls": [
+        "https://w3.org/",
+        "https://www.w3.org/",
+        "http://w3.org/"
+      ],
+      "initial_registrable_domain": "w3.org"
+    },
+    {
+      "website_id": "T0000185",
+      "tranco_rank": 185,
+      "original_domain": "paytmfirstgames.com",
+      "original_url": "https://paytmfirstgames.com/",
+      "candidate_urls": [
+        "https://paytmfirstgames.com/",
+        "https://www.paytmfirstgames.com/",
+        "http://paytmfirstgames.com/"
+      ],
+      "initial_registrable_domain": "paytmfirstgames.com"
+    },
+    {
+      "website_id": "T0000186",
+      "tranco_rank": 186,
+      "original_domain": "flickr.com",
+      "original_url": "https://flickr.com/",
+      "candidate_urls": [
+        "https://flickr.com/",
+        "https://www.flickr.com/",
+        "http://flickr.com/"
+      ],
+      "initial_registrable_domain": "flickr.com"
+    },
+    {
+      "website_id": "T0000187",
+      "tranco_rank": 187,
+      "original_domain": "pki.goog",
+      "original_url": "https://pki.goog/",
+      "candidate_urls": [
+        "https://pki.goog/",
+        "https://www.pki.goog/",
+        "http://pki.goog/"
+      ],
+      "initial_registrable_domain": "pki.goog"
+    },
+    {
+      "website_id": "T0000188",
+      "tranco_rank": 188,
+      "original_domain": "duckdns.org",
+      "original_url": "https://duckdns.org/",
+      "candidate_urls": [
+        "https://duckdns.org/",
+        "https://www.duckdns.org/",
+        "http://duckdns.org/"
+      ],
+      "initial_registrable_domain": "duckdns.org"
+    },
+    {
+      "website_id": "T0000189",
+      "tranco_rank": 189,
+      "original_domain": "namebrightdns.com",
+      "original_url": "https://namebrightdns.com/",
+      "candidate_urls": [
+        "https://namebrightdns.com/",
+        "https://www.namebrightdns.com/",
+        "http://namebrightdns.com/"
+      ],
+      "initial_registrable_domain": "namebrightdns.com"
+    },
+    {
+      "website_id": "T0000190",
+      "tranco_rank": 190,
+      "original_domain": "soundcloud.com",
+      "original_url": "https://soundcloud.com/",
+      "candidate_urls": [
+        "https://soundcloud.com/",
+        "https://www.soundcloud.com/",
+        "http://soundcloud.com/"
+      ],
+      "initial_registrable_domain": "soundcloud.com"
+    },
+    {
+      "website_id": "T0000191",
+      "tranco_rank": 191,
+      "original_domain": "creativecommons.org",
+      "original_url": "https://creativecommons.org/",
+      "candidate_urls": [
+        "https://creativecommons.org/",
+        "https://www.creativecommons.org/",
+        "http://creativecommons.org/"
+      ],
+      "initial_registrable_domain": "creativecommons.org"
+    },
+    {
+      "website_id": "T0000192",
+      "tranco_rank": 192,
+      "original_domain": "vedcdnlb.com",
+      "original_url": "https://vedcdnlb.com/",
+      "candidate_urls": [
+        "https://vedcdnlb.com/",
+        "https://www.vedcdnlb.com/",
+        "http://vedcdnlb.com/"
+      ],
+      "initial_registrable_domain": "vedcdnlb.com"
+    },
+    {
+      "website_id": "T0000193",
+      "tranco_rank": 193,
+      "original_domain": "applovin.com",
+      "original_url": "https://applovin.com/",
+      "candidate_urls": [
+        "https://applovin.com/",
+        "https://www.applovin.com/",
+        "http://applovin.com/"
+      ],
+      "initial_registrable_domain": "applovin.com"
+    },
+    {
+      "website_id": "T0000194",
+      "tranco_rank": 194,
+      "original_domain": "adtrafficquality.google",
+      "original_url": "https://adtrafficquality.google/",
+      "candidate_urls": [
+        "https://adtrafficquality.google/",
+        "https://www.adtrafficquality.google/",
+        "http://adtrafficquality.google/"
+      ],
+      "initial_registrable_domain": "adtrafficquality.google"
+    },
+    {
+      "website_id": "T0000195",
+      "tranco_rank": 195,
+      "original_domain": "ubuntu.com",
+      "original_url": "https://ubuntu.com/",
+      "candidate_urls": [
+        "https://ubuntu.com/",
+        "https://www.ubuntu.com/",
+        "http://ubuntu.com/"
+      ],
+      "initial_registrable_domain": "ubuntu.com"
+    },
+    {
+      "website_id": "T0000196",
+      "tranco_rank": 196,
+      "original_domain": "lsrelayaccess.com",
+      "original_url": "https://lsrelayaccess.com/",
+      "candidate_urls": [
+        "https://lsrelayaccess.com/",
+        "https://www.lsrelayaccess.com/",
+        "http://lsrelayaccess.com/"
+      ],
+      "initial_registrable_domain": "lsrelayaccess.com"
+    },
+    {
+      "website_id": "T0000197",
+      "tranco_rank": 197,
+      "original_domain": "t-online.de",
+      "original_url": "https://t-online.de/",
+      "candidate_urls": [
+        "https://t-online.de/",
+        "https://www.t-online.de/",
+        "http://t-online.de/"
+      ],
+      "initial_registrable_domain": "t-online.de"
+    },
+    {
+      "website_id": "T0000198",
+      "tranco_rank": 198,
+      "original_domain": "msftncsi.com",
+      "original_url": "https://msftncsi.com/",
+      "candidate_urls": [
+        "https://msftncsi.com/",
+        "https://www.msftncsi.com/",
+        "http://msftncsi.com/"
+      ],
+      "initial_registrable_domain": "msftncsi.com"
+    },
+    {
+      "website_id": "T0000199",
+      "tranco_rank": 199,
+      "original_domain": "crashlytics.com",
+      "original_url": "https://crashlytics.com/",
+      "candidate_urls": [
+        "https://crashlytics.com/",
+        "https://www.crashlytics.com/",
+        "http://crashlytics.com/"
+      ],
+      "initial_registrable_domain": "crashlytics.com"
+    },
+    {
+      "website_id": "T0000200",
+      "tranco_rank": 200,
+      "original_domain": "theguardian.com",
+      "original_url": "https://theguardian.com/",
+      "candidate_urls": [
+        "https://theguardian.com/",
+        "https://www.theguardian.com/",
+        "http://theguardian.com/"
+      ],
+      "initial_registrable_domain": "theguardian.com"
+    },
+    {
+      "website_id": "T0000201",
+      "tranco_rank": 201,
+      "original_domain": "medium.com",
+      "original_url": "https://medium.com/",
+      "candidate_urls": [
+        "https://medium.com/",
+        "https://www.medium.com/",
+        "http://medium.com/"
+      ],
+      "initial_registrable_domain": "medium.com"
+    },
+    {
+      "website_id": "T0000202",
+      "tranco_rank": 202,
+      "original_domain": "cnn.com",
+      "original_url": "https://cnn.com/",
+      "candidate_urls": [
+        "https://cnn.com/",
+        "https://www.cnn.com/",
+        "http://cnn.com/"
+      ],
+      "initial_registrable_domain": "cnn.com"
+    },
+    {
+      "website_id": "T0000203",
+      "tranco_rank": 203,
+      "original_domain": "googleadservices.com",
+      "original_url": "https://googleadservices.com/",
+      "candidate_urls": [
+        "https://googleadservices.com/",
+        "https://www.googleadservices.com/",
+        "http://googleadservices.com/"
+      ],
+      "initial_registrable_domain": "googleadservices.com"
+    },
+    {
+      "website_id": "T0000204",
+      "tranco_rank": 204,
+      "original_domain": "ebay.com",
+      "original_url": "https://ebay.com/",
+      "candidate_urls": [
+        "https://ebay.com/",
+        "https://www.ebay.com/",
+        "http://ebay.com/"
+      ],
+      "initial_registrable_domain": "ebay.com"
+    },
+    {
+      "website_id": "T0000205",
+      "tranco_rank": 205,
+      "original_domain": "ailawandorder.com",
+      "original_url": "https://ailawandorder.com/",
+      "candidate_urls": [
+        "https://ailawandorder.com/",
+        "https://www.ailawandorder.com/",
+        "http://ailawandorder.com/"
+      ],
+      "initial_registrable_domain": "ailawandorder.com"
+    },
+    {
+      "website_id": "T0000206",
+      "tranco_rank": 206,
+      "original_domain": "youtube-nocookie.com",
+      "original_url": "https://youtube-nocookie.com/",
+      "candidate_urls": [
+        "https://youtube-nocookie.com/",
+        "https://www.youtube-nocookie.com/",
+        "http://youtube-nocookie.com/"
+      ],
+      "initial_registrable_domain": "youtube-nocookie.com"
+    },
+    {
+      "website_id": "T0000207",
+      "tranco_rank": 207,
+      "original_domain": "scorecardresearch.com",
+      "original_url": "https://scorecardresearch.com/",
+      "candidate_urls": [
+        "https://scorecardresearch.com/",
+        "https://www.scorecardresearch.com/",
+        "http://scorecardresearch.com/"
+      ],
+      "initial_registrable_domain": "scorecardresearch.com"
+    },
+    {
+      "website_id": "T0000208",
+      "tranco_rank": 208,
+      "original_domain": "oracle.com",
+      "original_url": "https://oracle.com/",
+      "candidate_urls": [
+        "https://oracle.com/",
+        "https://www.oracle.com/",
+        "http://oracle.com/"
+      ],
+      "initial_registrable_domain": "oracle.com"
+    },
+    {
+      "website_id": "T0000209",
+      "tranco_rank": 209,
+      "original_domain": "telegram.org",
+      "original_url": "https://telegram.org/",
+      "candidate_urls": [
+        "https://telegram.org/",
+        "https://www.telegram.org/",
+        "http://telegram.org/"
+      ],
+      "initial_registrable_domain": "telegram.org"
+    },
+    {
+      "website_id": "T0000210",
+      "tranco_rank": 210,
+      "original_domain": "bytefcdn-oversea.com",
+      "original_url": "https://bytefcdn-oversea.com/",
+      "candidate_urls": [
+        "https://bytefcdn-oversea.com/",
+        "https://www.bytefcdn-oversea.com/",
+        "http://bytefcdn-oversea.com/"
+      ],
+      "initial_registrable_domain": "bytefcdn-oversea.com"
+    },
+    {
+      "website_id": "T0000211",
+      "tranco_rank": 211,
+      "original_domain": "ksyuncdn.com",
+      "original_url": "https://ksyuncdn.com/",
+      "candidate_urls": [
+        "https://ksyuncdn.com/",
+        "https://www.ksyuncdn.com/",
+        "http://ksyuncdn.com/"
+      ],
+      "initial_registrable_domain": "ksyuncdn.com"
+    },
+    {
+      "website_id": "T0000212",
+      "tranco_rank": 212,
+      "original_domain": "spectrum.com",
+      "original_url": "https://spectrum.com/",
+      "candidate_urls": [
+        "https://spectrum.com/",
+        "https://www.spectrum.com/",
+        "http://spectrum.com/"
+      ],
+      "initial_registrable_domain": "spectrum.com"
+    },
+    {
+      "website_id": "T0000213",
+      "tranco_rank": 213,
+      "original_domain": "steamserver.net",
+      "original_url": "https://steamserver.net/",
+      "candidate_urls": [
+        "https://steamserver.net/",
+        "https://www.steamserver.net/",
+        "http://steamserver.net/"
+      ],
+      "initial_registrable_domain": "steamserver.net"
+    },
+    {
+      "website_id": "T0000214",
+      "tranco_rank": 214,
+      "original_domain": "doi.org",
+      "original_url": "https://doi.org/",
+      "candidate_urls": [
+        "https://doi.org/",
+        "https://www.doi.org/",
+        "http://doi.org/"
+      ],
+      "initial_registrable_domain": "doi.org"
+    },
+    {
+      "website_id": "T0000215",
+      "tranco_rank": 215,
+      "original_domain": "shifen.com",
+      "original_url": "https://shifen.com/",
+      "candidate_urls": [
+        "https://shifen.com/",
+        "https://www.shifen.com/",
+        "http://shifen.com/"
+      ],
+      "initial_registrable_domain": "shifen.com"
+    },
+    {
+      "website_id": "T0000216",
+      "tranco_rank": 216,
+      "original_domain": "ttdns2.com",
+      "original_url": "https://ttdns2.com/",
+      "candidate_urls": [
+        "https://ttdns2.com/",
+        "https://www.ttdns2.com/",
+        "http://ttdns2.com/"
+      ],
+      "initial_registrable_domain": "ttdns2.com"
+    },
+    {
+      "website_id": "T0000217",
+      "tranco_rank": 217,
+      "original_domain": "pages.dev",
+      "original_url": "https://pages.dev/",
+      "candidate_urls": [
+        "https://pages.dev/",
+        "https://www.pages.dev/",
+        "http://pages.dev/"
+      ],
+      "initial_registrable_domain": "pages.dev"
+    },
+    {
+      "website_id": "T0000218",
+      "tranco_rank": 218,
+      "original_domain": "forbes.com",
+      "original_url": "https://forbes.com/",
+      "candidate_urls": [
+        "https://forbes.com/",
+        "https://www.forbes.com/",
+        "http://forbes.com/"
+      ],
+      "initial_registrable_domain": "forbes.com"
+    },
+    {
+      "website_id": "T0000219",
+      "tranco_rank": 219,
+      "original_domain": "cdn-apple.com",
+      "original_url": "https://cdn-apple.com/",
+      "candidate_urls": [
+        "https://cdn-apple.com/",
+        "https://www.cdn-apple.com/",
+        "http://cdn-apple.com/"
+      ],
+      "initial_registrable_domain": "cdn-apple.com"
+    },
+    {
+      "website_id": "T0000220",
+      "tranco_rank": 220,
+      "original_domain": "bbc.com",
+      "original_url": "https://bbc.com/",
+      "candidate_urls": [
+        "https://bbc.com/",
+        "https://www.bbc.com/",
+        "http://bbc.com/"
+      ],
+      "initial_registrable_domain": "bbc.com"
+    },
+    {
+      "website_id": "T0000221",
+      "tranco_rank": 221,
+      "original_domain": "dns.google",
+      "original_url": "https://dns.google/",
+      "candidate_urls": [
+        "https://dns.google/",
+        "https://www.dns.google/",
+        "http://dns.google/"
+      ],
+      "initial_registrable_domain": "dns.google"
+    },
+    {
+      "website_id": "T0000222",
+      "tranco_rank": 222,
+      "original_domain": "sciencedirect.com",
+      "original_url": "https://sciencedirect.com/",
+      "candidate_urls": [
+        "https://sciencedirect.com/",
+        "https://www.sciencedirect.com/",
+        "http://sciencedirect.com/"
+      ],
+      "initial_registrable_domain": "sciencedirect.com"
+    },
+    {
+      "website_id": "T0000223",
+      "tranco_rank": 223,
+      "original_domain": "samsungcloud.com",
+      "original_url": "https://samsungcloud.com/",
+      "candidate_urls": [
+        "https://samsungcloud.com/",
+        "https://www.samsungcloud.com/",
+        "http://samsungcloud.com/"
+      ],
+      "initial_registrable_domain": "samsungcloud.com"
+    },
+    {
+      "website_id": "T0000224",
+      "tranco_rank": 224,
+      "original_domain": "cdngslb.com",
+      "original_url": "https://cdngslb.com/",
+      "candidate_urls": [
+        "https://cdngslb.com/",
+        "https://www.cdngslb.com/",
+        "http://cdngslb.com/"
+      ],
+      "initial_registrable_domain": "cdngslb.com"
+    },
+    {
+      "website_id": "T0000225",
+      "tranco_rank": 225,
+      "original_domain": "mit.edu",
+      "original_url": "https://mit.edu/",
+      "candidate_urls": [
+        "https://mit.edu/",
+        "https://www.mit.edu/",
+        "http://mit.edu/"
+      ],
+      "initial_registrable_domain": "mit.edu"
+    },
+    {
+      "website_id": "T0000226",
+      "tranco_rank": 226,
+      "original_domain": "twitch.tv",
+      "original_url": "https://twitch.tv/",
+      "candidate_urls": [
+        "https://twitch.tv/",
+        "https://www.twitch.tv/",
+        "http://twitch.tv/"
+      ],
+      "initial_registrable_domain": "twitch.tv"
+    },
+    {
+      "website_id": "T0000227",
+      "tranco_rank": 227,
+      "original_domain": "researchgate.net",
+      "original_url": "https://researchgate.net/",
+      "candidate_urls": [
+        "https://researchgate.net/",
+        "https://www.researchgate.net/",
+        "http://researchgate.net/"
+      ],
+      "initial_registrable_domain": "researchgate.net"
+    },
+    {
+      "website_id": "T0000228",
+      "tranco_rank": 228,
+      "original_domain": "bbc.co.uk",
+      "original_url": "https://bbc.co.uk/",
+      "candidate_urls": [
+        "https://bbc.co.uk/",
+        "https://www.bbc.co.uk/",
+        "http://bbc.co.uk/"
+      ],
+      "initial_registrable_domain": "bbc.co.uk"
+    },
+    {
+      "website_id": "T0000229",
+      "tranco_rank": 229,
+      "original_domain": "cisco.com",
+      "original_url": "https://cisco.com/",
+      "candidate_urls": [
+        "https://cisco.com/",
+        "https://www.cisco.com/",
+        "http://cisco.com/"
+      ],
+      "initial_registrable_domain": "cisco.com"
+    },
+    {
+      "website_id": "T0000230",
+      "tranco_rank": 230,
+      "original_domain": "ggpht.com",
+      "original_url": "https://ggpht.com/",
+      "candidate_urls": [
+        "https://ggpht.com/",
+        "https://www.ggpht.com/",
+        "http://ggpht.com/"
+      ],
+      "initial_registrable_domain": "ggpht.com"
+    },
+    {
+      "website_id": "T0000231",
+      "tranco_rank": 231,
+      "original_domain": "sfx.ms",
+      "original_url": "https://sfx.ms/",
+      "candidate_urls": [
+        "https://sfx.ms/",
+        "https://www.sfx.ms/",
+        "http://sfx.ms/"
+      ],
+      "initial_registrable_domain": "sfx.ms"
+    },
+    {
+      "website_id": "T0000232",
+      "tranco_rank": 232,
+      "original_domain": "wikimedia.org",
+      "original_url": "https://wikimedia.org/",
+      "candidate_urls": [
+        "https://wikimedia.org/",
+        "https://www.wikimedia.org/",
+        "http://wikimedia.org/"
+      ],
+      "initial_registrable_domain": "wikimedia.org"
+    },
+    {
+      "website_id": "T0000233",
+      "tranco_rank": 233,
+      "original_domain": "azureedge.net",
+      "original_url": "https://azureedge.net/",
+      "candidate_urls": [
+        "https://azureedge.net/",
+        "https://www.azureedge.net/",
+        "http://azureedge.net/"
+      ],
+      "initial_registrable_domain": "azureedge.net"
+    },
+    {
+      "website_id": "T0000234",
+      "tranco_rank": 234,
+      "original_domain": "ozon.ru",
+      "original_url": "https://ozon.ru/",
+      "candidate_urls": [
+        "https://ozon.ru/",
+        "https://www.ozon.ru/",
+        "http://ozon.ru/"
+      ],
+      "initial_registrable_domain": "ozon.ru"
+    },
+    {
+      "website_id": "T0000235",
+      "tranco_rank": 235,
+      "original_domain": "nist.gov",
+      "original_url": "https://nist.gov/",
+      "candidate_urls": [
+        "https://nist.gov/",
+        "https://www.nist.gov/",
+        "http://nist.gov/"
+      ],
+      "initial_registrable_domain": "nist.gov"
+    },
+    {
+      "website_id": "T0000236",
+      "tranco_rank": 236,
+      "original_domain": "stripe.com",
+      "original_url": "https://stripe.com/",
+      "candidate_urls": [
+        "https://stripe.com/",
+        "https://www.stripe.com/",
+        "http://stripe.com/"
+      ],
+      "initial_registrable_domain": "stripe.com"
+    },
+    {
+      "website_id": "T0000237",
+      "tranco_rank": 237,
+      "original_domain": "cpanel.net",
+      "original_url": "https://cpanel.net/",
+      "candidate_urls": [
+        "https://cpanel.net/",
+        "https://www.cpanel.net/",
+        "http://cpanel.net/"
+      ],
+      "initial_registrable_domain": "cpanel.net"
+    },
+    {
+      "website_id": "T0000238",
+      "tranco_rank": 238,
+      "original_domain": "comcast.net",
+      "original_url": "https://comcast.net/",
+      "candidate_urls": [
+        "https://comcast.net/",
+        "https://www.comcast.net/",
+        "http://comcast.net/"
+      ],
+      "initial_registrable_domain": "comcast.net"
+    },
+    {
+      "website_id": "T0000239",
+      "tranco_rank": 239,
+      "original_domain": "alidns.com",
+      "original_url": "https://alidns.com/",
+      "candidate_urls": [
+        "https://alidns.com/",
+        "https://www.alidns.com/",
+        "http://alidns.com/"
+      ],
+      "initial_registrable_domain": "alidns.com"
+    },
+    {
+      "website_id": "T0000240",
+      "tranco_rank": 240,
+      "original_domain": "rbxcdn.com",
+      "original_url": "https://rbxcdn.com/",
+      "candidate_urls": [
+        "https://rbxcdn.com/",
+        "https://www.rbxcdn.com/",
+        "http://rbxcdn.com/"
+      ],
+      "initial_registrable_domain": "rbxcdn.com"
+    },
+    {
+      "website_id": "T0000241",
+      "tranco_rank": 241,
+      "original_domain": "spov-msedge.net",
+      "original_url": "https://spov-msedge.net/",
+      "candidate_urls": [
+        "https://spov-msedge.net/",
+        "https://www.spov-msedge.net/",
+        "http://spov-msedge.net/"
+      ],
+      "initial_registrable_domain": "spov-msedge.net"
+    },
+    {
+      "website_id": "T0000242",
+      "tranco_rank": 242,
+      "original_domain": "sourceforge.net",
+      "original_url": "https://sourceforge.net/",
+      "candidate_urls": [
+        "https://sourceforge.net/",
+        "https://www.sourceforge.net/",
+        "http://sourceforge.net/"
+      ],
+      "initial_registrable_domain": "sourceforge.net"
+    },
+    {
+      "website_id": "T0000243",
+      "tranco_rank": 243,
+      "original_domain": "t.co",
+      "original_url": "https://t.co/",
+      "candidate_urls": [
+        "https://t.co/",
+        "https://www.t.co/",
+        "http://t.co/"
+      ],
+      "initial_registrable_domain": "t.co"
+    },
+    {
+      "website_id": "T0000244",
+      "tranco_rank": 244,
+      "original_domain": "mtgglobals.com",
+      "original_url": "https://mtgglobals.com/",
+      "candidate_urls": [
+        "https://mtgglobals.com/",
+        "https://www.mtgglobals.com/",
+        "http://mtgglobals.com/"
+      ],
+      "initial_registrable_domain": "mtgglobals.com"
+    },
+    {
+      "website_id": "T0000245",
+      "tranco_rank": 245,
+      "original_domain": "canva.com",
+      "original_url": "https://canva.com/",
+      "candidate_urls": [
+        "https://canva.com/",
+        "https://www.canva.com/",
+        "http://canva.com/"
+      ],
+      "initial_registrable_domain": "canva.com"
+    },
+    {
+      "website_id": "T0000246",
+      "tranco_rank": 246,
+      "original_domain": "telekom.net",
+      "original_url": "https://telekom.net/",
+      "candidate_urls": [
+        "https://telekom.net/",
+        "https://www.telekom.net/",
+        "http://telekom.net/"
+      ],
+      "initial_registrable_domain": "telekom.net"
+    },
+    {
+      "website_id": "T0000247",
+      "tranco_rank": 247,
+      "original_domain": "meraki.com",
+      "original_url": "https://meraki.com/",
+      "candidate_urls": [
+        "https://meraki.com/",
+        "https://www.meraki.com/",
+        "http://meraki.com/"
+      ],
+      "initial_registrable_domain": "meraki.com"
+    },
+    {
+      "website_id": "T0000248",
+      "tranco_rank": 248,
+      "original_domain": "userapi.com",
+      "original_url": "https://userapi.com/",
+      "candidate_urls": [
+        "https://userapi.com/",
+        "https://www.userapi.com/",
+        "http://userapi.com/"
+      ],
+      "initial_registrable_domain": "userapi.com"
+    },
+    {
+      "website_id": "T0000249",
+      "tranco_rank": 249,
+      "original_domain": "wsdvs.com",
+      "original_url": "https://wsdvs.com/",
+      "candidate_urls": [
+        "https://wsdvs.com/",
+        "https://www.wsdvs.com/",
+        "http://wsdvs.com/"
+      ],
+      "initial_registrable_domain": "wsdvs.com"
+    },
+    {
+      "website_id": "T0000250",
+      "tranco_rank": 250,
+      "original_domain": "arubanetworks.com",
+      "original_url": "https://arubanetworks.com/",
+      "candidate_urls": [
+        "https://arubanetworks.com/",
+        "https://www.arubanetworks.com/",
+        "http://arubanetworks.com/"
+      ],
+      "initial_registrable_domain": "arubanetworks.com"
+    },
+    {
+      "website_id": "T0000251",
+      "tranco_rank": 251,
+      "original_domain": "rubiconproject.com",
+      "original_url": "https://rubiconproject.com/",
+      "candidate_urls": [
+        "https://rubiconproject.com/",
+        "https://www.rubiconproject.com/",
+        "http://rubiconproject.com/"
+      ],
+      "initial_registrable_domain": "rubiconproject.com"
+    },
+    {
+      "website_id": "T0000252",
+      "tranco_rank": 252,
+      "original_domain": "msedge.net",
+      "original_url": "https://msedge.net/",
+      "candidate_urls": [
+        "https://msedge.net/",
+        "https://www.msedge.net/",
+        "http://msedge.net/"
+      ],
+      "initial_registrable_domain": "msedge.net"
+    },
+    {
+      "website_id": "T0000253",
+      "tranco_rank": 253,
+      "original_domain": "name-services.com",
+      "original_url": "https://name-services.com/",
+      "candidate_urls": [
+        "https://name-services.com/",
+        "https://www.name-services.com/",
+        "http://name-services.com/"
+      ],
+      "initial_registrable_domain": "name-services.com"
+    },
+    {
+      "website_id": "T0000254",
+      "tranco_rank": 254,
+      "original_domain": "vungle.com",
+      "original_url": "https://vungle.com/",
+      "candidate_urls": [
+        "https://vungle.com/",
+        "https://www.vungle.com/",
+        "http://vungle.com/"
+      ],
+      "initial_registrable_domain": "vungle.com"
+    },
+    {
+      "website_id": "T0000255",
+      "tranco_rank": 255,
+      "original_domain": "one.one",
+      "original_url": "https://one.one/",
+      "candidate_urls": [
+        "https://one.one/",
+        "https://www.one.one/",
+        "http://one.one/"
+      ],
+      "initial_registrable_domain": "one.one"
+    },
+    {
+      "website_id": "T0000256",
+      "tranco_rank": 256,
+      "original_domain": "namecheap.com",
+      "original_url": "https://namecheap.com/",
+      "candidate_urls": [
+        "https://namecheap.com/",
+        "https://www.namecheap.com/",
+        "http://namecheap.com/"
+      ],
+      "initial_registrable_domain": "namecheap.com"
+    },
+    {
+      "website_id": "T0000257",
+      "tranco_rank": 257,
+      "original_domain": "omtrdc.net",
+      "original_url": "https://omtrdc.net/",
+      "candidate_urls": [
+        "https://omtrdc.net/",
+        "https://www.omtrdc.net/",
+        "http://omtrdc.net/"
+      ],
+      "initial_registrable_domain": "omtrdc.net"
+    },
+    {
+      "website_id": "T0000258",
+      "tranco_rank": 258,
+      "original_domain": "hubspot.com",
+      "original_url": "https://hubspot.com/",
+      "candidate_urls": [
+        "https://hubspot.com/",
+        "https://www.hubspot.com/",
+        "http://hubspot.com/"
+      ],
+      "initial_registrable_domain": "hubspot.com"
+    },
+    {
+      "website_id": "T0000259",
+      "tranco_rank": 259,
+      "original_domain": "roku.com",
+      "original_url": "https://roku.com/",
+      "candidate_urls": [
+        "https://roku.com/",
+        "https://www.roku.com/",
+        "http://roku.com/"
+      ],
+      "initial_registrable_domain": "roku.com"
+    },
+    {
+      "website_id": "T0000260",
+      "tranco_rank": 260,
+      "original_domain": "playstation.net",
+      "original_url": "https://playstation.net/",
+      "candidate_urls": [
+        "https://playstation.net/",
+        "https://www.playstation.net/",
+        "http://playstation.net/"
+      ],
+      "initial_registrable_domain": "playstation.net"
+    },
+    {
+      "website_id": "T0000261",
+      "tranco_rank": 261,
+      "original_domain": "who.int",
+      "original_url": "https://who.int/",
+      "candidate_urls": [
+        "https://who.int/",
+        "https://www.who.int/",
+        "http://who.int/"
+      ],
+      "initial_registrable_domain": "who.int"
+    },
+    {
+      "website_id": "T0000262",
+      "tranco_rank": 262,
+      "original_domain": "imdb.com",
+      "original_url": "https://imdb.com/",
+      "candidate_urls": [
+        "https://imdb.com/",
+        "https://www.imdb.com/",
+        "http://imdb.com/"
+      ],
+      "initial_registrable_domain": "imdb.com"
+    },
+    {
+      "website_id": "T0000263",
+      "tranco_rank": 263,
+      "original_domain": "telecid.ru",
+      "original_url": "https://telecid.ru/",
+      "candidate_urls": [
+        "https://telecid.ru/",
+        "https://www.telecid.ru/",
+        "http://telecid.ru/"
+      ],
+      "initial_registrable_domain": "telecid.ru"
+    },
+    {
+      "website_id": "T0000264",
+      "tranco_rank": 264,
+      "original_domain": "nflximg.com",
+      "original_url": "https://nflximg.com/",
+      "candidate_urls": [
+        "https://nflximg.com/",
+        "https://www.nflximg.com/",
+        "http://nflximg.com/"
+      ],
+      "initial_registrable_domain": "nflximg.com"
+    },
+    {
+      "website_id": "T0000265",
+      "tranco_rank": 265,
+      "original_domain": "taboola.com",
+      "original_url": "https://taboola.com/",
+      "candidate_urls": [
+        "https://taboola.com/",
+        "https://www.taboola.com/",
+        "http://taboola.com/"
+      ],
+      "initial_registrable_domain": "taboola.com"
+    },
+    {
+      "website_id": "T0000266",
+      "tranco_rank": 266,
+      "original_domain": "linktr.ee",
+      "original_url": "https://linktr.ee/",
+      "candidate_urls": [
+        "https://linktr.ee/",
+        "https://www.linktr.ee/",
+        "http://linktr.ee/"
+      ],
+      "initial_registrable_domain": "linktr.ee"
+    },
+    {
+      "website_id": "T0000267",
+      "tranco_rank": 267,
+      "original_domain": "media-amazon.com",
+      "original_url": "https://media-amazon.com/",
+      "candidate_urls": [
+        "https://media-amazon.com/",
+        "https://www.media-amazon.com/",
+        "http://media-amazon.com/"
+      ],
+      "initial_registrable_domain": "media-amazon.com"
+    },
+    {
+      "website_id": "T0000268",
+      "tranco_rank": 268,
+      "original_domain": "aliyuncsslbintl.com",
+      "original_url": "https://aliyuncsslbintl.com/",
+      "candidate_urls": [
+        "https://aliyuncsslbintl.com/",
+        "https://www.aliyuncsslbintl.com/",
+        "http://aliyuncsslbintl.com/"
+      ],
+      "initial_registrable_domain": "aliyuncsslbintl.com"
+    },
+    {
+      "website_id": "T0000269",
+      "tranco_rank": 269,
+      "original_domain": "licdn.com",
+      "original_url": "https://licdn.com/",
+      "candidate_urls": [
+        "https://licdn.com/",
+        "https://www.licdn.com/",
+        "http://licdn.com/"
+      ],
+      "initial_registrable_domain": "licdn.com"
+    },
+    {
+      "website_id": "T0000270",
+      "tranco_rank": 270,
+      "original_domain": "alibabadns.com",
+      "original_url": "https://alibabadns.com/",
+      "candidate_urls": [
+        "https://alibabadns.com/",
+        "https://www.alibabadns.com/",
+        "http://alibabadns.com/"
+      ],
+      "initial_registrable_domain": "alibabadns.com"
+    },
+    {
+      "website_id": "T0000271",
+      "tranco_rank": 271,
+      "original_domain": "awswaf.com",
+      "original_url": "https://awswaf.com/",
+      "candidate_urls": [
+        "https://awswaf.com/",
+        "https://www.awswaf.com/",
+        "http://awswaf.com/"
+      ],
+      "initial_registrable_domain": "awswaf.com"
+    },
+    {
+      "website_id": "T0000272",
+      "tranco_rank": 272,
+      "original_domain": "forter.com",
+      "original_url": "https://forter.com/",
+      "candidate_urls": [
+        "https://forter.com/",
+        "https://www.forter.com/",
+        "http://forter.com/"
+      ],
+      "initial_registrable_domain": "forter.com"
+    },
+    {
+      "website_id": "T0000273",
+      "tranco_rank": 273,
+      "original_domain": "wixsite.com",
+      "original_url": "https://wixsite.com/",
+      "candidate_urls": [
+        "https://wixsite.com/",
+        "https://www.wixsite.com/",
+        "http://wixsite.com/"
+      ],
+      "initial_registrable_domain": "wixsite.com"
+    },
+    {
+      "website_id": "T0000274",
+      "tranco_rank": 274,
+      "original_domain": "spo-msedge.net",
+      "original_url": "https://spo-msedge.net/",
+      "candidate_urls": [
+        "https://spo-msedge.net/",
+        "https://www.spo-msedge.net/",
+        "http://spo-msedge.net/"
+      ],
+      "initial_registrable_domain": "spo-msedge.net"
+    },
+    {
+      "website_id": "T0000275",
+      "tranco_rank": 275,
+      "original_domain": "adsafeprotected.com",
+      "original_url": "https://adsafeprotected.com/",
+      "candidate_urls": [
+        "https://adsafeprotected.com/",
+        "https://www.adsafeprotected.com/",
+        "http://adsafeprotected.com/"
+      ],
+      "initial_registrable_domain": "adsafeprotected.com"
+    },
+    {
+      "website_id": "T0000276",
+      "tranco_rank": 276,
+      "original_domain": "imcmdb.net",
+      "original_url": "https://imcmdb.net/",
+      "candidate_urls": [
+        "https://imcmdb.net/",
+        "https://www.imcmdb.net/",
+        "http://imcmdb.net/"
+      ],
+      "initial_registrable_domain": "imcmdb.net"
+    },
+    {
+      "website_id": "T0000277",
+      "tranco_rank": 277,
+      "original_domain": "hcaptcha.com",
+      "original_url": "https://hcaptcha.com/",
+      "candidate_urls": [
+        "https://hcaptcha.com/",
+        "https://www.hcaptcha.com/",
+        "http://hcaptcha.com/"
+      ],
+      "initial_registrable_domain": "hcaptcha.com"
+    },
+    {
+      "website_id": "T0000278",
+      "tranco_rank": 278,
+      "original_domain": "ttvnw.net",
+      "original_url": "https://ttvnw.net/",
+      "candidate_urls": [
+        "https://ttvnw.net/",
+        "https://www.ttvnw.net/",
+        "http://ttvnw.net/"
+      ],
+      "initial_registrable_domain": "ttvnw.net"
+    },
+    {
+      "website_id": "T0000279",
+      "tranco_rank": 279,
+      "original_domain": "ibm.com",
+      "original_url": "https://ibm.com/",
+      "candidate_urls": [
+        "https://ibm.com/",
+        "https://www.ibm.com/",
+        "http://ibm.com/"
+      ],
+      "initial_registrable_domain": "ibm.com"
+    },
+    {
+      "website_id": "T0000280",
+      "tranco_rank": 280,
+      "original_domain": "dnsmadeeasy.com",
+      "original_url": "https://dnsmadeeasy.com/",
+      "candidate_urls": [
+        "https://dnsmadeeasy.com/",
+        "https://www.dnsmadeeasy.com/",
+        "http://dnsmadeeasy.com/"
+      ],
+      "initial_registrable_domain": "dnsmadeeasy.com"
+    },
+    {
+      "website_id": "T0000281",
+      "tranco_rank": 281,
+      "original_domain": "launchpad.net",
+      "original_url": "https://launchpad.net/",
+      "candidate_urls": [
+        "https://launchpad.net/",
+        "https://www.launchpad.net/",
+        "http://launchpad.net/"
+      ],
+      "initial_registrable_domain": "launchpad.net"
+    },
+    {
+      "website_id": "T0000282",
+      "tranco_rank": 282,
+      "original_domain": "miui.com",
+      "original_url": "https://miui.com/",
+      "candidate_urls": [
+        "https://miui.com/",
+        "https://www.miui.com/",
+        "http://miui.com/"
+      ],
+      "initial_registrable_domain": "miui.com"
+    },
+    {
+      "website_id": "T0000283",
+      "tranco_rank": 283,
+      "original_domain": "adnxs.com",
+      "original_url": "https://adnxs.com/",
+      "candidate_urls": [
+        "https://adnxs.com/",
+        "https://www.adnxs.com/",
+        "http://adnxs.com/"
+      ],
+      "initial_registrable_domain": "adnxs.com"
+    },
+    {
+      "website_id": "T0000284",
+      "tranco_rank": 284,
+      "original_domain": "gmail.com",
+      "original_url": "https://gmail.com/",
+      "candidate_urls": [
+        "https://gmail.com/",
+        "https://www.gmail.com/",
+        "http://gmail.com/"
+      ],
+      "initial_registrable_domain": "gmail.com"
+    },
+    {
+      "website_id": "T0000285",
+      "tranco_rank": 285,
+      "original_domain": "pubmatic.com",
+      "original_url": "https://pubmatic.com/",
+      "candidate_urls": [
+        "https://pubmatic.com/",
+        "https://www.pubmatic.com/",
+        "http://pubmatic.com/"
+      ],
+      "initial_registrable_domain": "pubmatic.com"
+    },
+    {
+      "website_id": "T0000286",
+      "tranco_rank": 286,
+      "original_domain": "googleblog.com",
+      "original_url": "https://googleblog.com/",
+      "candidate_urls": [
+        "https://googleblog.com/",
+        "https://www.googleblog.com/",
+        "http://googleblog.com/"
+      ],
+      "initial_registrable_domain": "googleblog.com"
+    },
+    {
+      "website_id": "T0000287",
+      "tranco_rank": 287,
+      "original_domain": "reuters.com",
+      "original_url": "https://reuters.com/",
+      "candidate_urls": [
+        "https://reuters.com/",
+        "https://www.reuters.com/",
+        "http://reuters.com/"
+      ],
+      "initial_registrable_domain": "reuters.com"
+    },
+    {
+      "website_id": "T0000288",
+      "tranco_rank": 288,
+      "original_domain": "amplitude.com",
+      "original_url": "https://amplitude.com/",
+      "candidate_urls": [
+        "https://amplitude.com/",
+        "https://www.amplitude.com/",
+        "http://amplitude.com/"
+      ],
+      "initial_registrable_domain": "amplitude.com"
+    },
+    {
+      "website_id": "T0000289",
+      "tranco_rank": 289,
+      "original_domain": "workbox.dk",
+      "original_url": "https://workbox.dk/",
+      "candidate_urls": [
+        "https://workbox.dk/",
+        "https://www.workbox.dk/",
+        "http://workbox.dk/"
+      ],
+      "initial_registrable_domain": "workbox.dk"
+    },
+    {
+      "website_id": "T0000290",
+      "tranco_rank": 290,
+      "original_domain": "capcutapi.com",
+      "original_url": "https://capcutapi.com/",
+      "candidate_urls": [
+        "https://capcutapi.com/",
+        "https://www.capcutapi.com/",
+        "http://capcutapi.com/"
+      ],
+      "initial_registrable_domain": "capcutapi.com"
+    },
+    {
+      "website_id": "T0000291",
+      "tranco_rank": 291,
+      "original_domain": "booking.com",
+      "original_url": "https://booking.com/",
+      "candidate_urls": [
+        "https://booking.com/",
+        "https://www.booking.com/",
+        "http://booking.com/"
+      ],
+      "initial_registrable_domain": "booking.com"
+    },
+    {
+      "website_id": "T0000292",
+      "tranco_rank": 292,
+      "original_domain": "miit.gov.cn",
+      "original_url": "https://miit.gov.cn/",
+      "candidate_urls": [
+        "https://miit.gov.cn/",
+        "https://www.miit.gov.cn/",
+        "http://miit.gov.cn/"
+      ],
+      "initial_registrable_domain": "miit.gov.cn"
+    },
+    {
+      "website_id": "T0000293",
+      "tranco_rank": 293,
+      "original_domain": "nr-data.net",
+      "original_url": "https://nr-data.net/",
+      "candidate_urls": [
+        "https://nr-data.net/",
+        "https://www.nr-data.net/",
+        "http://nr-data.net/"
+      ],
+      "initial_registrable_domain": "nr-data.net"
+    },
+    {
+      "website_id": "T0000294",
+      "tranco_rank": 294,
+      "original_domain": "ripn.net",
+      "original_url": "https://ripn.net/",
+      "candidate_urls": [
+        "https://ripn.net/",
+        "https://www.ripn.net/",
+        "http://ripn.net/"
+      ],
+      "initial_registrable_domain": "ripn.net"
+    },
+    {
+      "website_id": "T0000295",
+      "tranco_rank": 295,
+      "original_domain": "weather.com",
+      "original_url": "https://weather.com/",
+      "candidate_urls": [
+        "https://weather.com/",
+        "https://www.weather.com/",
+        "http://weather.com/"
+      ],
+      "initial_registrable_domain": "weather.com"
+    },
+    {
+      "website_id": "T0000296",
+      "tranco_rank": 296,
+      "original_domain": "tinyurl.com",
+      "original_url": "https://tinyurl.com/",
+      "candidate_urls": [
+        "https://tinyurl.com/",
+        "https://www.tinyurl.com/",
+        "http://tinyurl.com/"
+      ],
+      "initial_registrable_domain": "tinyurl.com"
+    },
+    {
+      "website_id": "T0000297",
+      "tranco_rank": 297,
+      "original_domain": "telegram.me",
+      "original_url": "https://telegram.me/",
+      "candidate_urls": [
+        "https://telegram.me/",
+        "https://www.telegram.me/",
+        "http://telegram.me/"
+      ],
+      "initial_registrable_domain": "telegram.me"
+    },
+    {
+      "website_id": "T0000298",
+      "tranco_rank": 298,
+      "original_domain": "salesforce.com",
+      "original_url": "https://salesforce.com/",
+      "candidate_urls": [
+        "https://salesforce.com/",
+        "https://www.salesforce.com/",
+        "http://salesforce.com/"
+      ],
+      "initial_registrable_domain": "salesforce.com"
+    },
+    {
+      "website_id": "T0000299",
+      "tranco_rank": 299,
+      "original_domain": "springer.com",
+      "original_url": "https://springer.com/",
+      "candidate_urls": [
+        "https://springer.com/",
+        "https://www.springer.com/",
+        "http://springer.com/"
+      ],
+      "initial_registrable_domain": "springer.com"
+    },
+    {
+      "website_id": "T0000300",
+      "tranco_rank": 300,
+      "original_domain": "hp.com",
+      "original_url": "https://hp.com/",
+      "candidate_urls": [
+        "https://hp.com/",
+        "https://www.hp.com/",
+        "http://hp.com/"
+      ],
+      "initial_registrable_domain": "hp.com"
+    },
+    {
+      "website_id": "T0000301",
+      "tranco_rank": 301,
+      "original_domain": "autodesk.com",
+      "original_url": "https://autodesk.com/",
+      "candidate_urls": [
+        "https://autodesk.com/",
+        "https://www.autodesk.com/",
+        "http://autodesk.com/"
+      ],
+      "initial_registrable_domain": "autodesk.com"
+    },
+    {
+      "website_id": "T0000302",
+      "tranco_rank": 302,
+      "original_domain": "www.gov.uk",
+      "original_url": "https://www.gov.uk/",
+      "candidate_urls": [
+        "https://www.gov.uk/",
+        "http://www.gov.uk/"
+      ],
+      "initial_registrable_domain": "www.gov.uk"
+    },
+    {
+      "website_id": "T0000303",
+      "tranco_rank": 303,
+      "original_domain": "skybridge.click",
+      "original_url": "https://skybridge.click/",
+      "candidate_urls": [
+        "https://skybridge.click/",
+        "https://www.skybridge.click/",
+        "http://skybridge.click/"
+      ],
+      "initial_registrable_domain": "skybridge.click"
+    },
+    {
+      "website_id": "T0000304",
+      "tranco_rank": 304,
+      "original_domain": "mangosip.ru",
+      "original_url": "https://mangosip.ru/",
+      "candidate_urls": [
+        "https://mangosip.ru/",
+        "https://www.mangosip.ru/",
+        "http://mangosip.ru/"
+      ],
+      "initial_registrable_domain": "mangosip.ru"
+    },
+    {
+      "website_id": "T0000305",
+      "tranco_rank": 305,
+      "original_domain": "ip-api.com",
+      "original_url": "https://ip-api.com/",
+      "candidate_urls": [
+        "https://ip-api.com/",
+        "https://www.ip-api.com/",
+        "http://ip-api.com/"
+      ],
+      "initial_registrable_domain": "ip-api.com"
+    },
+    {
+      "website_id": "T0000306",
+      "tranco_rank": 306,
+      "original_domain": "tiktokcdn-us.com",
+      "original_url": "https://tiktokcdn-us.com/",
+      "candidate_urls": [
+        "https://tiktokcdn-us.com/",
+        "https://www.tiktokcdn-us.com/",
+        "http://tiktokcdn-us.com/"
+      ],
+      "initial_registrable_domain": "tiktokcdn-us.com"
+    },
+    {
+      "website_id": "T0000307",
+      "tranco_rank": 307,
+      "original_domain": "nature.com",
+      "original_url": "https://nature.com/",
+      "candidate_urls": [
+        "https://nature.com/",
+        "https://www.nature.com/",
+        "http://nature.com/"
+      ],
+      "initial_registrable_domain": "nature.com"
+    },
+    {
+      "website_id": "T0000308",
+      "tranco_rank": 308,
+      "original_domain": "jsdelivr.net",
+      "original_url": "https://jsdelivr.net/",
+      "candidate_urls": [
+        "https://jsdelivr.net/",
+        "https://www.jsdelivr.net/",
+        "http://jsdelivr.net/"
+      ],
+      "initial_registrable_domain": "jsdelivr.net"
+    },
+    {
+      "website_id": "T0000309",
+      "tranco_rank": 309,
+      "original_domain": "steampowered.com",
+      "original_url": "https://steampowered.com/",
+      "candidate_urls": [
+        "https://steampowered.com/",
+        "https://www.steampowered.com/",
+        "http://steampowered.com/"
+      ],
+      "initial_registrable_domain": "steampowered.com"
+    },
+    {
+      "website_id": "T0000310",
+      "tranco_rank": 310,
+      "original_domain": "inmobi.com",
+      "original_url": "https://inmobi.com/",
+      "candidate_urls": [
+        "https://inmobi.com/",
+        "https://www.inmobi.com/",
+        "http://inmobi.com/"
+      ],
+      "initial_registrable_domain": "inmobi.com"
+    },
+    {
+      "website_id": "T0000311",
+      "tranco_rank": 311,
+      "original_domain": "weibo.com",
+      "original_url": "https://weibo.com/",
+      "candidate_urls": [
+        "https://weibo.com/",
+        "https://www.weibo.com/",
+        "http://weibo.com/"
+      ],
+      "initial_registrable_domain": "weibo.com"
+    },
+    {
+      "website_id": "T0000312",
+      "tranco_rank": 312,
+      "original_domain": "avast.com",
+      "original_url": "https://avast.com/",
+      "candidate_urls": [
+        "https://avast.com/",
+        "https://www.avast.com/",
+        "http://avast.com/"
+      ],
+      "initial_registrable_domain": "avast.com"
+    },
+    {
+      "website_id": "T0000313",
+      "tranco_rank": 313,
+      "original_domain": "byteoversea.net",
+      "original_url": "https://byteoversea.net/",
+      "candidate_urls": [
+        "https://byteoversea.net/",
+        "https://www.byteoversea.net/",
+        "http://byteoversea.net/"
+      ],
+      "initial_registrable_domain": "byteoversea.net"
+    },
+    {
+      "website_id": "T0000314",
+      "tranco_rank": 314,
+      "original_domain": "casalemedia.com",
+      "original_url": "https://casalemedia.com/",
+      "candidate_urls": [
+        "https://casalemedia.com/",
+        "https://www.casalemedia.com/",
+        "http://casalemedia.com/"
+      ],
+      "initial_registrable_domain": "casalemedia.com"
+    },
+    {
+      "website_id": "T0000315",
+      "tranco_rank": 315,
+      "original_domain": "ok.ru",
+      "original_url": "https://ok.ru/",
+      "candidate_urls": [
+        "https://ok.ru/",
+        "https://www.ok.ru/",
+        "http://ok.ru/"
+      ],
+      "initial_registrable_domain": "ok.ru"
+    },
+    {
+      "website_id": "T0000316",
+      "tranco_rank": 316,
+      "original_domain": "harvard.edu",
+      "original_url": "https://harvard.edu/",
+      "candidate_urls": [
+        "https://harvard.edu/",
+        "https://www.harvard.edu/",
+        "http://harvard.edu/"
+      ],
+      "initial_registrable_domain": "harvard.edu"
+    },
+    {
+      "website_id": "T0000317",
+      "tranco_rank": 317,
+      "original_domain": "alibaba.com",
+      "original_url": "https://alibaba.com/",
+      "candidate_urls": [
+        "https://alibaba.com/",
+        "https://www.alibaba.com/",
+        "http://alibaba.com/"
+      ],
+      "initial_registrable_domain": "alibaba.com"
+    },
+    {
+      "website_id": "T0000318",
+      "tranco_rank": 318,
+      "original_domain": "debian.org",
+      "original_url": "https://debian.org/",
+      "candidate_urls": [
+        "https://debian.org/",
+        "https://www.debian.org/",
+        "http://debian.org/"
+      ],
+      "initial_registrable_domain": "debian.org"
+    },
+    {
+      "website_id": "T0000319",
+      "tranco_rank": 319,
+      "original_domain": "douyincdn.com",
+      "original_url": "https://douyincdn.com/",
+      "candidate_urls": [
+        "https://douyincdn.com/",
+        "https://www.douyincdn.com/",
+        "http://douyincdn.com/"
+      ],
+      "initial_registrable_domain": "douyincdn.com"
+    },
+    {
+      "website_id": "T0000320",
+      "tranco_rank": 320,
+      "original_domain": "appsflyer.com",
+      "original_url": "https://appsflyer.com/",
+      "candidate_urls": [
+        "https://appsflyer.com/",
+        "https://www.appsflyer.com/",
+        "http://appsflyer.com/"
+      ],
+      "initial_registrable_domain": "appsflyer.com"
+    },
+    {
+      "website_id": "T0000321",
+      "tranco_rank": 321,
+      "original_domain": "heytapmobile.com",
+      "original_url": "https://heytapmobile.com/",
+      "candidate_urls": [
+        "https://heytapmobile.com/",
+        "https://www.heytapmobile.com/",
+        "http://heytapmobile.com/"
+      ],
+      "initial_registrable_domain": "heytapmobile.com"
+    },
+    {
+      "website_id": "T0000322",
+      "tranco_rank": 322,
+      "original_domain": "spaceweb.pro",
+      "original_url": "https://spaceweb.pro/",
+      "candidate_urls": [
+        "https://spaceweb.pro/",
+        "https://www.spaceweb.pro/",
+        "http://spaceweb.pro/"
+      ],
+      "initial_registrable_domain": "spaceweb.pro"
+    },
+    {
+      "website_id": "T0000323",
+      "tranco_rank": 323,
+      "original_domain": "mi.com",
+      "original_url": "https://mi.com/",
+      "candidate_urls": [
+        "https://mi.com/",
+        "https://www.mi.com/",
+        "http://mi.com/"
+      ],
+      "initial_registrable_domain": "mi.com"
+    },
+    {
+      "website_id": "T0000324",
+      "tranco_rank": 324,
+      "original_domain": "wac-msedge.net",
+      "original_url": "https://wac-msedge.net/",
+      "candidate_urls": [
+        "https://wac-msedge.net/",
+        "https://www.wac-msedge.net/",
+        "http://wac-msedge.net/"
+      ],
+      "initial_registrable_domain": "wac-msedge.net"
+    },
+    {
+      "website_id": "T0000325",
+      "tranco_rank": 325,
+      "original_domain": "clarity.ms",
+      "original_url": "https://clarity.ms/",
+      "candidate_urls": [
+        "https://clarity.ms/",
+        "https://www.clarity.ms/",
+        "http://clarity.ms/"
+      ],
+      "initial_registrable_domain": "clarity.ms"
+    },
+    {
+      "website_id": "T0000326",
+      "tranco_rank": 326,
+      "original_domain": "mzstatic.com",
+      "original_url": "https://mzstatic.com/",
+      "candidate_urls": [
+        "https://mzstatic.com/",
+        "https://www.mzstatic.com/",
+        "http://mzstatic.com/"
+      ],
+      "initial_registrable_domain": "mzstatic.com"
+    },
+    {
+      "website_id": "T0000327",
+      "tranco_rank": 327,
+      "original_domain": "statsigapi.net",
+      "original_url": "https://statsigapi.net/",
+      "candidate_urls": [
+        "https://statsigapi.net/",
+        "https://www.statsigapi.net/",
+        "http://statsigapi.net/"
+      ],
+      "initial_registrable_domain": "statsigapi.net"
+    },
+    {
+      "website_id": "T0000328",
+      "tranco_rank": 328,
+      "original_domain": "wiley.com",
+      "original_url": "https://wiley.com/",
+      "candidate_urls": [
+        "https://wiley.com/",
+        "https://www.wiley.com/",
+        "http://wiley.com/"
+      ],
+      "initial_registrable_domain": "wiley.com"
+    },
+    {
+      "website_id": "T0000329",
+      "tranco_rank": 329,
+      "original_domain": "php.net",
+      "original_url": "https://php.net/",
+      "candidate_urls": [
+        "https://php.net/",
+        "https://www.php.net/",
+        "http://php.net/"
+      ],
+      "initial_registrable_domain": "php.net"
+    },
+    {
+      "website_id": "T0000330",
+      "tranco_rank": 330,
+      "original_domain": "etsy.com",
+      "original_url": "https://etsy.com/",
+      "candidate_urls": [
+        "https://etsy.com/",
+        "https://www.etsy.com/",
+        "http://etsy.com/"
+      ],
+      "initial_registrable_domain": "etsy.com"
+    },
+    {
+      "website_id": "T0000331",
+      "tranco_rank": 331,
+      "original_domain": "avcdn.net",
+      "original_url": "https://avcdn.net/",
+      "candidate_urls": [
+        "https://avcdn.net/",
+        "https://www.avcdn.net/",
+        "http://avcdn.net/"
+      ],
+      "initial_registrable_domain": "avcdn.net"
+    },
+    {
+      "website_id": "T0000332",
+      "tranco_rank": 332,
+      "original_domain": "facebook.net",
+      "original_url": "https://facebook.net/",
+      "candidate_urls": [
+        "https://facebook.net/",
+        "https://www.facebook.net/",
+        "http://facebook.net/"
+      ],
+      "initial_registrable_domain": "facebook.net"
+    },
+    {
+      "website_id": "T0000333",
+      "tranco_rank": 333,
+      "original_domain": "amazon.co.uk",
+      "original_url": "https://amazon.co.uk/",
+      "candidate_urls": [
+        "https://amazon.co.uk/",
+        "https://www.amazon.co.uk/",
+        "http://amazon.co.uk/"
+      ],
+      "initial_registrable_domain": "amazon.co.uk"
+    },
+    {
+      "website_id": "T0000334",
+      "tranco_rank": 334,
+      "original_domain": "drom.ru",
+      "original_url": "https://drom.ru/",
+      "candidate_urls": [
+        "https://drom.ru/",
+        "https://www.drom.ru/",
+        "http://drom.ru/"
+      ],
+      "initial_registrable_domain": "drom.ru"
+    },
+    {
+      "website_id": "T0000335",
+      "tranco_rank": 335,
+      "original_domain": "aliyun.com",
+      "original_url": "https://aliyun.com/",
+      "candidate_urls": [
+        "https://aliyun.com/",
+        "https://www.aliyun.com/",
+        "http://aliyun.com/"
+      ],
+      "initial_registrable_domain": "aliyun.com"
+    },
+    {
+      "website_id": "T0000336",
+      "tranco_rank": 336,
+      "original_domain": "crpt.ru",
+      "original_url": "https://crpt.ru/",
+      "candidate_urls": [
+        "https://crpt.ru/",
+        "https://www.crpt.ru/",
+        "http://crpt.ru/"
+      ],
+      "initial_registrable_domain": "crpt.ru"
+    },
+    {
+      "website_id": "T0000337",
+      "tranco_rank": 337,
+      "original_domain": "name.com",
+      "original_url": "https://name.com/",
+      "candidate_urls": [
+        "https://name.com/",
+        "https://www.name.com/",
+        "http://name.com/"
+      ],
+      "initial_registrable_domain": "name.com"
+    },
+    {
+      "website_id": "T0000338",
+      "tranco_rank": 338,
+      "original_domain": "weebly.com",
+      "original_url": "https://weebly.com/",
+      "candidate_urls": [
+        "https://weebly.com/",
+        "https://www.weebly.com/",
+        "http://weebly.com/"
+      ],
+      "initial_registrable_domain": "weebly.com"
+    },
+    {
+      "website_id": "T0000339",
+      "tranco_rank": 339,
+      "original_domain": "browser-intake-datadoghq.com",
+      "original_url": "https://browser-intake-datadoghq.com/",
+      "candidate_urls": [
+        "https://browser-intake-datadoghq.com/",
+        "https://www.browser-intake-datadoghq.com/",
+        "http://browser-intake-datadoghq.com/"
+      ],
+      "initial_registrable_domain": "browser-intake-datadoghq.com"
+    },
+    {
+      "website_id": "T0000340",
+      "tranco_rank": 340,
+      "original_domain": "dell.com",
+      "original_url": "https://dell.com/",
+      "candidate_urls": [
+        "https://dell.com/",
+        "https://www.dell.com/",
+        "http://dell.com/"
+      ],
+      "initial_registrable_domain": "dell.com"
+    },
+    {
+      "website_id": "T0000341",
+      "tranco_rank": 341,
+      "original_domain": "smartadserver.com",
+      "original_url": "https://smartadserver.com/",
+      "candidate_urls": [
+        "https://smartadserver.com/",
+        "https://www.smartadserver.com/",
+        "http://smartadserver.com/"
+      ],
+      "initial_registrable_domain": "smartadserver.com"
+    },
+    {
+      "website_id": "T0000342",
+      "tranco_rank": 342,
+      "original_domain": "gnu.org",
+      "original_url": "https://gnu.org/",
+      "candidate_urls": [
+        "https://gnu.org/",
+        "https://www.gnu.org/",
+        "http://gnu.org/"
+      ],
+      "initial_registrable_domain": "gnu.org"
+    },
+    {
+      "website_id": "T0000343",
+      "tranco_rank": 343,
+      "original_domain": "hostgator.com",
+      "original_url": "https://hostgator.com/",
+      "candidate_urls": [
+        "https://hostgator.com/",
+        "https://www.hostgator.com/",
+        "http://hostgator.com/"
+      ],
+      "initial_registrable_domain": "hostgator.com"
+    },
+    {
+      "website_id": "T0000344",
+      "tranco_rank": 344,
+      "original_domain": "netflix.net",
+      "original_url": "https://netflix.net/",
+      "candidate_urls": [
+        "https://netflix.net/",
+        "https://www.netflix.net/",
+        "http://netflix.net/"
+      ],
+      "initial_registrable_domain": "netflix.net"
+    },
+    {
+      "website_id": "T0000345",
+      "tranco_rank": 345,
+      "original_domain": "akamaihd.net",
+      "original_url": "https://akamaihd.net/",
+      "candidate_urls": [
+        "https://akamaihd.net/",
+        "https://www.akamaihd.net/",
+        "http://akamaihd.net/"
+      ],
+      "initial_registrable_domain": "akamaihd.net"
+    },
+    {
+      "website_id": "T0000346",
+      "tranco_rank": 346,
+      "original_domain": "bilibili.com",
+      "original_url": "https://bilibili.com/",
+      "candidate_urls": [
+        "https://bilibili.com/",
+        "https://www.bilibili.com/",
+        "http://bilibili.com/"
+      ],
+      "initial_registrable_domain": "bilibili.com"
+    },
+    {
+      "website_id": "T0000347",
+      "tranco_rank": 347,
+      "original_domain": "slack.com",
+      "original_url": "https://slack.com/",
+      "candidate_urls": [
+        "https://slack.com/",
+        "https://www.slack.com/",
+        "http://slack.com/"
+      ],
+      "initial_registrable_domain": "slack.com"
+    },
+    {
+      "website_id": "T0000348",
+      "tranco_rank": 348,
+      "original_domain": "publicnode.com",
+      "original_url": "https://publicnode.com/",
+      "candidate_urls": [
+        "https://publicnode.com/",
+        "https://www.publicnode.com/",
+        "http://publicnode.com/"
+      ],
+      "initial_registrable_domain": "publicnode.com"
+    },
+    {
+      "website_id": "T0000349",
+      "tranco_rank": 349,
+      "original_domain": "myshopify.com",
+      "original_url": "https://myshopify.com/",
+      "candidate_urls": [
+        "https://myshopify.com/",
+        "https://www.myshopify.com/",
+        "http://myshopify.com/"
+      ],
+      "initial_registrable_domain": "myshopify.com"
+    },
+    {
+      "website_id": "T0000350",
+      "tranco_rank": 350,
+      "original_domain": "naver.com",
+      "original_url": "https://naver.com/",
+      "candidate_urls": [
+        "https://naver.com/",
+        "https://www.naver.com/",
+        "http://naver.com/"
+      ],
+      "initial_registrable_domain": "naver.com"
+    },
+    {
+      "website_id": "T0000351",
+      "tranco_rank": 351,
+      "original_domain": "adsrvr.org",
+      "original_url": "https://adsrvr.org/",
+      "candidate_urls": [
+        "https://adsrvr.org/",
+        "https://www.adsrvr.org/",
+        "http://adsrvr.org/"
+      ],
+      "initial_registrable_domain": "adsrvr.org"
+    },
+    {
+      "website_id": "T0000352",
+      "tranco_rank": 352,
+      "original_domain": "ea.com",
+      "original_url": "https://ea.com/",
+      "candidate_urls": [
+        "https://ea.com/",
+        "https://www.ea.com/",
+        "http://ea.com/"
+      ],
+      "initial_registrable_domain": "ea.com"
+    },
+    {
+      "website_id": "T0000353",
+      "tranco_rank": 353,
+      "original_domain": "trustpilot.com",
+      "original_url": "https://trustpilot.com/",
+      "candidate_urls": [
+        "https://trustpilot.com/",
+        "https://www.trustpilot.com/",
+        "http://trustpilot.com/"
+      ],
+      "initial_registrable_domain": "trustpilot.com"
+    },
+    {
+      "website_id": "T0000354",
+      "tranco_rank": 354,
+      "original_domain": "onelink.me",
+      "original_url": "https://onelink.me/",
+      "candidate_urls": [
+        "https://onelink.me/",
+        "https://www.onelink.me/",
+        "http://onelink.me/"
+      ],
+      "initial_registrable_domain": "onelink.me"
+    },
+    {
+      "website_id": "T0000355",
+      "tranco_rank": 355,
+      "original_domain": "tbcache.com",
+      "original_url": "https://tbcache.com/",
+      "candidate_urls": [
+        "https://tbcache.com/",
+        "https://www.tbcache.com/",
+        "http://tbcache.com/"
+      ],
+      "initial_registrable_domain": "tbcache.com"
+    },
+    {
+      "website_id": "T0000356",
+      "tranco_rank": 356,
+      "original_domain": "samsungqbe.com",
+      "original_url": "https://samsungqbe.com/",
+      "candidate_urls": [
+        "https://samsungqbe.com/",
+        "https://www.samsungqbe.com/",
+        "http://samsungqbe.com/"
+      ],
+      "initial_registrable_domain": "samsungqbe.com"
+    },
+    {
+      "website_id": "T0000357",
+      "tranco_rank": 357,
+      "original_domain": "gamepass.com",
+      "original_url": "https://gamepass.com/",
+      "candidate_urls": [
+        "https://gamepass.com/",
+        "https://www.gamepass.com/",
+        "http://gamepass.com/"
+      ],
+      "initial_registrable_domain": "gamepass.com"
+    },
+    {
+      "website_id": "T0000358",
+      "tranco_rank": 358,
+      "original_domain": "trueconf.net",
+      "original_url": "https://trueconf.net/",
+      "candidate_urls": [
+        "https://trueconf.net/",
+        "https://www.trueconf.net/",
+        "http://trueconf.net/"
+      ],
+      "initial_registrable_domain": "trueconf.net"
+    },
+    {
+      "website_id": "T0000359",
+      "tranco_rank": 359,
+      "original_domain": "cdc.gov",
+      "original_url": "https://cdc.gov/",
+      "candidate_urls": [
+        "https://cdc.gov/",
+        "https://www.cdc.gov/",
+        "http://cdc.gov/"
+      ],
+      "initial_registrable_domain": "cdc.gov"
+    },
+    {
+      "website_id": "T0000360",
+      "tranco_rank": 360,
+      "original_domain": "nasa.gov",
+      "original_url": "https://nasa.gov/",
+      "candidate_urls": [
+        "https://nasa.gov/",
+        "https://www.nasa.gov/",
+        "http://nasa.gov/"
+      ],
+      "initial_registrable_domain": "nasa.gov"
+    },
+    {
+      "website_id": "T0000361",
+      "tranco_rank": 361,
+      "original_domain": "worldnic.com",
+      "original_url": "https://worldnic.com/",
+      "candidate_urls": [
+        "https://worldnic.com/",
+        "https://www.worldnic.com/",
+        "http://worldnic.com/"
+      ],
+      "initial_registrable_domain": "worldnic.com"
+    },
+    {
+      "website_id": "T0000362",
+      "tranco_rank": 362,
+      "original_domain": "mobile.de",
+      "original_url": "https://mobile.de/",
+      "candidate_urls": [
+        "https://mobile.de/",
+        "https://www.mobile.de/",
+        "http://mobile.de/"
+      ],
+      "initial_registrable_domain": "mobile.de"
+    },
+    {
+      "website_id": "T0000363",
+      "tranco_rank": 363,
+      "original_domain": "un.org",
+      "original_url": "https://un.org/",
+      "candidate_urls": [
+        "https://un.org/",
+        "https://www.un.org/",
+        "http://un.org/"
+      ],
+      "initial_registrable_domain": "un.org"
+    },
+    {
+      "website_id": "T0000364",
+      "tranco_rank": 364,
+      "original_domain": "demdex.net",
+      "original_url": "https://demdex.net/",
+      "candidate_urls": [
+        "https://demdex.net/",
+        "https://www.demdex.net/",
+        "http://demdex.net/"
+      ],
+      "initial_registrable_domain": "demdex.net"
+    },
+    {
+      "website_id": "T0000365",
+      "tranco_rank": 365,
+      "original_domain": "checkpoint.com",
+      "original_url": "https://checkpoint.com/",
+      "candidate_urls": [
+        "https://checkpoint.com/",
+        "https://www.checkpoint.com/",
+        "http://checkpoint.com/"
+      ],
+      "initial_registrable_domain": "checkpoint.com"
+    },
+    {
+      "website_id": "T0000366",
+      "tranco_rank": 366,
+      "original_domain": "shalltry.com",
+      "original_url": "https://shalltry.com/",
+      "candidate_urls": [
+        "https://shalltry.com/",
+        "https://www.shalltry.com/",
+        "http://shalltry.com/"
+      ],
+      "initial_registrable_domain": "shalltry.com"
+    },
+    {
+      "website_id": "T0000367",
+      "tranco_rank": 367,
+      "original_domain": "gitlab.com",
+      "original_url": "https://gitlab.com/",
+      "candidate_urls": [
+        "https://gitlab.com/",
+        "https://www.gitlab.com/",
+        "http://gitlab.com/"
+      ],
+      "initial_registrable_domain": "gitlab.com"
+    },
+    {
+      "website_id": "T0000368",
+      "tranco_rank": 368,
+      "original_domain": "tp-link.com",
+      "original_url": "https://tp-link.com/",
+      "candidate_urls": [
+        "https://tp-link.com/",
+        "https://www.tp-link.com/",
+        "http://tp-link.com/"
+      ],
+      "initial_registrable_domain": "tp-link.com"
+    },
+    {
+      "website_id": "T0000369",
+      "tranco_rank": 369,
+      "original_domain": "washingtonpost.com",
+      "original_url": "https://washingtonpost.com/",
+      "candidate_urls": [
+        "https://washingtonpost.com/",
+        "https://www.washingtonpost.com/",
+        "http://washingtonpost.com/"
+      ],
+      "initial_registrable_domain": "washingtonpost.com"
+    },
+    {
+      "website_id": "T0000370",
+      "tranco_rank": 370,
+      "original_domain": "tradingview.com",
+      "original_url": "https://tradingview.com/",
+      "candidate_urls": [
+        "https://tradingview.com/",
+        "https://www.tradingview.com/",
+        "http://tradingview.com/"
+      ],
+      "initial_registrable_domain": "tradingview.com"
+    },
+    {
+      "website_id": "T0000371",
+      "tranco_rank": 371,
+      "original_domain": "selectel.ru",
+      "original_url": "https://selectel.ru/",
+      "candidate_urls": [
+        "https://selectel.ru/",
+        "https://www.selectel.ru/",
+        "http://selectel.ru/"
+      ],
+      "initial_registrable_domain": "selectel.ru"
+    },
+    {
+      "website_id": "T0000372",
+      "tranco_rank": 372,
+      "original_domain": "zendesk.com",
+      "original_url": "https://zendesk.com/",
+      "candidate_urls": [
+        "https://zendesk.com/",
+        "https://www.zendesk.com/",
+        "http://zendesk.com/"
+      ],
+      "initial_registrable_domain": "zendesk.com"
+    },
+    {
+      "website_id": "T0000373",
+      "tranco_rank": 373,
+      "original_domain": "cookiedatabase.org",
+      "original_url": "https://cookiedatabase.org/",
+      "candidate_urls": [
+        "https://cookiedatabase.org/",
+        "https://www.cookiedatabase.org/",
+        "http://cookiedatabase.org/"
+      ],
+      "initial_registrable_domain": "cookiedatabase.org"
+    },
+    {
+      "website_id": "T0000374",
+      "tranco_rank": 374,
+      "original_domain": "allawnos.com",
+      "original_url": "https://allawnos.com/",
+      "candidate_urls": [
+        "https://allawnos.com/",
+        "https://www.allawnos.com/",
+        "http://allawnos.com/"
+      ],
+      "initial_registrable_domain": "allawnos.com"
+    },
+    {
+      "website_id": "T0000375",
+      "tranco_rank": 375,
+      "original_domain": "opendns.com",
+      "original_url": "https://opendns.com/",
+      "candidate_urls": [
+        "https://opendns.com/",
+        "https://www.opendns.com/",
+        "http://opendns.com/"
+      ],
+      "initial_registrable_domain": "opendns.com"
+    },
+    {
+      "website_id": "T0000376",
+      "tranco_rank": 376,
+      "original_domain": "brave.com",
+      "original_url": "https://brave.com/",
+      "candidate_urls": [
+        "https://brave.com/",
+        "https://www.brave.com/",
+        "http://brave.com/"
+      ],
+      "initial_registrable_domain": "brave.com"
+    },
+    {
+      "website_id": "T0000377",
+      "tranco_rank": 377,
+      "original_domain": "netangels.ru",
+      "original_url": "https://netangels.ru/",
+      "candidate_urls": [
+        "https://netangels.ru/",
+        "https://www.netangels.ru/",
+        "http://netangels.ru/"
+      ],
+      "initial_registrable_domain": "netangels.ru"
+    },
+    {
+      "website_id": "T0000378",
+      "tranco_rank": 378,
+      "original_domain": "nvidia.com",
+      "original_url": "https://nvidia.com/",
+      "candidate_urls": [
+        "https://nvidia.com/",
+        "https://www.nvidia.com/",
+        "http://nvidia.com/"
+      ],
+      "initial_registrable_domain": "nvidia.com"
+    },
+    {
+      "website_id": "T0000379",
+      "tranco_rank": 379,
+      "original_domain": "issuu.com",
+      "original_url": "https://issuu.com/",
+      "candidate_urls": [
+        "https://issuu.com/",
+        "https://www.issuu.com/",
+        "http://issuu.com/"
+      ],
+      "initial_registrable_domain": "issuu.com"
+    },
+    {
+      "website_id": "T0000380",
+      "tranco_rank": 380,
+      "original_domain": "datadoghq.com",
+      "original_url": "https://datadoghq.com/",
+      "candidate_urls": [
+        "https://datadoghq.com/",
+        "https://www.datadoghq.com/",
+        "http://datadoghq.com/"
+      ],
+      "initial_registrable_domain": "datadoghq.com"
+    },
+    {
+      "website_id": "T0000381",
+      "tranco_rank": 381,
+      "original_domain": "dnspod.net",
+      "original_url": "https://dnspod.net/",
+      "candidate_urls": [
+        "https://dnspod.net/",
+        "https://www.dnspod.net/",
+        "http://dnspod.net/"
+      ],
+      "initial_registrable_domain": "dnspod.net"
+    },
+    {
+      "website_id": "T0000382",
+      "tranco_rank": 382,
+      "original_domain": "plesk.com",
+      "original_url": "https://plesk.com/",
+      "candidate_urls": [
+        "https://plesk.com/",
+        "https://www.plesk.com/",
+        "http://plesk.com/"
+      ],
+      "initial_registrable_domain": "plesk.com"
+    },
+    {
+      "website_id": "T0000383",
+      "tranco_rank": 383,
+      "original_domain": "bloomberg.com",
+      "original_url": "https://bloomberg.com/",
+      "candidate_urls": [
+        "https://bloomberg.com/",
+        "https://www.bloomberg.com/",
+        "http://bloomberg.com/"
+      ],
+      "initial_registrable_domain": "bloomberg.com"
+    },
+    {
+      "website_id": "T0000384",
+      "tranco_rank": 384,
+      "original_domain": "stanford.edu",
+      "original_url": "https://stanford.edu/",
+      "candidate_urls": [
+        "https://stanford.edu/",
+        "https://www.stanford.edu/",
+        "http://stanford.edu/"
+      ],
+      "initial_registrable_domain": "stanford.edu"
+    },
+    {
+      "website_id": "T0000385",
+      "tranco_rank": 385,
+      "original_domain": "volcfcdndvs.com",
+      "original_url": "https://volcfcdndvs.com/",
+      "candidate_urls": [
+        "https://volcfcdndvs.com/",
+        "https://www.volcfcdndvs.com/",
+        "http://volcfcdndvs.com/"
+      ],
+      "initial_registrable_domain": "volcfcdndvs.com"
+    },
+    {
+      "website_id": "T0000386",
+      "tranco_rank": 386,
+      "original_domain": "googletagservices.com",
+      "original_url": "https://googletagservices.com/",
+      "candidate_urls": [
+        "https://googletagservices.com/",
+        "https://www.googletagservices.com/",
+        "http://googletagservices.com/"
+      ],
+      "initial_registrable_domain": "googletagservices.com"
+    },
+    {
+      "website_id": "T0000387",
+      "tranco_rank": 387,
+      "original_domain": "live-video.net",
+      "original_url": "https://live-video.net/",
+      "candidate_urls": [
+        "https://live-video.net/",
+        "https://www.live-video.net/",
+        "http://live-video.net/"
+      ],
+      "initial_registrable_domain": "live-video.net"
+    },
+    {
+      "website_id": "T0000388",
+      "tranco_rank": 388,
+      "original_domain": "tagomi.com",
+      "original_url": "https://tagomi.com/",
+      "candidate_urls": [
+        "https://tagomi.com/",
+        "https://www.tagomi.com/",
+        "http://tagomi.com/"
+      ],
+      "initial_registrable_domain": "tagomi.com"
+    },
+    {
+      "website_id": "T0000389",
+      "tranco_rank": 389,
+      "original_domain": "wsj.com",
+      "original_url": "https://wsj.com/",
+      "candidate_urls": [
+        "https://wsj.com/",
+        "https://www.wsj.com/",
+        "http://wsj.com/"
+      ],
+      "initial_registrable_domain": "wsj.com"
+    },
+    {
+      "website_id": "T0000390",
+      "tranco_rank": 390,
+      "original_domain": "firefox-portal-detection.com",
+      "original_url": "https://firefox-portal-detection.com/",
+      "candidate_urls": [
+        "https://firefox-portal-detection.com/",
+        "https://www.firefox-portal-detection.com/",
+        "http://firefox-portal-detection.com/"
+      ],
+      "initial_registrable_domain": "firefox-portal-detection.com"
+    },
+    {
+      "website_id": "T0000391",
+      "tranco_rank": 391,
+      "original_domain": "doubleverify.com",
+      "original_url": "https://doubleverify.com/",
+      "candidate_urls": [
+        "https://doubleverify.com/",
+        "https://www.doubleverify.com/",
+        "http://doubleverify.com/"
+      ],
+      "initial_registrable_domain": "doubleverify.com"
+    },
+    {
+      "website_id": "T0000392",
+      "tranco_rank": 392,
+      "original_domain": "xcal.tv",
+      "original_url": "https://xcal.tv/",
+      "candidate_urls": [
+        "https://xcal.tv/",
+        "https://www.xcal.tv/",
+        "http://xcal.tv/"
+      ],
+      "initial_registrable_domain": "xcal.tv"
+    },
+    {
+      "website_id": "T0000393",
+      "tranco_rank": 393,
+      "original_domain": "samsungcloudsolution.com",
+      "original_url": "https://samsungcloudsolution.com/",
+      "candidate_urls": [
+        "https://samsungcloudsolution.com/",
+        "https://www.samsungcloudsolution.com/",
+        "http://samsungcloudsolution.com/"
+      ],
+      "initial_registrable_domain": "samsungcloudsolution.com"
+    },
+    {
+      "website_id": "T0000394",
+      "tranco_rank": 394,
+      "original_domain": "gandi-ns.fr",
+      "original_url": "https://gandi-ns.fr/",
+      "candidate_urls": [
+        "https://gandi-ns.fr/",
+        "https://www.gandi-ns.fr/",
+        "http://gandi-ns.fr/"
+      ],
+      "initial_registrable_domain": "gandi-ns.fr"
+    },
+    {
+      "website_id": "T0000395",
+      "tranco_rank": 395,
+      "original_domain": "cdnbuild.net",
+      "original_url": "https://cdnbuild.net/",
+      "candidate_urls": [
+        "https://cdnbuild.net/",
+        "https://www.cdnbuild.net/",
+        "http://cdnbuild.net/"
+      ],
+      "initial_registrable_domain": "cdnbuild.net"
+    },
+    {
+      "website_id": "T0000396",
+      "tranco_rank": 396,
+      "original_domain": "tiktokv.us",
+      "original_url": "https://tiktokv.us/",
+      "candidate_urls": [
+        "https://tiktokv.us/",
+        "https://www.tiktokv.us/",
+        "http://tiktokv.us/"
+      ],
+      "initial_registrable_domain": "tiktokv.us"
+    },
+    {
+      "website_id": "T0000397",
+      "tranco_rank": 397,
+      "original_domain": "yandex.com",
+      "original_url": "https://yandex.com/",
+      "candidate_urls": [
+        "https://yandex.com/",
+        "https://www.yandex.com/",
+        "http://yandex.com/"
+      ],
+      "initial_registrable_domain": "yandex.com"
+    },
+    {
+      "website_id": "T0000398",
+      "tranco_rank": 398,
+      "original_domain": "globo.com",
+      "original_url": "https://globo.com/",
+      "candidate_urls": [
+        "https://globo.com/",
+        "https://www.globo.com/",
+        "http://globo.com/"
+      ],
+      "initial_registrable_domain": "globo.com"
+    },
+    {
+      "website_id": "T0000399",
+      "tranco_rank": 399,
+      "original_domain": "amazontrust.com",
+      "original_url": "https://amazontrust.com/",
+      "candidate_urls": [
+        "https://amazontrust.com/",
+        "https://www.amazontrust.com/",
+        "http://amazontrust.com/"
+      ],
+      "initial_registrable_domain": "amazontrust.com"
+    },
+    {
+      "website_id": "T0000400",
+      "tranco_rank": 400,
+      "original_domain": "google.cn",
+      "original_url": "https://google.cn/",
+      "candidate_urls": [
+        "https://google.cn/",
+        "https://www.google.cn/",
+        "http://google.cn/"
+      ],
+      "initial_registrable_domain": "google.cn"
+    },
+    {
+      "website_id": "T0000401",
+      "tranco_rank": 401,
+      "original_domain": "w2rt6byl5nf1opmc-a.com",
+      "original_url": "https://w2rt6byl5nf1opmc-a.com/",
+      "candidate_urls": [
+        "https://w2rt6byl5nf1opmc-a.com/",
+        "https://www.w2rt6byl5nf1opmc-a.com/",
+        "http://w2rt6byl5nf1opmc-a.com/"
+      ],
+      "initial_registrable_domain": "w2rt6byl5nf1opmc-a.com"
+    },
+    {
+      "website_id": "T0000402",
+      "tranco_rank": 402,
+      "original_domain": "amazon.de",
+      "original_url": "https://amazon.de/",
+      "candidate_urls": [
+        "https://amazon.de/",
+        "https://www.amazon.de/",
+        "http://amazon.de/"
+      ],
+      "initial_registrable_domain": "amazon.de"
+    },
+    {
+      "website_id": "T0000403",
+      "tranco_rank": 403,
+      "original_domain": "calendly.com",
+      "original_url": "https://calendly.com/",
+      "candidate_urls": [
+        "https://calendly.com/",
+        "https://www.calendly.com/",
+        "http://calendly.com/"
+      ],
+      "initial_registrable_domain": "calendly.com"
+    },
+    {
+      "website_id": "T0000404",
+      "tranco_rank": 404,
+      "original_domain": "bsky.app",
+      "original_url": "https://bsky.app/",
+      "candidate_urls": [
+        "https://bsky.app/",
+        "https://www.bsky.app/",
+        "http://bsky.app/"
+      ],
+      "initial_registrable_domain": "bsky.app"
+    },
+    {
+      "website_id": "T0000405",
+      "tranco_rank": 405,
+      "original_domain": "quickconnect.to",
+      "original_url": "https://quickconnect.to/",
+      "candidate_urls": [
+        "https://quickconnect.to/",
+        "https://www.quickconnect.to/",
+        "http://quickconnect.to/"
+      ],
+      "initial_registrable_domain": "quickconnect.to"
+    },
+    {
+      "website_id": "T0000406",
+      "tranco_rank": 406,
+      "original_domain": "espn.com",
+      "original_url": "https://espn.com/",
+      "candidate_urls": [
+        "https://espn.com/",
+        "https://www.espn.com/",
+        "http://espn.com/"
+      ],
+      "initial_registrable_domain": "espn.com"
+    },
+    {
+      "website_id": "T0000407",
+      "tranco_rank": 407,
+      "original_domain": "online-metrix.net",
+      "original_url": "https://online-metrix.net/",
+      "candidate_urls": [
+        "https://online-metrix.net/",
+        "https://www.online-metrix.net/",
+        "http://online-metrix.net/"
+      ],
+      "initial_registrable_domain": "online-metrix.net"
+    },
+    {
+      "website_id": "T0000408",
+      "tranco_rank": 408,
+      "original_domain": "expireddomains.com",
+      "original_url": "https://expireddomains.com/",
+      "candidate_urls": [
+        "https://expireddomains.com/",
+        "https://www.expireddomains.com/",
+        "http://expireddomains.com/"
+      ],
+      "initial_registrable_domain": "expireddomains.com"
+    },
+    {
+      "website_id": "T0000409",
+      "tranco_rank": 409,
+      "original_domain": "nflxvideo.net",
+      "original_url": "https://nflxvideo.net/",
+      "candidate_urls": [
+        "https://nflxvideo.net/",
+        "https://www.nflxvideo.net/",
+        "http://nflxvideo.net/"
+      ],
+      "initial_registrable_domain": "nflxvideo.net"
+    },
+    {
+      "website_id": "T0000410",
+      "tranco_rank": 410,
+      "original_domain": "ibyteimg.com",
+      "original_url": "https://ibyteimg.com/",
+      "candidate_urls": [
+        "https://ibyteimg.com/",
+        "https://www.ibyteimg.com/",
+        "http://ibyteimg.com/"
+      ],
+      "initial_registrable_domain": "ibyteimg.com"
+    },
+    {
+      "website_id": "T0000411",
+      "tranco_rank": 411,
+      "original_domain": "shopifysvc.com",
+      "original_url": "https://shopifysvc.com/",
+      "candidate_urls": [
+        "https://shopifysvc.com/",
+        "https://www.shopifysvc.com/",
+        "http://shopifysvc.com/"
+      ],
+      "initial_registrable_domain": "shopifysvc.com"
+    },
+    {
+      "website_id": "T0000412",
+      "tranco_rank": 412,
+      "original_domain": "timeweb.ru",
+      "original_url": "https://timeweb.ru/",
+      "candidate_urls": [
+        "https://timeweb.ru/",
+        "https://www.timeweb.ru/",
+        "http://timeweb.ru/"
+      ],
+      "initial_registrable_domain": "timeweb.ru"
+    },
+    {
+      "website_id": "T0000413",
+      "tranco_rank": 413,
+      "original_domain": "whecloud.com",
+      "original_url": "https://whecloud.com/",
+      "candidate_urls": [
+        "https://whecloud.com/",
+        "https://www.whecloud.com/",
+        "http://whecloud.com/"
+      ],
+      "initial_registrable_domain": "whecloud.com"
+    },
+    {
+      "website_id": "T0000414",
+      "tranco_rank": 414,
+      "original_domain": "vkuser.net",
+      "original_url": "https://vkuser.net/",
+      "candidate_urls": [
+        "https://vkuser.net/",
+        "https://www.vkuser.net/",
+        "http://vkuser.net/"
+      ],
+      "initial_registrable_domain": "vkuser.net"
+    },
+    {
+      "website_id": "T0000415",
+      "tranco_rank": 415,
+      "original_domain": "skyhigh.cloud",
+      "original_url": "https://skyhigh.cloud/",
+      "candidate_urls": [
+        "https://skyhigh.cloud/",
+        "https://www.skyhigh.cloud/",
+        "http://skyhigh.cloud/"
+      ],
+      "initial_registrable_domain": "skyhigh.cloud"
+    },
+    {
+      "website_id": "T0000416",
+      "tranco_rank": 416,
+      "original_domain": "indeed.com",
+      "original_url": "https://indeed.com/",
+      "candidate_urls": [
+        "https://indeed.com/",
+        "https://www.indeed.com/",
+        "http://indeed.com/"
+      ],
+      "initial_registrable_domain": "indeed.com"
+    },
+    {
+      "website_id": "T0000417",
+      "tranco_rank": 417,
+      "original_domain": "unsplash.com",
+      "original_url": "https://unsplash.com/",
+      "candidate_urls": [
+        "https://unsplash.com/",
+        "https://www.unsplash.com/",
+        "http://unsplash.com/"
+      ],
+      "initial_registrable_domain": "unsplash.com"
+    },
+    {
+      "website_id": "T0000418",
+      "tranco_rank": 418,
+      "original_domain": "scdn.co",
+      "original_url": "https://scdn.co/",
+      "candidate_urls": [
+        "https://scdn.co/",
+        "https://www.scdn.co/",
+        "http://scdn.co/"
+      ],
+      "initial_registrable_domain": "scdn.co"
+    },
+    {
+      "website_id": "T0000419",
+      "tranco_rank": 419,
+      "original_domain": "dropcatch.com",
+      "original_url": "https://dropcatch.com/",
+      "candidate_urls": [
+        "https://dropcatch.com/",
+        "https://www.dropcatch.com/",
+        "http://dropcatch.com/"
+      ],
+      "initial_registrable_domain": "dropcatch.com"
+    },
+    {
+      "website_id": "T0000420",
+      "tranco_rank": 420,
+      "original_domain": "kwai-pro.com",
+      "original_url": "https://kwai-pro.com/",
+      "candidate_urls": [
+        "https://kwai-pro.com/",
+        "https://www.kwai-pro.com/",
+        "http://kwai-pro.com/"
+      ],
+      "initial_registrable_domain": "kwai-pro.com"
+    },
+    {
+      "website_id": "T0000421",
+      "tranco_rank": 421,
+      "original_domain": "bluehost.com",
+      "original_url": "https://bluehost.com/",
+      "candidate_urls": [
+        "https://bluehost.com/",
+        "https://www.bluehost.com/",
+        "http://bluehost.com/"
+      ],
+      "initial_registrable_domain": "bluehost.com"
+    },
+    {
+      "website_id": "T0000422",
+      "tranco_rank": 422,
+      "original_domain": "media.net",
+      "original_url": "https://media.net/",
+      "candidate_urls": [
+        "https://media.net/",
+        "https://www.media.net/",
+        "http://media.net/"
+      ],
+      "initial_registrable_domain": "media.net"
+    },
+    {
+      "website_id": "T0000423",
+      "tranco_rank": 423,
+      "original_domain": "go.com",
+      "original_url": "https://go.com/",
+      "candidate_urls": [
+        "https://go.com/",
+        "https://www.go.com/",
+        "http://go.com/"
+      ],
+      "initial_registrable_domain": "go.com"
+    },
+    {
+      "website_id": "T0000424",
+      "tranco_rank": 424,
+      "original_domain": "163.com",
+      "original_url": "https://163.com/",
+      "candidate_urls": [
+        "https://163.com/",
+        "https://www.163.com/",
+        "http://163.com/"
+      ],
+      "initial_registrable_domain": "163.com"
+    },
+    {
+      "website_id": "T0000425",
+      "tranco_rank": 425,
+      "original_domain": "duckduckgo.com",
+      "original_url": "https://duckduckgo.com/",
+      "candidate_urls": [
+        "https://duckduckgo.com/",
+        "https://www.duckduckgo.com/",
+        "http://duckduckgo.com/"
+      ],
+      "initial_registrable_domain": "duckduckgo.com"
+    },
+    {
+      "website_id": "T0000426",
+      "tranco_rank": 426,
+      "original_domain": "line.me",
+      "original_url": "https://line.me/",
+      "candidate_urls": [
+        "https://line.me/",
+        "https://www.line.me/",
+        "http://line.me/"
+      ],
+      "initial_registrable_domain": "line.me"
+    },
+    {
+      "website_id": "T0000427",
+      "tranco_rank": 427,
+      "original_domain": "netease.com",
+      "original_url": "https://netease.com/",
+      "candidate_urls": [
+        "https://netease.com/",
+        "https://www.netease.com/",
+        "http://netease.com/"
+      ],
+      "initial_registrable_domain": "netease.com"
+    },
+    {
+      "website_id": "T0000428",
+      "tranco_rank": 428,
+      "original_domain": "claude.ai",
+      "original_url": "https://claude.ai/",
+      "candidate_urls": [
+        "https://claude.ai/",
+        "https://www.claude.ai/",
+        "http://claude.ai/"
+      ],
+      "initial_registrable_domain": "claude.ai"
+    },
+    {
+      "website_id": "T0000429",
+      "tranco_rank": 429,
+      "original_domain": "heytapdl.com",
+      "original_url": "https://heytapdl.com/",
+      "candidate_urls": [
+        "https://heytapdl.com/",
+        "https://www.heytapdl.com/",
+        "http://heytapdl.com/"
+      ],
+      "initial_registrable_domain": "heytapdl.com"
+    },
+    {
+      "website_id": "T0000430",
+      "tranco_rank": 430,
+      "original_domain": "beian.gov.cn",
+      "original_url": "https://beian.gov.cn/",
+      "candidate_urls": [
+        "https://beian.gov.cn/",
+        "https://www.beian.gov.cn/",
+        "http://beian.gov.cn/"
+      ],
+      "initial_registrable_domain": "beian.gov.cn"
+    },
+    {
+      "website_id": "T0000431",
+      "tranco_rank": 431,
+      "original_domain": "icanhazip.com",
+      "original_url": "https://icanhazip.com/",
+      "candidate_urls": [
+        "https://icanhazip.com/",
+        "https://www.icanhazip.com/",
+        "http://icanhazip.com/"
+      ],
+      "initial_registrable_domain": "icanhazip.com"
+    },
+    {
+      "website_id": "T0000432",
+      "tranco_rank": 432,
+      "original_domain": "vecdnlb.com",
+      "original_url": "https://vecdnlb.com/",
+      "candidate_urls": [
+        "https://vecdnlb.com/",
+        "https://www.vecdnlb.com/",
+        "http://vecdnlb.com/"
+      ],
+      "initial_registrable_domain": "vecdnlb.com"
+    },
+    {
+      "website_id": "T0000433",
+      "tranco_rank": 433,
+      "original_domain": "steamcommunity.com",
+      "original_url": "https://steamcommunity.com/",
+      "candidate_urls": [
+        "https://steamcommunity.com/",
+        "https://www.steamcommunity.com/",
+        "http://steamcommunity.com/"
+      ],
+      "initial_registrable_domain": "steamcommunity.com"
+    },
+    {
+      "website_id": "T0000434",
+      "tranco_rank": 434,
+      "original_domain": "launchdarkly.com",
+      "original_url": "https://launchdarkly.com/",
+      "candidate_urls": [
+        "https://launchdarkly.com/",
+        "https://www.launchdarkly.com/",
+        "http://launchdarkly.com/"
+      ],
+      "initial_registrable_domain": "launchdarkly.com"
+    },
+    {
+      "website_id": "T0000435",
+      "tranco_rank": 435,
+      "original_domain": "dailymotion.com",
+      "original_url": "https://dailymotion.com/",
+      "candidate_urls": [
+        "https://dailymotion.com/",
+        "https://www.dailymotion.com/",
+        "http://dailymotion.com/"
+      ],
+      "initial_registrable_domain": "dailymotion.com"
+    },
+    {
+      "website_id": "T0000436",
+      "tranco_rank": 436,
+      "original_domain": "virginm.net",
+      "original_url": "https://virginm.net/",
+      "candidate_urls": [
+        "https://virginm.net/",
+        "https://www.virginm.net/",
+        "http://virginm.net/"
+      ],
+      "initial_registrable_domain": "virginm.net"
+    },
+    {
+      "website_id": "T0000437",
+      "tranco_rank": 437,
+      "original_domain": "temu.com",
+      "original_url": "https://temu.com/",
+      "candidate_urls": [
+        "https://temu.com/",
+        "https://www.temu.com/",
+        "http://temu.com/"
+      ],
+      "initial_registrable_domain": "temu.com"
+    },
+    {
+      "website_id": "T0000438",
+      "tranco_rank": 438,
+      "original_domain": "tiktokv.eu",
+      "original_url": "https://tiktokv.eu/",
+      "candidate_urls": [
+        "https://tiktokv.eu/",
+        "https://www.tiktokv.eu/",
+        "http://tiktokv.eu/"
+      ],
+      "initial_registrable_domain": "tiktokv.eu"
+    },
+    {
+      "website_id": "T0000439",
+      "tranco_rank": 439,
+      "original_domain": "mozilla.com",
+      "original_url": "https://mozilla.com/",
+      "candidate_urls": [
+        "https://mozilla.com/",
+        "https://www.mozilla.com/",
+        "http://mozilla.com/"
+      ],
+      "initial_registrable_domain": "mozilla.com"
+    },
+    {
+      "website_id": "T0000440",
+      "tranco_rank": 440,
+      "original_domain": "tiktokcdn-eu.com",
+      "original_url": "https://tiktokcdn-eu.com/",
+      "candidate_urls": [
+        "https://tiktokcdn-eu.com/",
+        "https://www.tiktokcdn-eu.com/",
+        "http://tiktokcdn-eu.com/"
+      ],
+      "initial_registrable_domain": "tiktokcdn-eu.com"
+    },
+    {
+      "website_id": "T0000441",
+      "tranco_rank": 441,
+      "original_domain": "supercell.com",
+      "original_url": "https://supercell.com/",
+      "candidate_urls": [
+        "https://supercell.com/",
+        "https://www.supercell.com/",
+        "http://supercell.com/"
+      ],
+      "initial_registrable_domain": "supercell.com"
+    },
+    {
+      "website_id": "T0000442",
+      "tranco_rank": 442,
+      "original_domain": "tencent-cloud.net",
+      "original_url": "https://tencent-cloud.net/",
+      "candidate_urls": [
+        "https://tencent-cloud.net/",
+        "https://www.tencent-cloud.net/",
+        "http://tencent-cloud.net/"
+      ],
+      "initial_registrable_domain": "tencent-cloud.net"
+    },
+    {
+      "website_id": "T0000443",
+      "tranco_rank": 443,
+      "original_domain": "intel.com",
+      "original_url": "https://intel.com/",
+      "candidate_urls": [
+        "https://intel.com/",
+        "https://www.intel.com/",
+        "http://intel.com/"
+      ],
+      "initial_registrable_domain": "intel.com"
+    },
+    {
+      "website_id": "T0000444",
+      "tranco_rank": 444,
+      "original_domain": "rocket-cdn.com",
+      "original_url": "https://rocket-cdn.com/",
+      "candidate_urls": [
+        "https://rocket-cdn.com/",
+        "https://www.rocket-cdn.com/",
+        "http://rocket-cdn.com/"
+      ],
+      "initial_registrable_domain": "rocket-cdn.com"
+    },
+    {
+      "website_id": "T0000445",
+      "tranco_rank": 445,
+      "original_domain": "pangle.io",
+      "original_url": "https://pangle.io/",
+      "candidate_urls": [
+        "https://pangle.io/",
+        "https://www.pangle.io/",
+        "http://pangle.io/"
+      ],
+      "initial_registrable_domain": "pangle.io"
+    },
+    {
+      "website_id": "T0000446",
+      "tranco_rank": 446,
+      "original_domain": "huawei.com",
+      "original_url": "https://huawei.com/",
+      "candidate_urls": [
+        "https://huawei.com/",
+        "https://www.huawei.com/",
+        "http://huawei.com/"
+      ],
+      "initial_registrable_domain": "huawei.com"
+    },
+    {
+      "website_id": "T0000447",
+      "tranco_rank": 447,
+      "original_domain": "kaspersky-labs.com",
+      "original_url": "https://kaspersky-labs.com/",
+      "candidate_urls": [
+        "https://kaspersky-labs.com/",
+        "https://www.kaspersky-labs.com/",
+        "http://kaspersky-labs.com/"
+      ],
+      "initial_registrable_domain": "kaspersky-labs.com"
+    },
+    {
+      "website_id": "T0000448",
+      "tranco_rank": 448,
+      "original_domain": "substack.com",
+      "original_url": "https://substack.com/",
+      "candidate_urls": [
+        "https://substack.com/",
+        "https://www.substack.com/",
+        "http://substack.com/"
+      ],
+      "initial_registrable_domain": "substack.com"
+    },
+    {
+      "website_id": "T0000449",
+      "tranco_rank": 449,
+      "original_domain": "paloaltonetworks.com",
+      "original_url": "https://paloaltonetworks.com/",
+      "candidate_urls": [
+        "https://paloaltonetworks.com/",
+        "https://www.paloaltonetworks.com/",
+        "http://paloaltonetworks.com/"
+      ],
+      "initial_registrable_domain": "paloaltonetworks.com"
+    },
+    {
+      "website_id": "T0000450",
+      "tranco_rank": 450,
+      "original_domain": "taobao.com",
+      "original_url": "https://taobao.com/",
+      "candidate_urls": [
+        "https://taobao.com/",
+        "https://www.taobao.com/",
+        "http://taobao.com/"
+      ],
+      "initial_registrable_domain": "taobao.com"
+    },
+    {
+      "website_id": "T0000451",
+      "tranco_rank": 451,
+      "original_domain": "awsglobalaccelerator.com",
+      "original_url": "https://awsglobalaccelerator.com/",
+      "candidate_urls": [
+        "https://awsglobalaccelerator.com/",
+        "https://www.awsglobalaccelerator.com/",
+        "http://awsglobalaccelerator.com/"
+      ],
+      "initial_registrable_domain": "awsglobalaccelerator.com"
+    },
+    {
+      "website_id": "T0000452",
+      "tranco_rank": 452,
+      "original_domain": "duolingo.com",
+      "original_url": "https://duolingo.com/",
+      "candidate_urls": [
+        "https://duolingo.com/",
+        "https://www.duolingo.com/",
+        "http://duolingo.com/"
+      ],
+      "initial_registrable_domain": "duolingo.com"
+    },
+    {
+      "website_id": "T0000453",
+      "tranco_rank": 453,
+      "original_domain": "adobe.net",
+      "original_url": "https://adobe.net/",
+      "candidate_urls": [
+        "https://adobe.net/",
+        "https://www.adobe.net/",
+        "http://adobe.net/"
+      ],
+      "initial_registrable_domain": "adobe.net"
+    },
+    {
+      "website_id": "T0000454",
+      "tranco_rank": 454,
+      "original_domain": "g.page",
+      "original_url": "https://g.page/",
+      "candidate_urls": [
+        "https://g.page/",
+        "https://www.g.page/",
+        "http://g.page/"
+      ],
+      "initial_registrable_domain": "g.page"
+    },
+    {
+      "website_id": "T0000455",
+      "tranco_rank": 455,
+      "original_domain": "h264.io",
+      "original_url": "https://h264.io/",
+      "candidate_urls": [
+        "https://h264.io/",
+        "https://www.h264.io/",
+        "http://h264.io/"
+      ],
+      "initial_registrable_domain": "h264.io"
+    },
+    {
+      "website_id": "T0000456",
+      "tranco_rank": 456,
+      "original_domain": "vercel-dns-016.com",
+      "original_url": "https://vercel-dns-016.com/",
+      "candidate_urls": [
+        "https://vercel-dns-016.com/",
+        "https://www.vercel-dns-016.com/",
+        "http://vercel-dns-016.com/"
+      ],
+      "initial_registrable_domain": "vercel-dns-016.com"
+    },
+    {
+      "website_id": "T0000457",
+      "tranco_rank": 457,
+      "original_domain": "businessinsider.com",
+      "original_url": "https://businessinsider.com/",
+      "candidate_urls": [
+        "https://businessinsider.com/",
+        "https://www.businessinsider.com/",
+        "http://businessinsider.com/"
+      ],
+      "initial_registrable_domain": "businessinsider.com"
+    },
+    {
+      "website_id": "T0000458",
+      "tranco_rank": 458,
+      "original_domain": "inner-active.mobi",
+      "original_url": "https://inner-active.mobi/",
+      "candidate_urls": [
+        "https://inner-active.mobi/",
+        "https://www.inner-active.mobi/",
+        "http://inner-active.mobi/"
+      ],
+      "initial_registrable_domain": "inner-active.mobi"
+    },
+    {
+      "website_id": "T0000459",
+      "tranco_rank": 459,
+      "original_domain": "yahoo.co.jp",
+      "original_url": "https://yahoo.co.jp/",
+      "candidate_urls": [
+        "https://yahoo.co.jp/",
+        "https://www.yahoo.co.jp/",
+        "http://yahoo.co.jp/"
+      ],
+      "initial_registrable_domain": "yahoo.co.jp"
+    },
+    {
+      "website_id": "T0000460",
+      "tranco_rank": 460,
+      "original_domain": "pixabay.com",
+      "original_url": "https://pixabay.com/",
+      "candidate_urls": [
+        "https://pixabay.com/",
+        "https://www.pixabay.com/",
+        "http://pixabay.com/"
+      ],
+      "initial_registrable_domain": "pixabay.com"
+    },
+    {
+      "website_id": "T0000461",
+      "tranco_rank": 461,
+      "original_domain": "aol.com",
+      "original_url": "https://aol.com/",
+      "candidate_urls": [
+        "https://aol.com/",
+        "https://www.aol.com/",
+        "http://aol.com/"
+      ],
+      "initial_registrable_domain": "aol.com"
+    },
+    {
+      "website_id": "T0000462",
+      "tranco_rank": 462,
+      "original_domain": "arxiv.org",
+      "original_url": "https://arxiv.org/",
+      "candidate_urls": [
+        "https://arxiv.org/",
+        "https://www.arxiv.org/",
+        "http://arxiv.org/"
+      ],
+      "initial_registrable_domain": "arxiv.org"
+    },
+    {
+      "website_id": "T0000463",
+      "tranco_rank": 463,
+      "original_domain": "aliexpress.com",
+      "original_url": "https://aliexpress.com/",
+      "candidate_urls": [
+        "https://aliexpress.com/",
+        "https://www.aliexpress.com/",
+        "http://aliexpress.com/"
+      ],
+      "initial_registrable_domain": "aliexpress.com"
+    },
+    {
+      "website_id": "T0000464",
+      "tranco_rank": 464,
+      "original_domain": "cloudns.net",
+      "original_url": "https://cloudns.net/",
+      "candidate_urls": [
+        "https://cloudns.net/",
+        "https://www.cloudns.net/",
+        "http://cloudns.net/"
+      ],
+      "initial_registrable_domain": "cloudns.net"
+    },
+    {
+      "website_id": "T0000465",
+      "tranco_rank": 465,
+      "original_domain": "myqcloud.com",
+      "original_url": "https://myqcloud.com/",
+      "candidate_urls": [
+        "https://myqcloud.com/",
+        "https://www.myqcloud.com/",
+        "http://myqcloud.com/"
+      ],
+      "initial_registrable_domain": "myqcloud.com"
+    },
+    {
+      "website_id": "T0000466",
+      "tranco_rank": 466,
+      "original_domain": "speedtest.net",
+      "original_url": "https://speedtest.net/",
+      "candidate_urls": [
+        "https://speedtest.net/",
+        "https://www.speedtest.net/",
+        "http://speedtest.net/"
+      ],
+      "initial_registrable_domain": "speedtest.net"
+    },
+    {
+      "website_id": "T0000467",
+      "tranco_rank": 467,
+      "original_domain": "fandom.com",
+      "original_url": "https://fandom.com/",
+      "candidate_urls": [
+        "https://fandom.com/",
+        "https://www.fandom.com/",
+        "http://fandom.com/"
+      ],
+      "initial_registrable_domain": "fandom.com"
+    },
+    {
+      "website_id": "T0000468",
+      "tranco_rank": 468,
+      "original_domain": "firetvcaptiveportal.com",
+      "original_url": "https://firetvcaptiveportal.com/",
+      "candidate_urls": [
+        "https://firetvcaptiveportal.com/",
+        "https://www.firetvcaptiveportal.com/",
+        "http://firetvcaptiveportal.com/"
+      ],
+      "initial_registrable_domain": "firetvcaptiveportal.com"
+    },
+    {
+      "website_id": "T0000469",
+      "tranco_rank": 469,
+      "original_domain": "eye4.cn",
+      "original_url": "https://eye4.cn/",
+      "candidate_urls": [
+        "https://eye4.cn/",
+        "https://www.eye4.cn/",
+        "http://eye4.cn/"
+      ],
+      "initial_registrable_domain": "eye4.cn"
+    },
+    {
+      "website_id": "T0000470",
+      "tranco_rank": 470,
+      "original_domain": "prodregistryv2.org",
+      "original_url": "https://prodregistryv2.org/",
+      "candidate_urls": [
+        "https://prodregistryv2.org/",
+        "https://www.prodregistryv2.org/",
+        "http://prodregistryv2.org/"
+      ],
+      "initial_registrable_domain": "prodregistryv2.org"
+    },
+    {
+      "website_id": "T0000471",
+      "tranco_rank": 471,
+      "original_domain": "byteglb.com",
+      "original_url": "https://byteglb.com/",
+      "candidate_urls": [
+        "https://byteglb.com/",
+        "https://www.byteglb.com/",
+        "http://byteglb.com/"
+      ],
+      "initial_registrable_domain": "byteglb.com"
+    },
+    {
+      "website_id": "T0000472",
+      "tranco_rank": 472,
+      "original_domain": "ui-dns.com",
+      "original_url": "https://ui-dns.com/",
+      "candidate_urls": [
+        "https://ui-dns.com/",
+        "https://www.ui-dns.com/",
+        "http://ui-dns.com/"
+      ],
+      "initial_registrable_domain": "ui-dns.com"
+    },
+    {
+      "website_id": "T0000473",
+      "tranco_rank": 473,
+      "original_domain": "cloudflareinsights.com",
+      "original_url": "https://cloudflareinsights.com/",
+      "candidate_urls": [
+        "https://cloudflareinsights.com/",
+        "https://www.cloudflareinsights.com/",
+        "http://cloudflareinsights.com/"
+      ],
+      "initial_registrable_domain": "cloudflareinsights.com"
+    },
+    {
+      "website_id": "T0000474",
+      "tranco_rank": 474,
+      "original_domain": "edgecdn.ru",
+      "original_url": "https://edgecdn.ru/",
+      "candidate_urls": [
+        "https://edgecdn.ru/",
+        "https://www.edgecdn.ru/",
+        "http://edgecdn.ru/"
+      ],
+      "initial_registrable_domain": "edgecdn.ru"
+    },
+    {
+      "website_id": "T0000475",
+      "tranco_rank": 475,
+      "original_domain": "wp.com",
+      "original_url": "https://wp.com/",
+      "candidate_urls": [
+        "https://wp.com/",
+        "https://www.wp.com/",
+        "http://wp.com/"
+      ],
+      "initial_registrable_domain": "wp.com"
+    },
+    {
+      "website_id": "T0000476",
+      "tranco_rank": 476,
+      "original_domain": "okta.com",
+      "original_url": "https://okta.com/",
+      "candidate_urls": [
+        "https://okta.com/",
+        "https://www.okta.com/",
+        "http://okta.com/"
+      ],
+      "initial_registrable_domain": "okta.com"
+    },
+    {
+      "website_id": "T0000477",
+      "tranco_rank": 477,
+      "original_domain": "dotaplabs.net",
+      "original_url": "https://dotaplabs.net/",
+      "candidate_urls": [
+        "https://dotaplabs.net/",
+        "https://www.dotaplabs.net/",
+        "http://dotaplabs.net/"
+      ],
+      "initial_registrable_domain": "dotaplabs.net"
+    },
+    {
+      "website_id": "T0000478",
+      "tranco_rank": 478,
+      "original_domain": "gcdn.co",
+      "original_url": "https://gcdn.co/",
+      "candidate_urls": [
+        "https://gcdn.co/",
+        "https://www.gcdn.co/",
+        "http://gcdn.co/"
+      ],
+      "initial_registrable_domain": "gcdn.co"
+    },
+    {
+      "website_id": "T0000479",
+      "tranco_rank": 479,
+      "original_domain": "goodreads.com",
+      "original_url": "https://goodreads.com/",
+      "candidate_urls": [
+        "https://goodreads.com/",
+        "https://www.goodreads.com/",
+        "http://goodreads.com/"
+      ],
+      "initial_registrable_domain": "goodreads.com"
+    },
+    {
+      "website_id": "T0000480",
+      "tranco_rank": 480,
+      "original_domain": "cnbc.com",
+      "original_url": "https://cnbc.com/",
+      "candidate_urls": [
+        "https://cnbc.com/",
+        "https://www.cnbc.com/",
+        "http://cnbc.com/"
+      ],
+      "initial_registrable_domain": "cnbc.com"
+    },
+    {
+      "website_id": "T0000481",
+      "tranco_rank": 481,
+      "original_domain": "walmart.com",
+      "original_url": "https://walmart.com/",
+      "candidate_urls": [
+        "https://walmart.com/",
+        "https://www.walmart.com/",
+        "http://walmart.com/"
+      ],
+      "initial_registrable_domain": "walmart.com"
+    },
+    {
+      "website_id": "T0000482",
+      "tranco_rank": 482,
+      "original_domain": "kwai.net",
+      "original_url": "https://kwai.net/",
+      "candidate_urls": [
+        "https://kwai.net/",
+        "https://www.kwai.net/",
+        "http://kwai.net/"
+      ],
+      "initial_registrable_domain": "kwai.net"
+    },
+    {
+      "website_id": "T0000483",
+      "tranco_rank": 483,
+      "original_domain": "ampproject.org",
+      "original_url": "https://ampproject.org/",
+      "candidate_urls": [
+        "https://ampproject.org/",
+        "https://www.ampproject.org/",
+        "http://ampproject.org/"
+      ],
+      "initial_registrable_domain": "ampproject.org"
+    },
+    {
+      "website_id": "T0000484",
+      "tranco_rank": 484,
+      "original_domain": "chinamobile.com",
+      "original_url": "https://chinamobile.com/",
+      "candidate_urls": [
+        "https://chinamobile.com/",
+        "https://www.chinamobile.com/",
+        "http://chinamobile.com/"
+      ],
+      "initial_registrable_domain": "chinamobile.com"
+    },
+    {
+      "website_id": "T0000485",
+      "tranco_rank": 485,
+      "original_domain": "ietf.org",
+      "original_url": "https://ietf.org/",
+      "candidate_urls": [
+        "https://ietf.org/",
+        "https://www.ietf.org/",
+        "http://ietf.org/"
+      ],
+      "initial_registrable_domain": "ietf.org"
+    },
+    {
+      "website_id": "T0000486",
+      "tranco_rank": 486,
+      "original_domain": "statista.com",
+      "original_url": "https://statista.com/",
+      "candidate_urls": [
+        "https://statista.com/",
+        "https://www.statista.com/",
+        "http://statista.com/"
+      ],
+      "initial_registrable_domain": "statista.com"
+    },
+    {
+      "website_id": "T0000487",
+      "tranco_rank": 487,
+      "original_domain": "list-manage.com",
+      "original_url": "https://list-manage.com/",
+      "candidate_urls": [
+        "https://list-manage.com/",
+        "https://www.list-manage.com/",
+        "http://list-manage.com/"
+      ],
+      "initial_registrable_domain": "list-manage.com"
+    },
+    {
+      "website_id": "T0000488",
+      "tranco_rank": 488,
+      "original_domain": "branch.io",
+      "original_url": "https://branch.io/",
+      "candidate_urls": [
+        "https://branch.io/",
+        "https://www.branch.io/",
+        "http://branch.io/"
+      ],
+      "initial_registrable_domain": "branch.io"
+    },
+    {
+      "website_id": "T0000489",
+      "tranco_rank": 489,
+      "original_domain": "quora.com",
+      "original_url": "https://quora.com/",
+      "candidate_urls": [
+        "https://quora.com/",
+        "https://www.quora.com/",
+        "http://quora.com/"
+      ],
+      "initial_registrable_domain": "quora.com"
+    },
+    {
+      "website_id": "T0000490",
+      "tranco_rank": 490,
+      "original_domain": "wswebcdn.com",
+      "original_url": "https://wswebcdn.com/",
+      "candidate_urls": [
+        "https://wswebcdn.com/",
+        "https://www.wswebcdn.com/",
+        "http://wswebcdn.com/"
+      ],
+      "initial_registrable_domain": "wswebcdn.com"
+    },
+    {
+      "website_id": "T0000491",
+      "tranco_rank": 491,
+      "original_domain": "dual-s-msedge.net",
+      "original_url": "https://dual-s-msedge.net/",
+      "candidate_urls": [
+        "https://dual-s-msedge.net/",
+        "https://www.dual-s-msedge.net/",
+        "http://dual-s-msedge.net/"
+      ],
+      "initial_registrable_domain": "dual-s-msedge.net"
+    },
+    {
+      "website_id": "T0000492",
+      "tranco_rank": 492,
+      "original_domain": "markmonitor.com",
+      "original_url": "https://markmonitor.com/",
+      "candidate_urls": [
+        "https://markmonitor.com/",
+        "https://www.markmonitor.com/",
+        "http://markmonitor.com/"
+      ],
+      "initial_registrable_domain": "markmonitor.com"
+    },
+    {
+      "website_id": "T0000493",
+      "tranco_rank": 493,
+      "original_domain": "twc.com",
+      "original_url": "https://twc.com/",
+      "candidate_urls": [
+        "https://twc.com/",
+        "https://www.twc.com/",
+        "http://twc.com/"
+      ],
+      "initial_registrable_domain": "twc.com"
+    },
+    {
+      "website_id": "T0000494",
+      "tranco_rank": 494,
+      "original_domain": "amazon.co.jp",
+      "original_url": "https://amazon.co.jp/",
+      "candidate_urls": [
+        "https://amazon.co.jp/",
+        "https://www.amazon.co.jp/",
+        "http://amazon.co.jp/"
+      ],
+      "initial_registrable_domain": "amazon.co.jp"
+    },
+    {
+      "website_id": "T0000495",
+      "tranco_rank": 495,
+      "original_domain": "mcafee.com",
+      "original_url": "https://mcafee.com/",
+      "candidate_urls": [
+        "https://mcafee.com/",
+        "https://www.mcafee.com/",
+        "http://mcafee.com/"
+      ],
+      "initial_registrable_domain": "mcafee.com"
+    },
+    {
+      "website_id": "T0000496",
+      "tranco_rank": 496,
+      "original_domain": "addtoany.com",
+      "original_url": "https://addtoany.com/",
+      "candidate_urls": [
+        "https://addtoany.com/",
+        "https://www.addtoany.com/",
+        "http://addtoany.com/"
+      ],
+      "initial_registrable_domain": "addtoany.com"
+    },
+    {
+      "website_id": "T0000497",
+      "tranco_rank": 497,
+      "original_domain": "grammarly.com",
+      "original_url": "https://grammarly.com/",
+      "candidate_urls": [
+        "https://grammarly.com/",
+        "https://www.grammarly.com/",
+        "http://grammarly.com/"
+      ],
+      "initial_registrable_domain": "grammarly.com"
+    },
+    {
+      "website_id": "T0000498",
+      "tranco_rank": 498,
+      "original_domain": "shein.com",
+      "original_url": "https://shein.com/",
+      "candidate_urls": [
+        "https://shein.com/",
+        "https://www.shein.com/",
+        "http://shein.com/"
+      ],
+      "initial_registrable_domain": "shein.com"
+    },
+    {
+      "website_id": "T0000499",
+      "tranco_rank": 499,
+      "original_domain": "dynatrace.com",
+      "original_url": "https://dynatrace.com/",
+      "candidate_urls": [
+        "https://dynatrace.com/",
+        "https://www.dynatrace.com/",
+        "http://dynatrace.com/"
+      ],
+      "initial_registrable_domain": "dynatrace.com"
+    },
+    {
+      "website_id": "T0000500",
+      "tranco_rank": 500,
+      "original_domain": "impervadns.net",
+      "original_url": "https://impervadns.net/",
+      "candidate_urls": [
+        "https://impervadns.net/",
+        "https://www.impervadns.net/",
+        "http://impervadns.net/"
+      ],
+      "initial_registrable_domain": "impervadns.net"
+    }
+  ],
+  "status": {
+    "selected": 500,
+    "attempted": 500,
+    "completed_observed": 336,
+    "success": 251,
+    "http_error": 85,
+    "failed": 155,
+    "blocked_unsafe": 9,
+    "pending": 0,
+    "complete": true
+  },
+  "runs": [
+    {
+      "started_at": "2026-10-11T13:06:10+00:00",
+      "pending_at_start": 500,
+      "scheduled": 500,
+      "config": {
+        "workers": 3,
+        "headless": true,
+        "navigation_timeout_s": 30.0,
+        "load_event_timeout_s": 15.0,
+        "settle_s": 5.0,
+        "overall_timeout_s": 150.0,
+        "max_retries": 2,
+        "backoff_base_s": 3.0,
+        "max_retry_after_s": 30.0,
+        "inter_site_delay_s": 1.0,
+        "max_consecutive_server_errors": 20,
+        "viewport_width": 1366,
+        "viewport_height": 768,
+        "locale": "en-US",
+        "max_evidence_events": 25,
+        "max_path_chars": 200,
+        "launch_args": [
+          "--disable-quic",
+          "--force-webrtc-ip-handling-policy=disable_non_proxied_udp",
+          "--disable-background-networking"
+        ]
+      },
+      "finished_at": "2026-10-11T13:45:16+00:00",
+      "stop_reason": "completed"
+    }
+  ],
+  "updated_at": "2026-10-11T13:45:16+00:00",
+  "environment": {
+    "python": "3.14.7",
+    "platform": "Linux-7.1.13-200.fc44.x86_64-x86_64-with-glibc2.43",
+    "playwright": "1.63.0",
+    "browser": "chromium",
+    "browser_version": "153.0.8010.12",
+    "headless": true,
+    "user_agent": "Playwright Chromium default (headless)"
+  }
+}

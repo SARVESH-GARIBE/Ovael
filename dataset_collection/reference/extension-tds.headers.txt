@@ -1,0 +1,15 @@
+HTTP/2 200 
+server: nginx
+date: Sun, 11 Oct 2026 12:45:05 GMT
+content-type: application/json
+content-length: 1481745
+vary: Accept-Encoding
+last-modified: Mon, 21 Sep 2026 14:41:22 GMT
+etag: "584d5e04e38c06beffa36f1312705bf9"
+x-amz-server-side-encryption: AES256
+x-robots-tag: noindex
+expires: Sun, 11 Oct 2026 12:45:04 GMT
+cache-control: no-cache
+strict-transport-security: max-age=31536000
+accept-ranges: bytes
+
