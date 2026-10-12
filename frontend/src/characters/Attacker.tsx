@@ -8,7 +8,13 @@ import type { AttackerMood } from '../lib/mood';
  *   sneaky    eyes slide sideways, finger to the keys, tiny smile
  *   attacking evil grin, eyebrows in a V, typing fast, screen glow on the face
  *   blocked   frustrated: frown, raised brows, sweat drop, red screen
+ *
+ * Reactions play once per packet, on top of the mood:
+ *   send   a packet leaves: leans in, laptop screen flashes, wide grin, little "zap" lines
+ *   fail   Ovael stopped the packet: gritted teeth, angry brows, steam from the head
  */
+
+export type AttackerReaction = 'send' | 'fail' | null;
 
 const SKIN = '#f2b48a';
 const LID = '#b9785a';
@@ -30,7 +36,19 @@ const HAIR_BLOBS: Array<[number, number, number]> = [
   [16, -218, 12],
 ];
 
-export function Attacker({ mood, facing = 1 }: { mood: AttackerMood; facing?: 1 | -1 }) {
+export function Attacker({
+  mood,
+  facing = 1,
+  reaction = null,
+  reactionKey = 0,
+}: {
+  mood: AttackerMood;
+  facing?: 1 | -1;
+  reaction?: AttackerReaction;
+  reactionKey?: number;
+}) {
+  const send = reaction === 'send';
+  const fail = reaction === 'fail';
   const lid =
     mood === 'attacking' ? 0.55 : mood === 'blocked' ? 0.15 : mood === 'sneaky' ? 0.5 : 0.42;
   const look = mood === 'blocked' ? 0 : 4 * facing;
@@ -43,7 +61,8 @@ export function Attacker({ mood, facing = 1 }: { mood: AttackerMood; facing?: 1 
       <ellipse cx={0} cy={2} rx={34} ry={5} fill="#000" opacity={0.35} />
 
       <g
-        className="animate-breathe"
+        key={`body-${reactionKey}`}
+        className={send ? 'animate-lean' : fail ? 'animate-shake' : 'animate-breathe'}
         style={{ transformBox: 'fill-box', transformOrigin: 'center bottom' }}
       >
         {/* legs */}
@@ -105,7 +124,7 @@ export function Attacker({ mood, facing = 1 }: { mood: AttackerMood; facing?: 1 
             cx={0}
             cy={-95}
             r={5}
-            fill={screen}
+            fill={send ? '#d8ffe4' : fail ? '#E4572E' : screen}
             opacity={0.9}
             className={mood === 'attacking' ? 'animate-flicker' : undefined}
           />
@@ -171,7 +190,7 @@ export function Attacker({ mood, facing = 1 }: { mood: AttackerMood; facing?: 1 
 
         {/* eyebrows */}
         <g stroke={INK} strokeWidth={3} strokeLinecap="round">
-          {mood === 'attacking' ? (
+          {mood === 'attacking' || send || fail ? (
             <>
               <line x1={-20} y1={-186} x2={-4} y2={-180} />
               <line x1={24} y1={-186} x2={8} y2={-180} />
@@ -185,7 +204,25 @@ export function Attacker({ mood, facing = 1 }: { mood: AttackerMood; facing?: 1 
         </g>
 
         {/* mouth */}
-        {mood === 'attacking' ? (
+        {fail ? (
+          <g>
+            <rect
+              x={-8}
+              y={-152}
+              width={24}
+              height={9}
+              rx={3}
+              fill="#fff"
+              stroke={INK}
+              strokeWidth={2.2}
+            />
+            <path
+              d="M-8,-147.5 L16,-147.5 M0,-152 L0,-143 M8,-152 L8,-143"
+              stroke={INK}
+              strokeWidth={1.4}
+            />
+          </g>
+        ) : send || mood === 'attacking' ? (
           <g>
             <path
               d="M-8,-147 Q4,-132 18,-147 Z"
@@ -214,6 +251,41 @@ export function Attacker({ mood, facing = 1 }: { mood: AttackerMood; facing?: 1 
           />
         )}
       </g>
+
+      {/* send: zap lines from the laptop toward the victim */}
+      {send && (
+        <g
+          key={`zap-${reactionKey}`}
+          className="animate-burst"
+          style={{ transformBox: 'fill-box', transformOrigin: 'left center' }}
+        >
+          <g stroke="#7CF29A" strokeWidth={3} strokeLinecap="round">
+            <line x1={40} y1={-104} x2={56} y2={-112} />
+            <line x1={42} y1={-94} x2={60} y2={-94} />
+            <line x1={40} y1={-84} x2={56} y2={-76} />
+          </g>
+        </g>
+      )}
+      {/* fail: steam from the head */}
+      {fail && (
+        <g key={`steam-${reactionKey}`}>
+          {[-18, 4, 24].map((x, i) => (
+            <circle
+              key={x}
+              cx={x}
+              cy={-226}
+              r={7}
+              fill="#9c9a88"
+              className="animate-steam"
+              style={{
+                transformBox: 'fill-box',
+                transformOrigin: 'center',
+                animationDelay: `${i * 90}ms`,
+              }}
+            />
+          ))}
+        </g>
+      )}
 
       {/* blocked: sweat drop */}
       {mood === 'blocked' && (

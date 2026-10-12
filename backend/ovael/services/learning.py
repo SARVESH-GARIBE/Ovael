@@ -40,6 +40,56 @@ async def confirm(ctx: AppContext, item_id: str, label: str, note: str | None, a
     return item
 
 
+async def suggestions(ctx: AppContext, module: str, limit: int = 200) -> dict[str, dict]:
+    from ..learning_loop.suggest import suggest
+
+    async with ctx.db.read_session() as session:
+        pending = list(await session.scalars(
+            select(ReviewItem).where(ReviewItem.module == module, ReviewItem.status == "pending")
+            .order_by(ReviewItem.created_at.desc()).limit(limit)))
+        confirmed = list(await session.scalars(
+            select(ReviewItem).where(ReviewItem.module == module, ReviewItem.status == "confirmed")
+            .order_by(ReviewItem.reviewed_at.desc()).limit(1000)))
+    try:
+        bundle = ctx.registry.active(module)
+        benign, known = set(bundle.benign_labels), set(bundle.classes)
+    except Exception:
+        benign, known = {"benign"}, None
+    return await asyncio.to_thread(suggest, module, pending, confirmed, benign, known)
+
+
+async def confirm_batch(ctx: AppContext, decisions: list[tuple[str, str]], note: str | None,
+                        actor: str) -> dict:
+    """Confirm many items at once. Items that are no longer pending are skipped, not failed."""
+    labels = {item_id: label.strip().lower() for item_id, label in decisions}
+    async with ctx.db.session() as session:
+        items = list(await session.scalars(select(ReviewItem).where(ReviewItem.id.in_(list(labels)))))
+        done, modules = [], set()
+        for item in items:
+            if item.status != "pending":
+                continue
+            item.status, item.final_label, item.note = "confirmed", labels[item.id], note
+            item.reviewer, item.reviewed_at = actor, utcnow()
+            done.append(item)
+            modules.add(item.module)
+        session.add(AuditLog(actor=actor, action="review.confirm_batch", target=f"{len(done)} items",
+                             detail={"labels": _count(i.final_label for i in done)}))
+        await session.commit()
+        pending_counts = {m: await _unused_confirmed(session, m) for m in modules}
+    for m, n in pending_counts.items():
+        if n >= ctx.settings.retrain_min_new_samples:
+            await ctx.jobs.submit_retrain(m)
+    return {"confirmed": len(done), "skipped": len(decisions) - len(done),
+            "labels": _count(i.final_label for i in done)}
+
+
+def _count(values) -> dict[str, int]:
+    out: dict[str, int] = {}
+    for v in values:
+        out[v] = out.get(v, 0) + 1
+    return out
+
+
 async def reject(ctx: AppContext, item_id: str, note: str | None, actor: str) -> ReviewItem | None:
     async with ctx.db.session() as session:
         item = await session.get(ReviewItem, item_id)
