@@ -28,7 +28,10 @@ export function Victim({ mood }: { mood: VictimMood }) {
   return (
     <g aria-label={`victim, ${mood}`}>
       <ellipse cx={0} cy={2} rx={34} ry={5} fill="#000" opacity={0.35} />
-      <g className={shaking ? 'animate-shake' : undefined}>
+      <g
+        className={shaking ? 'animate-shake' : 'animate-breathe'}
+        style={{ transformBox: 'fill-box', transformOrigin: 'center bottom' }}
+      >
         {/* legs */}
         <g stroke={INK} strokeWidth={4} strokeLinecap="round">
           <line x1={-11} y1={-48} x2={-13} y2={-2} />
@@ -65,7 +68,10 @@ export function Victim({ mood }: { mood: VictimMood }) {
 
         {/* eyes */}
         {mood === 'scared' ? (
-          <g>
+          <g
+            className="animate-blink"
+            style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+          >
             <circle cx={-14} cy={-156} r={9} fill="#fff" stroke={INK} strokeWidth={2.5} />
             <circle cx={16} cy={-156} r={9} fill="#fff" stroke={INK} strokeWidth={2.5} />
             <circle cx={-15} cy={-155} r={2.5} fill={INK} />
@@ -77,7 +83,11 @@ export function Victim({ mood }: { mood: VictimMood }) {
             <path d="M10,-154 q6,-7 12,0" />
           </g>
         ) : (
-          <g fill={INK}>
+          <g
+            fill={INK}
+            className="animate-blink"
+            style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+          >
             <circle cx={-14} cy={-156} r={5} />
             <circle cx={16} cy={-156} r={5} />
           </g>

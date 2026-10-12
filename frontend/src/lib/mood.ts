@@ -18,9 +18,12 @@ export interface StageState {
   focus: LiveDetection | null; // the alert the stage is showing
 }
 
-export const MOOD_WINDOW_MS = 4000;
+/** How long an attack keeps the stage busy after its last flow (blocked attackers go quiet). */
+export const MOOD_WINDOW_MS = 8000;
+/** A lone "unusual" flow is a short blip, not a scene. */
+export const SUSPICIOUS_WINDOW_MS = 2500;
 /** The block usually lands within a second; hold the "attack" beat this long so it can be seen. */
-export const BLOCK_REVEAL_MS = 2000;
+export const BLOCK_REVEAL_MS = 3500;
 const ORDER: Record<RiskLevel, number> = { low: 0, suspicious: 1, medium: 2, high: 3 };
 
 export const CALM: StageState = {
@@ -38,7 +41,11 @@ export function deriveStage(
   blockedIps: Set<string>,
   now: number
 ): StageState {
-  const alerts = recent.filter((r) => now - r.at <= MOOD_WINDOW_MS && r.d.risk_level !== 'low');
+  const alerts = recent.filter(
+    (r) =>
+      r.d.risk_level !== 'low' &&
+      now - r.at <= (r.d.risk_level === 'suspicious' ? SUSPICIOUS_WINDOW_MS : MOOD_WINDOW_MS)
+  );
   if (alerts.length === 0) return CALM;
 
   // The most severe recent alert decides the mood; ties go to the newest.

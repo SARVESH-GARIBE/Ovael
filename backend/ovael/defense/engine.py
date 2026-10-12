@@ -73,6 +73,12 @@ class DefenseEngine:
         # Several instances can see the same flood at once; only the first may act.
         if not await self.cache.acquire(f"block:{src_ip}", 15):
             return None
+        # The database is the record: a block that outlived a cache flush or restart still counts.
+        existing = await session.scalar(select(DefenseAction.id).where(
+            DefenseAction.target_ip == src_ip, DefenseAction.status.in_(("applied", "simulated"))).limit(1))
+        if existing:
+            await self.cache.set_json(f"blocked:{src_ip}", {"action": existing}, ttl_s=7 * 24 * 3600)
+            return None
         mode = "agent" if self.settings.defense_mode == "agent" and self.settings.defense_agent_url else "simulate"
         action = DefenseAction(action="block", target_ip=src_ip, mode=mode, detection_id=detection_id,
                                incident_id=incident_id,
@@ -106,6 +112,14 @@ class DefenseEngine:
         await self.cache.release(f"block:{action.target_ip}")
         metrics.DEFENSE_ACTIONS.labels("undo", "done").inc()
         return action
+
+    async def warm(self, db) -> int:
+        """Load active blocks into the cache at startup, so live events report them correctly."""
+        async with db.session() as session:
+            blocks = await self.active_blocks(session)
+        for a in blocks:
+            await self.cache.set_json(f"blocked:{a.target_ip}", {"action": a.id}, ttl_s=7 * 24 * 3600)
+        return len(blocks)
 
     async def active_blocks(self, session) -> list[DefenseAction]:
         rows = await session.scalars(select(DefenseAction).where(DefenseAction.status.in_(("applied", "simulated"))))

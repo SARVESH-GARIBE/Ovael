@@ -190,3 +190,19 @@ export function usePromote() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['models'] }),
   });
 }
+
+export interface ModelSchema {
+  module: Module;
+  version: string;
+  threshold: number;
+  classes: string[];
+  features: Array<{ name: string; description: string; baseline: number | null }>;
+}
+
+export function useModelSchema(module: Module) {
+  return useQuery({
+    queryKey: ['models', module, 'schema'],
+    queryFn: () => getJson<ModelSchema>(`/api/models/${module}/schema`),
+    staleTime: 60_000,
+  });
+}

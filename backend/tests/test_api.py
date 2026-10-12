@@ -171,3 +171,18 @@ def test_admin_token_enforced(settings, path):
     with TestClient(create_app(settings)) as c:
         assert c.post(path).status_code == 401
         assert c.post(path, headers={"Authorization": "Bearer wrong"}).status_code == 401
+
+
+def test_model_schema_has_baseline(client):
+    s = client.get("/api/models/network/schema").json()
+    assert s["threshold"] > 0.5 and len(s["features"]) == 24
+    assert all("baseline" in f and f["description"] for f in s["features"])
+
+
+def test_block_survives_cache_loss(client, make_flow):
+    flood = [make_flow("dos_flood", seed=i) for i in range(30)]
+    assert post_flows(client, flood)["blocked_sources"]
+    ctx = client.app.state.ctx
+    ctx.cache._mem.clear()  # what a restart does to the in-process cache
+    post_flows(client, [make_flow("dos_flood", seed=200 + i) for i in range(30)])
+    assert len([a for a in client.get("/api/actions").json() if a["status"] == "simulated"]) == 1
