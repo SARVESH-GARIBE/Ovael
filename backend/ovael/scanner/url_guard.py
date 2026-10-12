@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import asyncio
 import ipaddress
+import re
 import socket
 from dataclasses import dataclass
 from urllib.parse import urlsplit, urlunsplit
@@ -53,6 +54,10 @@ def normalize(raw: str, max_length: int = 2048) -> CheckedURL:
     if len(raw) > max_length:
         raise UnsafeURL(f"URL is longer than {max_length} characters")
     if "://" not in raw:
+        if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 _-]*", raw):  # a bare name: "instagram", "Rummy Circle"
+            from .reputation import resolve_name  # noqa: PLC0415
+
+            raw = resolve_name(raw)
         raw = "https://" + raw
     parts = urlsplit(raw)
     if parts.scheme not in ("http", "https"):

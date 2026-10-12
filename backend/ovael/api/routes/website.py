@@ -24,10 +24,12 @@ async def create_scan(body: ScanCreate, request: Request, response: Response,
     return scan
 
 
-@router.get("/scans", response_model=list[ScanOut], summary="Recent scans")
+@router.get("/scans", response_model=list[ScanOut], summary="Recent scans (adult sites left out)")
 async def list_scans(ctx: AppContext = Depends(get_ctx), limit: int = Query(20, ge=1, le=100)) -> list[Scan]:
+    # The list is shared by everyone who opens the page, so adult sites someone scanned stay off it.
     async with ctx.db.read_session() as s:
-        return list(await s.scalars(select(Scan).order_by(Scan.created_at.desc()).limit(limit)))
+        recent = await s.scalars(select(Scan).order_by(Scan.created_at.desc()).limit(limit * 3))
+    return [sc for sc in recent if not ((sc.report or {}).get("smart") or {}).get("adult")][:limit]
 
 
 @router.get("/scans/{scan_id}", response_model=ScanDetail, summary="Scan status and finished report")

@@ -13,6 +13,8 @@ COPY backend/requirements.txt /app/backend/requirements.txt
 RUN pip install -r /app/backend/requirements.txt
 COPY backend/ovael /app/backend/ovael
 COPY backend/pyproject.toml /app/backend/
+# Tranco popularity list: resolves bare names ("rummycircle") and ranks sites in the smart report.
+COPY dataset_collection/top-1m.csv /app/dataset_collection/top-1m.csv
 WORKDIR /app/backend
 ENV OVAEL_MODEL_DIR=/models OVAEL_CRAWLER_PATH=/app/dataset_collection
 

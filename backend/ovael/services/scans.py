@@ -13,7 +13,7 @@ from ..core import metrics
 from ..core.context import AppContext
 from ..db.models import Detection, Scan, utcnow
 from ..scanner import url_guard
-from . import pipeline
+from . import pipeline, smart_report
 
 log = logging.getLogger(__name__)
 
@@ -83,12 +83,19 @@ async def run_scan(ctx: AppContext, scan_id: str) -> None:
         out = await _scan_features(ctx, scan)
         [detection] = await pipeline.process(ctx, "website", [{"features": out["features"], "meta": {}}],
                                              scan_id=scan.id, explain=True)
+        try:
+            out["report"]["smart"] = smart_report.compose(out["report"], detection)
+            if out["report"]["smart"]["adult"]:
+                out["report"]["title"] = None  # adult page titles are often explicit; keep them off the report
+        except Exception as exc:  # never lose the model's verdict over the narrative
+            log.warning("smart report for scan %s failed: %s", scan_id, exc)
         scan.status, scan.report, scan.detection_id = "completed", out["report"], detection.id
         await ctx.cache.set_json(_cache_key(scan.domain), {"detection_id": detection.id, "report": out["report"]},
                                  ctx.settings.scan_cache_ttl_s)
     except Exception as exc:
         log.warning("scan %s failed: %s", scan_id, exc)
         scan.status, scan.error = "failed", str(exc)[:500]
+        scan.report = await _offline_report(scan)
     finally:
         metrics.SCANS_RUNNING.dec()
     scan.finished_at = utcnow()
@@ -101,6 +108,20 @@ async def run_scan(ctx: AppContext, scan_id: str) -> None:
     payload = ScanOut.model_validate(scan).model_dump(mode="json")
     payload["detection"] = DetectionOut.model_validate(detection).model_dump(mode="json") if detection else None
     await ctx.bus.publish("scan_complete", payload)
+
+
+async def _offline_report(scan: Scan) -> dict:
+    """The page never loaded (down, ISP-blocked, timed out): still say what reputation lists know."""
+    from ..scanner import insights  # noqa: PLC0415
+
+    try:
+        checked = url_guard.normalize(scan.url)
+        report = {"insights": await insights.offline(checked.hostname, checked.domain)}
+        report["smart"] = smart_report.compose(report, None)
+        return report
+    except Exception as exc:
+        log.warning("offline report for scan %s failed: %s", scan.id, exc)
+        return {}
 
 
 async def load_detection(ctx: AppContext, detection_id: str | None) -> Detection | None:

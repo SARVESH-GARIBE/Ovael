@@ -56,6 +56,27 @@ DOM_IFRAMES_JS = """() => Array.from(document.querySelectorAll('iframe')).map(el
           srcdoc: el.hasAttribute('srcdoc'), sandbox: el.hasAttribute('sandbox')};
 })"""
 
+# Page content signals for the live smart report (backend). Kept in the attempt data only, never
+# written to the dataset: page text can be personal.
+PAGE_SIGNALS_JS = """() => {
+  const meta = n => { const el = document.querySelector(`meta[name="${n}" i], meta[property="${n}" i]`);
+                      return el && el.content ? el.content.slice(0, 500) : null; };
+  const forms = Array.from(document.forms).slice(0, 50);
+  return {
+    description: meta('description') || meta('og:description'),
+    site_name: meta('og:site_name'),
+    lang: document.documentElement.lang || null,
+    text_sample: document.body ? document.body.innerText.slice(0, 4000) : '',
+    password_inputs: document.querySelectorAll('input[type=password]').length,
+    card_inputs: document.querySelectorAll('input[autocomplete^="cc-"], input[name*="card" i], input[name*="cvv" i]').length,
+    form_count: forms.length,
+    form_actions: forms.map(f => f.action).filter(Boolean).slice(0, 20),
+  };
+}"""
+
+SECURITY_HEADERS = ("strict-transport-security", "content-security-policy", "x-frame-options",
+                    "x-content-type-options", "referrer-policy", "permissions-policy")
+
 
 _ID_TOKEN = re.compile(r"(?<![A-Za-z0-9])(?=[A-Za-z0-9]*\d)[A-Za-z0-9]{8,}(?![A-Za-z0-9])")
 
@@ -402,6 +423,8 @@ class Crawler:
                              "popups": popups[0], "downloads_blocked": downloads[0],
                              "blocked": proxy.blocked[:],
                              "attempt_seconds": round(time.monotonic() - t_attempt, 3)})
+            if cfg.collect_page_signals:
+                res.data["page_signals"] = await self._page_signals(page, resp)
             if not res.error_class:
                 res.ok = True
             return res
@@ -412,6 +435,23 @@ class Crawler:
                 except Exception:
                     pass
             await proxy.stop()
+
+    @staticmethod
+    async def _page_signals(page, resp) -> dict:
+        """Security headers, TLS certificate and page-content signals of the main document."""
+        out: dict = {"security_headers": None, "tls": None, "content": None}
+        if resp is not None:
+            out["security_headers"] = {h: (resp.headers.get(h) or None) and resp.headers[h][:300]
+                                       for h in SECURITY_HEADERS}
+            try:
+                out["tls"] = await asyncio.wait_for(resp.security_details(), 5)
+            except Exception:
+                pass
+        try:
+            out["content"] = await asyncio.wait_for(page.evaluate(PAGE_SIGNALS_JS), 5)
+        except Exception:
+            pass
+        return out
 
     @staticmethod
     def _nav_blocked(proxy: SafetyProxy, reqs: list[dict]) -> bool:

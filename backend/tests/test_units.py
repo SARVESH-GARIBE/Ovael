@@ -81,6 +81,74 @@ def test_url_guard_normalizes():
     assert c.url == "https://example.com/path?q=1" and c.domain == "example.com"
 
 
+def test_url_guard_resolves_bare_names():
+    assert normalize("rummycircle").domain == "rummycircle.com"  # found in the Tranco list
+    assert normalize("Instagram").url == "https://instagram.com/"
+    assert normalize("surely-not-a-real-site-xyz").domain == "surely-not-a-real-site-xyz.com"
+
+
+def test_lookalike_domains():
+    from ovael.scanner.reputation import lookalike_of
+
+    assert lookalike_of("instagrarn.com", None)["kind"] == "lookalike_characters"
+    assert lookalike_of("paypal-secure-login.com", None)["kind"] == "contains_brand"
+    assert lookalike_of("instagram.com", 11) is None
+    assert lookalike_of("rummycircle.com", 247095) is None
+
+
+def test_content_classifier():
+    from ovael.scanner.insights import classify_content
+
+    c = classify_content("rummycircle.com", "Play Rummy Online", {"text_sample": "Win real money in cash games"})
+    assert c["categories"][0]["id"] == "gambling"
+    c = classify_content("example.com", "Notice", {"text_sample": "Your account has been suspended. Verify your account now."})
+    assert len(c["scam_phrases"]) >= 2
+
+
+def test_smart_report_verdicts():
+    from ovael.services.smart_report import compose
+
+    det = {"risk_level": "low", "risk_score": 10, "label": "benign"}
+    popular = {"domain": "example.org", "tranco_rank": 200, "rdap": {"age_days": 9000, "registered": "2001-01-01"},
+               "https": True, "tls": {"protocol": "TLS 1.3", "issuer": "CA", "valid_to": "2027-01-01"},
+               "content": {"categories": []}}
+    assert compose({"insights": popular}, det)["verdict"] == "Safe to open"
+
+    gambling = {**popular, "content": {"categories": [{"id": "gambling", "evidence": ["rummy"]}]}}
+    assert compose({"insights": gambling}, det)["risk_level"] == "suspicious"
+
+    phish = {"domain": "instagrarn.com", "original_domain": "instagrarn.com", "password_inputs": 1,
+             "lookalike": {"target": "instagram.com", "kind": "lookalike_characters"}, "rdap": {"age_days": 3},
+             "https": True, "content": {"categories": []}}
+    r = compose({"insights": phish}, det)
+    assert r["risk_level"] == "high" and r["findings"][0]["severity"] == "critical"
+
+    legacy = compose({"title": "old cached report"}, det)  # no insights: privacy only, no crash
+    assert legacy["limited"] and all(f["category"] == "privacy" for f in legacy["findings"])
+
+
+def test_adult_sites_are_flagged_and_never_safe():
+    from ovael.scanner.reputation import is_adult_domain
+    from ovael.services.smart_report import compose
+
+    assert is_adult_domain("www.pornhub.com") and is_adult_domain("xvideos.com")
+    assert not is_adult_domain("notpornhub.com") and not is_adult_domain("instagram.com")
+    ins = {"domain": "xvideos.com", "tranco_rank": 100, "rdap": {"age_days": 9000, "registered": "2000"},
+           "https": True, "content": {"categories": []}, "adult_listed": True}
+    r = compose({"insights": ins}, {"risk_level": "low", "risk_score": 5, "label": "benign"})
+    assert r["adult"] and r["risk_level"] == "medium" and r["verdict"].startswith("Adult content (18+)")
+    assert any("sextortion" in a for a in r["advice"])
+
+
+def test_offline_report_when_page_cannot_load():
+    from ovael.services.smart_report import compose
+
+    ins = {"offline": True, "domain": "example.com", "tranco_rank": 169, "content": {"categories": []}}
+    r = compose({"insights": ins}, None)
+    assert r["offline"] and r["verdict"] == "Couldn't fully check this website"
+    assert {c["id"]: c["status"] for c in r["categories"]}["privacy"] == "unknown"
+
+
 def test_private_addresses_are_not_public():
     import ipaddress
 

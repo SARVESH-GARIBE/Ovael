@@ -115,6 +115,30 @@ def test_scan_pipeline_with_stubbed_browser(client, monkeypatch):
     assert scan["status"] == "completed"
     assert scan["detection"]["label"] in ("tracker", "invasive_tracker")
     assert scan["detection"]["top_features"]
+    assert scan["report"]["smart"]["verdict"] and scan["report"]["smart"]["findings"]
+
+    # adult scans stay off the shared recent-scans list
+    from ovael.scanner import insights
+
+    async def no_rdap(domain, timeout_s=8.0):
+        return None
+
+    monkeypatch.setattr(insights.reputation, "rdap", no_rdap)
+
+    async def adult_features(ctx, scan):
+        return {"features": {"tracker_matched_requests": 3},
+                "report": {"title": "explicit title", "insights": await insights.offline("pornhub.com", "pornhub.com")}}
+
+    monkeypatch.setattr(scans, "_scan_features", adult_features)
+    with client.websocket_connect("/ws") as ws:
+        ws.receive_json()
+        adult = client.post("/api/scans", json={"url": "pornhub"}).json()
+        while (msg := ws.receive_json())["type"] != "scan_complete":
+            pass
+    adult = client.get(f"/api/scans/{adult['id']}").json()
+    assert adult["domain"] == "pornhub.com" and adult["report"]["smart"]["adult"]
+    assert adult["report"]["title"] is None
+    assert adult["id"] not in {s["id"] for s in client.get("/api/scans").json()}
 
     # second request for the same domain comes from the cache
     again = client.post("/api/scans", json={"url": "https://tracky-site.com/other"})

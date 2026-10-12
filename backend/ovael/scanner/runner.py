@@ -13,6 +13,8 @@ import sys
 import time
 from pathlib import Path
 
+from . import insights
+
 log = logging.getLogger(__name__)
 
 
@@ -66,7 +68,8 @@ class WebsiteScanner:
     def __init__(self, crawler_path: Path, max_concurrent: int = 2, timeout_s: float = 90.0):
         self.schema, CrawlConfig, self.Crawler, TrackerReference = _import_crawler(crawler_path)
         self.cfg = CrawlConfig(workers=1, settle_s=3.0, navigation_timeout_s=25.0,
-                               load_event_timeout_s=10.0, max_retries=1, overall_timeout_s=timeout_s)
+                               load_event_timeout_s=10.0, max_retries=1, overall_timeout_s=timeout_s,
+                               collect_page_signals=True)
         self.ref = TrackerReference()
         self.timeout_s = timeout_s
         self.sem = asyncio.Semaphore(max_concurrent)
@@ -106,5 +109,10 @@ class WebsiteScanner:
         if status not in ("success", "http_error"):
             raise ScanFailed(rec["crawl"].get("failure_reason") or status)
         features = self.schema.compute_features(rec, self.ref.categories)
-        return {"features": features, "report": build_report(rec, features),
+        report = build_report(rec, features)
+        try:
+            report["insights"] = await insights.gather(rec, final.data, hostname, domain)
+        except Exception as exc:  # the smart report is extra; the model's verdict stands without it
+            log.warning("insights for %s failed: %s", hostname, exc)
+        return {"features": features, "report": report,
                 "seconds": round(time.monotonic() - t0, 2)}

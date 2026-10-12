@@ -46,6 +46,8 @@ class CrawlConfig:
     max_evidence_events: int = 25
     # Path component of saved URLs is truncated to this many characters.
     max_path_chars: int = 200
+    # Read headers, TLS details and page text for the backend's smart report (never saved to the dataset).
+    collect_page_signals: bool = False
     launch_args: list[str] = field(default_factory=lambda: [
         "--disable-quic",  # QUIC (UDP) cannot traverse the filtering proxy
         "--force-webrtc-ip-handling-policy=disable_non_proxied_udp",
