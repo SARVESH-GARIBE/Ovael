@@ -224,3 +224,21 @@ def test_persistent_known_attack_is_escalated_and_blocked(client, make_flow):
 def test_few_known_attack_alerts_are_not_blocked(client, make_flow):
     res = post_flows(client, [make_flow("brute_force", seed=i) for i in range(5)])
     assert res["blocked_sources"] == []
+
+
+def test_review_suggestions_and_accept_all(client):
+    client.post("/api/lab/learning/probe", json={"flows": 10})  # queues 10 hard examples
+    queue = client.get("/api/review-queue?module=network").json()
+    assert queue
+    sugg = client.get("/api/review-queue/suggestions?module=network").json()
+    assert set(sugg) == {i["id"] for i in queue}
+    assert all({"label", "source", "reason"} <= set(v) for v in sugg.values())
+
+    # nothing is learned until a person accepts: confirm all, with one label overridden
+    decisions = [{"id": i["id"], "label": sugg[i["id"]]["label"] or "unknown_beacon"} for i in queue]
+    decisions[0]["label"] = "botnet"
+    res = client.post("/api/review-queue/confirm-batch", json={"items": decisions}).json()
+    assert res["confirmed"] == len(queue) and res["skipped"] == 0
+    assert client.get("/api/review-queue?module=network").json() == []
+    again = client.post("/api/review-queue/confirm-batch", json={"items": decisions}).json()
+    assert again["confirmed"] == 0 and again["skipped"] == len(queue)

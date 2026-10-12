@@ -138,7 +138,7 @@ export function useReviewQueue(module?: Module) {
     queryFn: () =>
       unwrap<ReviewItem[]>(
         api.GET('/api/review-queue', {
-          params: { query: { module, status: 'pending', limit: 50 } },
+          params: { query: { module, status: 'pending', limit: 200 } },
         })
       ),
   });
@@ -312,6 +312,40 @@ export function useTeach() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['models'] });
       qc.invalidateQueries({ queryKey: ['review-queue'] });
+    },
+  });
+}
+
+/* ------------------------------------------------------------------ review suggestions */
+
+export interface ReviewSuggestion {
+  label: string | null;
+  source: 'similar' | 'second' | 'normal' | 'none';
+  reason: string;
+}
+
+export function useReviewSuggestions(module: Module, enabled = true) {
+  return useQuery({
+    queryKey: ['review-queue', 'suggestions', module],
+    enabled,
+    queryFn: () =>
+      getJson<Record<string, ReviewSuggestion>>(
+        `/api/review-queue/suggestions?module=${module}&limit=200`
+      ),
+  });
+}
+
+export function useConfirmBatch() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (items: Array<{ id: string; label: string }>) =>
+      postJson<{ confirmed: number; skipped: number; labels: Record<string, number> }>(
+        '/api/review-queue/confirm-batch',
+        { items }
+      ),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['review-queue'] });
+      qc.invalidateQueries({ queryKey: ['stats'] });
     },
   });
 }

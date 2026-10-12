@@ -11,7 +11,8 @@ from ...feature_extraction import describe
 from ...ml.registry import ModelNotAvailable
 from ...services import learning
 from ..deps import get_ctx, require_admin
-from ..schemas import Module, ModelVersionOut, RetrainResult, ReviewConfirm, ReviewItemOut, ReviewReject
+from ..schemas import (Module, ModelVersionOut, RetrainResult, ReviewBatch, ReviewConfirm, ReviewItemOut,
+                       ReviewReject)
 
 router = APIRouter(prefix="/api", tags=["learning loop"])
 
@@ -29,6 +30,20 @@ async def review_queue(ctx: AppContext = Depends(get_ctx), module: Module | None
 async def _publish(ctx: AppContext, item: ReviewItem) -> ReviewItem:
     await ctx.bus.publish("review_item", ReviewItemOut.model_validate(item).model_dump(mode="json"))
     return item
+
+
+@router.get("/review-queue/suggestions", summary="Suggested labels for pending items, with reasons")
+async def review_suggestions(module: Module, ctx: AppContext = Depends(get_ctx),
+                             limit: int = Query(200, ge=1, le=500)) -> dict:
+    return await learning.suggestions(ctx, module, limit)
+
+
+@router.post("/review-queue/confirm-batch", summary="Confirm many hard examples at once")
+async def confirm_batch(body: ReviewBatch, ctx: AppContext = Depends(get_ctx),
+                        actor: str = Depends(require_admin)) -> dict:
+    result = await learning.confirm_batch(ctx, [(d.id, d.label) for d in body.items], body.note, actor)
+    await ctx.bus.publish("review_item", {"batch": True, **result})
+    return result
 
 
 @router.post("/review-queue/{item_id}/confirm", response_model=ReviewItemOut,

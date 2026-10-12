@@ -1,15 +1,19 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { ATTACKER_LINES, VICTIM_LINES, type StageState } from '../lib/mood';
-import { Attacker } from './Attacker';
-import { Victim } from './Victim';
+import { Attacker, type AttackerReaction } from './Attacker';
+import { Victim, type VictimReaction } from './Victim';
 
 /**
  * The attack stage: two sandbox containers (attacker, victim) drawn as 3D boxes, each with its
  * character standing underneath, and real-looking packets travelling between them.
  *
  * A packet is a small card showing what the wire would carry (protocol, flag, destination port),
- * built from the live detection when there is one. When the attacker is blocked a firewall goes up
- * in front of the victim, packets stop at it and are counted as dropped.
+ * built from the live detection when there is one. Attack packets leave the attacker's container;
+ * normal traffic comes from the "normal users" cloud. When Ovael blocks the attacker, an Ovael
+ * shield appears in front of the victim and attack packets stop there.
+ *
+ * Both characters react to every packet: the attacker leans in as each one leaves and fumes when
+ * Ovael stops it; the victim flinches when one lands and smiles at normal traffic.
  *
  * Each unit (container + character) can be dragged, or moved with the arrow keys when focused.
  */
@@ -21,8 +25,11 @@ const BOX_W = 176; // front face
 const BOX_H = 112;
 const DEPTH_X = 24; // isometric depth offset
 const DEPTH_Y = -16;
-const BOX_TOP = -232; // front face top, relative to the unit's floor point
-const CHAR_SCALE = 0.52;
+const BOX_TOP = -262; // front face top, relative to the unit's floor point
+const CHAR_SCALE = 0.6;
+const REACTION_MS = 420;
+// the "normal users" cloud sits left of centre, clear of the Ovael badge over the victim side
+const USERS_AT = 0.38;
 
 type Who = 'attacker' | 'victim';
 interface Pos {
@@ -234,7 +241,7 @@ function AttackerBox({ state }: { state: StageState }) {
           fill="#E8B04B"
           fontFamily="JetBrains Mono, monospace"
         >
-          connection refused
+          blocked by ovael
         </text>
       )}
     </Box>
@@ -310,55 +317,64 @@ function VictimBox({ state, targetPort }: { state: StageState; targetPort: numbe
   );
 }
 
-function Firewall({ drops }: { drops: number }) {
+/** Shown in front of the victim once Ovael blocks the attacker. */
+function OvaelShield({ stopped }: { stopped: number }) {
   return (
-    <g
-      className="animate-pop"
-      style={{ transformBox: 'fill-box', transformOrigin: 'center bottom' }}
-    >
-      <rect
-        x={-9}
-        y={BOX_TOP - 6}
-        width={18}
-        height={BOX_H + 12}
-        rx={3}
-        fill="#122C4F"
+    <g className="animate-pop" style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
+      <circle
+        r={44}
+        fill="none"
         stroke="#5B88B2"
-        strokeWidth={1.5}
+        strokeWidth={2}
+        className="animate-ping2"
+        style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
       />
-      {Array.from({ length: 8 }, (_, i) => (
-        <line
-          key={i}
-          x1={-9}
-          x2={9}
-          y1={BOX_TOP - 6 + (i + 1) * ((BOX_H + 12) / 9)}
-          y2={BOX_TOP - 6 + (i + 1) * ((BOX_H + 12) / 9)}
-          stroke="#5B88B2"
-          strokeWidth={0.8}
-          opacity={0.6}
-        />
-      ))}
-      <rect x={-34} y={BOX_TOP - 30} width={68} height={18} rx={9} fill="#5B88B2" />
-      <text x={0} y={BOX_TOP - 18} textAnchor="middle" fontSize={9.5} fontWeight={700} fill="#000">
-        FIREWALL
-      </text>
+      <path
+        d="M0,-56 C16,-50 30,-46 36,-40 L36,8 C36,32 18,48 0,58 C-18,48 -36,32 -36,8 L-36,-40 C-30,-46 -16,-50 0,-56 Z"
+        fill="#5B88B2"
+        fillOpacity={0.16}
+        stroke="#7ea4cb"
+        strokeWidth={2.5}
+        strokeLinejoin="round"
+      />
+      {/* ovael mark */}
+      <circle r={15} fill="#050c17" stroke="#FBF9E4" strokeWidth={4.5} />
+      <circle r={5} fill="#5B88B2" />
+      <g transform="translate(0,-78)">
+        <rect x={-62} y={-11} width={124} height={22} rx={11} fill="#FBF9E4" />
+        <text
+          x={0}
+          y={4}
+          textAnchor="middle"
+          fontSize={10}
+          fontWeight={800}
+          fill="#000"
+          letterSpacing={0.8}
+        >
+          BLOCKED BY OVAEL
+        </text>
+      </g>
       <text
         x={0}
-        y={BOX_TOP + BOX_H + 22}
+        y={78}
         textAnchor="middle"
         fontSize={10}
-        fontWeight={700}
-        fill="#E4572E"
+        fontWeight={600}
+        fill="#7ea4cb"
         fontFamily="JetBrains Mono, monospace"
       >
-        DROP ×{drops}
+        {stopped} packet{stopped === 1 ? '' : 's'} stopped
       </text>
     </g>
   );
 }
 
+function cardWidth(label: string): number {
+  return Math.max(70, label.length * 5.6 + 16);
+}
+
 function PacketCard({ p }: { p: Packet }) {
-  const w = Math.max(70, p.label.length * 5.6 + 16);
+  const w = cardWidth(p.label);
   const dur = `${p.kind.dur}s`;
   return (
     <g opacity={0}>
@@ -412,6 +428,28 @@ function PacketCard({ p }: { p: Packet }) {
   );
 }
 
+/** Where normal traffic comes from, so no packet appears out of nowhere. */
+function UsersCloud() {
+  return (
+    <g>
+      <path
+        d="M-30,8 C-44,8 -44,-10 -30,-10 C-30,-24 -10,-26 -4,-16 C2,-28 24,-26 24,-10 C38,-10 38,8 24,8 Z"
+        fill="#0e203c"
+        stroke="#255494"
+        strokeWidth={1.5}
+      />
+      <g fill="#5B88B2">
+        <circle cx={-12} cy={-4} r={3.2} />
+        <circle cx={-3} cy={-6} r={3.6} />
+        <circle cx={7} cy={-4} r={3.2} />
+      </g>
+      <text x={0} y={22} textAnchor="middle" fontSize={8.5} fill="#7ea4cb" letterSpacing={1}>
+        NORMAL USERS
+      </text>
+    </g>
+  );
+}
+
 /* ----------------------------------------------------------------- stage */
 
 export function Stage({
@@ -429,7 +467,16 @@ export function Stage({
   const drag = useRef<{ who: Who; dx: number; dy: number } | null>(null);
   const [packets, setPackets] = useState<Packet[]>([]);
   const [drops, setDrops] = useState(0);
+  const [attackerReact, setAttackerReact] = useState<{ kind: AttackerReaction; key: number }>({
+    kind: null,
+    key: 0,
+  });
+  const [victimReact, setVictimReact] = useState<{ kind: VictimReaction; key: number }>({
+    kind: null,
+    key: 0,
+  });
   const nextId = useRef(0);
+  const reactKey = useRef(0);
   const posRef = useRef(pos);
   posRef.current = pos;
 
@@ -455,6 +502,23 @@ export function Stage({
     let acc = 0;
     let n = 0;
     let lastKind: PacketKind | null = null;
+    // Reactions: a newer one replaces an older one; each clears itself after REACTION_MS.
+    const attackerDoes = (kind: AttackerReaction) => {
+      const key = ++reactKey.current;
+      setAttackerReact({ kind, key });
+      setTimeout(
+        () => setAttackerReact((r) => (r.key === key ? { kind: null, key } : r)),
+        REACTION_MS
+      );
+    };
+    const victimDoes = (kind: VictimReaction) => {
+      const key = ++reactKey.current;
+      setVictimReact({ kind, key });
+      setTimeout(
+        () => setVictimReact((r) => (r.key === key ? { kind: null, key } : r)),
+        REACTION_MS
+      );
+    };
     const timer = setInterval(() => {
       const { state: s, focusPort: port, attacking: hot } = live.current;
       const hostile = hot || s.blocked;
@@ -472,39 +536,49 @@ export function Stage({
       const dir = v.x >= a.x ? 1 : -1;
       // four fixed lanes across the box face, used in turn, so cards never stack on each other
       const lane = BOX_TOP + 34 + (n % 4) * 21;
+      const label = kind.label(port ?? 0, n);
+      const half = cardWidth(label) / 2;
       let sx: number, sy: number;
       if (kind === BENIGN) {
-        // normal clients reach the victim from the internet, above the attacker
-        sx = dir > 0 ? -60 : W + 60;
-        sy = 26 + Math.random() * 18;
+        // normal traffic leaves the "normal users" cloud
+        sx = a.x + (v.x - a.x) * USERS_AT;
+        sy = 46;
       } else {
-        sx = a.x + dir * (BOX_W / 2 + DEPTH_X);
+        // attack traffic leaves the attacker's container, fully outside the box
+        sx = a.x + dir * (BOX_W / 2 + DEPTH_X + half + 6);
         sy = a.y + lane;
       }
       const dropped = s.blocked && kind !== BENIGN;
-      // stop at the firewall when blocked, otherwise just short of the victim's face
-      const ex = dropped ? v.x - dir * (BOX_W / 2 + 64) : v.x - dir * (BOX_W / 2 + 36);
+      const shieldX = v.x - dir * (BOX_W / 2 + 46);
+      // stop in front of the Ovael shield when blocked, otherwise just short of the victim's box
+      const ex = dropped ? shieldX - dir * (40 + half) : v.x - dir * (BOX_W / 2 + half + 8);
       const ey = v.y + lane;
       const mx = (sx + ex) / 2;
       const my = Math.min(sy, ey) - 18 - Math.random() * 18;
       const p: Packet = {
         id: nextId.current++,
         kind,
-        label: kind.label(port ?? 0, n++),
+        label,
         path: `M${sx},${sy} Q${mx},${my} ${ex},${ey}`,
         dropped,
         // SMIL animations are timed from page load; without an explicit begin, a packet added
         // later would start "already finished" and never be seen.
         begin: svgRef.current?.getCurrentTime?.() ?? 0,
       };
+      n++;
       setPackets((ps) => [...ps.slice(-10), p]);
-      setTimeout(
-        () => {
-          setPackets((ps) => ps.filter((q) => q.id !== p.id));
-          if (dropped) setDrops((d) => d + 1);
-        },
-        kind.dur * 1000 + 60
-      );
+      if (kind !== BENIGN) attackerDoes('send');
+      // the moment the packet arrives (or is stopped), the characters react to it
+      setTimeout(() => {
+        if (dropped) {
+          attackerDoes('fail');
+          victimDoes('smile');
+          setDrops((d) => d + 1);
+        } else {
+          victimDoes(kind === BENIGN ? 'smile' : 'hit');
+        }
+      }, kind.dur * 900);
+      setTimeout(() => setPackets((ps) => ps.filter((q) => q.id !== p.id)), kind.dur * 1000 + 60);
     }, TICK);
     return () => clearInterval(timer);
   }, [reducedMotion]);
@@ -598,7 +672,12 @@ export function Stage({
         <AttackerBox state={state} />
         <g transform={`scale(${facing * CHAR_SCALE},${CHAR_SCALE})`}>
           <g className={state.attacker === 'idle' && !reducedMotion ? 'animate-bob' : undefined}>
-            <Attacker mood={state.attacker} facing={1} />
+            <Attacker
+              mood={state.attacker}
+              facing={1}
+              reaction={attackerReact.kind}
+              reactionKey={attackerReact.key}
+            />
           </g>
         </g>
         {attackerLine && <Bubble x={-58 * facing} y={charHead + 18} text={attackerLine} />}
@@ -615,18 +694,23 @@ export function Stage({
         className="cursor-grab outline-none active:cursor-grabbing"
       >
         <VictimBox state={state} targetPort={focusPort} />
-        <g transform={`scale(${CHAR_SCALE})`}>
+        <g transform={`scale(${facing * CHAR_SCALE},${CHAR_SCALE})`}>
           <g className={state.victim === 'calm' && !reducedMotion ? 'animate-bob' : undefined}>
-            <Victim mood={state.victim} />
+            <Victim mood={state.victim} reaction={victimReact.kind} reactionKey={victimReact.key} />
           </g>
         </g>
         {victimLine && <Bubble x={58 * facing} y={charHead + 18} text={victimLine} />}
       </g>
 
-      {/* firewall in front of the victim */}
+      {/* normal traffic source */}
+      <g transform={`translate(${a.x + (v.x - a.x) * USERS_AT},${30})`}>
+        <UsersCloud />
+      </g>
+
+      {/* Ovael's block, in front of the victim */}
       {state.blocked && (
-        <g transform={`translate(${v.x - facing * (BOX_W / 2 + 18)},${v.y})`}>
-          <Firewall drops={drops} />
+        <g transform={`translate(${v.x - facing * (BOX_W / 2 + 46)},${v.y + BOX_TOP + BOX_H / 2})`}>
+          <OvaelShield stopped={drops} />
         </g>
       )}
 

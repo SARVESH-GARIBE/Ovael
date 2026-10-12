@@ -628,7 +628,7 @@ export function AttackJourney({
                 <Icon className="relative h-4 w-4" />
               </button>
               <span
-                className={`mt-2 text-[11px] sm:text-xs ${active ? 'text-pearl' : 'text-pearl-dim'}`}
+                className={`mt-2 text-[11px] sm:text-xs ${active ? 'text-pearl' : done ? 'text-pearl-muted' : 'text-pearl-dim'}`}
               >
                 {s.label}
               </span>

@@ -8,7 +8,9 @@ import {
   KeyRound,
   Radar,
   Sparkles,
+  ShieldCheck,
   Square,
+  TriangleAlert,
   Undo2,
   Waves,
   type LucideIcon,
@@ -60,6 +62,52 @@ function caption(
   if (state.attacker === 'attacking') return `${familyName ?? 'Attack'}: ${summary ?? ''}`;
   if (state.attacker === 'sneaky') return 'Something unfamiliar. Saved for a person to review.';
   return 'Normal traffic. Both models agree it looks fine.';
+}
+
+/** What is happening right now, in one line: which attack Ovael sees, or that Ovael stopped it. */
+function AttackBanner({ state, name }: { state: StageState; name?: string }) {
+  if (state.attacker === 'idle') return <div className="h-0" aria-hidden />;
+  const label = name ?? 'Unrecognised attack';
+  const kind = state.blocked ? 'blocked' : state.attacker === 'sneaky' ? 'unknown' : 'attack';
+  const styles = {
+    attack: 'border-risk-high/60 bg-risk-high/10 text-risk-high',
+    unknown: 'border-risk-suspicious/60 bg-risk-suspicious/10 text-risk-suspicious',
+    blocked: 'border-ocean/70 bg-ocean/10 text-ocean-light',
+  }[kind];
+  const Icon = kind === 'blocked' ? ShieldCheck : kind === 'unknown' ? CircleHelp : TriangleAlert;
+  return (
+    <div className="px-5 pt-3" role="status" aria-live="polite">
+      <div
+        key={`${kind}-${label}`}
+        className={`flex items-center gap-2.5 rounded-xl border px-4 py-2.5 animate-rise ${styles}`}
+      >
+        <Icon className="h-5 w-5 shrink-0" />
+        <span className="text-sm">
+          {kind === 'blocked' ? (
+            <>
+              <span className="font-semibold">Blocked by Ovael:</span>{' '}
+              <span className="text-pearl">{label}</span>
+            </>
+          ) : kind === 'unknown' ? (
+            <>
+              <span className="font-semibold">Unfamiliar activity:</span>{' '}
+              <span className="text-pearl">sent to a person for review</span>
+            </>
+          ) : (
+            <>
+              <span className="font-semibold">Attack in progress:</span>{' '}
+              <span className="text-pearl">{label}</span>
+            </>
+          )}
+        </span>
+        {kind === 'attack' && (
+          <span className="ml-auto hidden text-xs text-pearl-dim sm:inline">
+            from {state.focus?.src_ip}
+          </span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export function NetworkPage() {
@@ -207,7 +255,7 @@ export function NetworkPage() {
         <div className="flex min-w-0 flex-col gap-5">
           {/* stage */}
           <section className="card overflow-hidden">
-            <div className="flex items-center gap-2 px-5 pt-4">
+            <div className="flex flex-wrap items-center gap-2 px-5 pt-4">
               <span className="relative flex h-2 w-2">
                 {running && (
                   <span className="absolute inset-0 rounded-full bg-risk-high animate-ping2" />
@@ -216,9 +264,20 @@ export function NetworkPage() {
                   className={`relative h-2 w-2 rounded-full ${running ? 'bg-risk-high' : 'bg-ocean'}`}
                 />
               </span>
-              <span className="label">{running ? 'Simulation running' : 'Live'}</span>
+              <span className="label">
+                {running
+                  ? `${SCENARIOS.find((x) => x.id === sim.data?.scenario)?.label ?? 'Simulation'} · sending ${
+                      sim.data?.phase === 'benign'
+                        ? 'normal traffic'
+                        : (SCENARIOS.find((x) => x.id === sim.data?.phase)?.label ??
+                          sim.data?.phase ??
+                          '…')
+                    }`
+                  : 'Live'}
+              </span>
               {stage.focus && <RiskBadge level={stage.level} />}
             </div>
+            <AttackBanner state={stage} name={stageFamily?.name} />
             <div className="h-[220px] sm:h-[370px]">
               <Stage state={stage} reducedMotion={reducedMotion} />
             </div>

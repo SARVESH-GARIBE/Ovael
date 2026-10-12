@@ -150,6 +150,16 @@ class ReviewConfirm(BaseModel):
     note: str | None = Field(None, max_length=2000)
 
 
+class ReviewDecision(BaseModel):
+    id: str = Field(..., max_length=32)
+    label: str = Field(..., min_length=1, max_length=64)
+
+
+class ReviewBatch(BaseModel):
+    items: list[ReviewDecision] = Field(..., min_length=1, max_length=500)
+    note: str | None = Field(None, max_length=2000)
+
+
 class ReviewReject(BaseModel):
     note: str | None = Field(None, max_length=2000)
 
