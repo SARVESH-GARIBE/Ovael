@@ -22,7 +22,8 @@ from sqlalchemy import select
 from ..api.schemas import ActionOut
 from ..core.context import AppContext
 from ..db.models import DefenseAction
-from ..ml.synthetic import ATTACKER_IPS, sample_flow
+from ..ml.flow_source import get_flow_source
+from ..ml.synthetic import ATTACKER_IPS
 from ..services import pipeline
 
 log = logging.getLogger(__name__)
@@ -60,7 +61,8 @@ class Simulator:
         self.stop()
         self.task = asyncio.create_task(self._run(scenario, duration_s), name=f"simulate-{scenario}")
         self.status = {"running": True, "scenario": scenario, "duration_s": duration_s,
-                       "started_at": time.time(), "phase": None}
+                       "started_at": time.time(), "phase": None,
+                       "flows": get_flow_source(self.ctx.settings).name}
         return self.status
 
     async def _reset_sandbox(self) -> None:
@@ -78,6 +80,8 @@ class Simulator:
 
     async def _run(self, scenario: str, duration_s: float) -> None:
         rng = np.random.default_rng()
+        source = get_flow_source(self.ctx.settings)
+        sample_flow = source.sample
         await self._reset_sandbox()
         phases = SCENARIOS[scenario]
         total = sum(p[1] for p in phases)

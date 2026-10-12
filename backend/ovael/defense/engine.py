@@ -46,13 +46,17 @@ class DefenseEngine:
     async def is_blocked(self, ip: str | None) -> bool:
         return bool(ip) and bool(await self.cache.get_json(f"blocked:{ip}"))
 
-    def eligible(self, result, src_ip: str | None) -> tuple[bool, str]:
+    def eligible(self, result, src_ip: str | None, persistent: int = 0) -> tuple[bool, str]:
         if self.settings.defense_mode == "off":
             return False, "defense disabled"
         if result.module != "network":
             return False, "not a network detection"
-        if result.risk_level != "high" or not result.models_agree:
-            return False, "needs high risk with both models agreeing"
+        single_flow = result.risk_level == "high" and result.models_agree
+        # Persistence rule: a confident known-attack verdict repeated N times from one source
+        # inside the incident window is enough evidence even when no single flow looks unusual.
+        sustained = result.is_attack and persistent >= self.settings.persistence_alerts
+        if not (single_flow or sustained):
+            return False, "needs high risk with both models agreeing, or a persistent known attack"
         if not family_for("network", result.label).auto_defense:
             return False, "family does not allow auto-defense"
         if not self._in_sandbox(src_ip):
@@ -66,8 +70,8 @@ class DefenseEngine:
             r.raise_for_status()
 
     async def maybe_block(self, session, result, detection_id: str, incident_id: str | None,
-                          src_ip: str | None) -> DefenseAction | None:
-        ok, _ = self.eligible(result, src_ip)
+                          src_ip: str | None, persistent: int = 0) -> DefenseAction | None:
+        ok, _ = self.eligible(result, src_ip, persistent)
         if not ok or await self.is_blocked(src_ip):
             return None
         # Several instances can see the same flood at once; only the first may act.
@@ -82,7 +86,10 @@ class DefenseEngine:
         mode = "agent" if self.settings.defense_mode == "agent" and self.settings.defense_agent_url else "simulate"
         action = DefenseAction(action="block", target_ip=src_ip, mode=mode, detection_id=detection_id,
                                incident_id=incident_id,
-                               reason=f"{result.family_name}: risk {result.risk_score} (high), both models agree")
+                               reason=(f"{result.family_name}: risk {result.risk_score} (high), both models agree"
+                                       if result.risk_level == "high" and result.models_agree else
+                                       f"{result.family_name}: persistent, {persistent} known-attack alerts "
+                                       f"from this source within {self.settings.incident_window_s} s"))
         try:
             if mode == "agent":
                 await self._agent("/block", src_ip)

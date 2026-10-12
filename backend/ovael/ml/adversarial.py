@@ -46,7 +46,7 @@ def perturb(attack: pd.DataFrame, technique: str, s: float, benign: pd.DataFrame
     df = attack.copy()
     if s <= 0:
         return df
-    med = benign.median()
+    med = benign.median(numeric_only=True)
     if technique == "slow_down":
         slow = 1 - 0.97 * s  # up to ~33x slower
         for c in RATE_COLS + ["src_conn_rate_10s"]:
@@ -71,12 +71,17 @@ def perturb(attack: pd.DataFrame, technique: str, s: float, benign: pd.DataFrame
     return df[NETWORK_FEATURES]
 
 
-def sweep(engine, attack: str, technique: str, steps: int = 11, n: int = 80, seed: int = 7) -> dict:
+def sweep(engine, attack: str, technique: str, steps: int = 11, n: int = 80, seed: int = 7,
+          source=None) -> dict:
     if attack not in ATTACKS:
         raise ValueError(f"attack must be one of {ATTACKS}")
     rng = np.random.default_rng(seed)
-    base = synthetic.generate(n_per_class=n, seed=seed, classes=[attack]).drop(columns="label")
-    benign = synthetic.generate(n_per_class=200, seed=seed + 1, classes=["benign"]).drop(columns="label")
+    if source is not None:  # real flows (CIC-IDS2017 replay) when available
+        base = source.frame(attack, n, seed)
+        benign = source.frame("benign", 400, seed + 1)
+    else:
+        base = synthetic.generate(n_per_class=n, seed=seed, classes=[attack]).drop(columns="label")
+        benign = synthetic.generate(n_per_class=200, seed=seed + 1, classes=["benign"]).drop(columns="label")
 
     points = []
     for i in range(steps):
@@ -108,6 +113,7 @@ def sweep(engine, attack: str, technique: str, steps: int = 11, n: int = 80, see
         "technique": technique,
         "technique_description": TECHNIQUES[technique],
         "flows_per_step": n,
+        "flow_source": getattr(source, "name", "synthetic"),
         "model_version": engine.registry.active("network").version,
         "points": points,
         "summary": {

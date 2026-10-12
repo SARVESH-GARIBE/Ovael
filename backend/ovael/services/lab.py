@@ -22,19 +22,23 @@ from sqlalchemy import select
 
 from ..core.context import AppContext
 from ..db.models import Detection, ReviewItem, utcnow
-from ..ml import adversarial, synthetic
+from ..ml import adversarial
+from ..ml.flow_source import get_flow_source
 from . import learning
 
-PROBE_BEHAVIOUR = "novel"  # synthetic class that no training class covers
+# The behaviour no training class covers: real CIC-IDS2017 botnet flows held out of training when
+# the real dataset is imported, otherwise the synthetic exfiltration-like class.
+PROBE_BEHAVIOUR = "novel"
 
 
-def _summary(results, probe_id: str, n: int) -> dict:
+def _summary(results, probe_id: str, n: int, source: str = "") -> dict:
     levels = Counter(r.risk_level for r in results)
     labels = Counter(r.label for r in results)
     families = Counter(r.family for r in results)
     return {
         "probe_id": probe_id,
         "flows": n,
+        "flow_source": source,
         "model_version": results[0].model_version if results else None,
         "recognized": round(sum(r.is_attack for r in results) / n, 4),
         "unusual": round(sum(r.is_unusual for r in results) / n, 4),
@@ -48,7 +52,8 @@ def _summary(results, probe_id: str, n: int) -> dict:
 
 async def probe(ctx: AppContext, n: int = 40) -> dict:
     rng = np.random.default_rng()
-    items = [synthetic.sample_flow(PROBE_BEHAVIOUR, rng) for _ in range(n)]
+    source = get_flow_source(ctx.settings)
+    items = [source.sample(PROBE_BEHAVIOUR, rng) for _ in range(n)]
     results = await asyncio.to_thread(ctx.engine.detect_many, "network", [f for f, _ in items])
     probe_id = uuid.uuid4().hex[:12]
     async with ctx.db.session() as s:
@@ -68,7 +73,7 @@ async def probe(ctx: AppContext, n: int = 40) -> dict:
                                       "confidence": r.confidence, "probabilities": r.probabilities,
                                       "src_ip": meta["src_ip"]}))
         await s.commit()
-    return _summary(results, probe_id, n)
+    return _summary(results, probe_id, n, source.name)
 
 
 async def teach(ctx: AppContext, probe_id: str, label: str, actor: str) -> dict:
@@ -87,4 +92,5 @@ async def teach(ctx: AppContext, probe_id: str, label: str, actor: str) -> dict:
 
 
 async def evasion(ctx: AppContext, attack: str, technique: str, steps: int, n: int) -> dict:
-    return await asyncio.to_thread(adversarial.sweep, ctx.engine, attack, technique, steps, n)
+    source = get_flow_source(ctx.settings)
+    return await asyncio.to_thread(adversarial.sweep, ctx.engine, attack, technique, steps, n, 7, source)

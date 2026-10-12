@@ -400,11 +400,17 @@ function Outcome({
   let icon: ReactNode, title: string, line: string;
   if (blocked) {
     icon = <Ban className="h-5 w-5" />;
-    title = `Blocked ${action!.target_ip}`;
+    const persistent = action!.reason.includes('persistent');
+    title = persistent
+      ? `Blocked ${action!.target_ip} (persistence rule)`
+      : `Blocked ${action!.target_ip}`;
     line =
-      action!.mode === 'simulate'
+      (persistent
+        ? `No single flow was unusual, but the source kept attacking: ${action!.reason.split(': ').slice(1).join(': ')}. `
+        : '') +
+      (action!.mode === 'simulate'
         ? 'Firewall rule simulated in the sandbox.'
-        : 'Firewall rule added in the victim container.';
+        : 'Firewall rule added in the victim container.');
   } else if (level === 'high' || level === 'medium') {
     icon = <Bell className="h-5 w-5" />;
     title = 'Alert raised';
@@ -498,6 +504,10 @@ function DecisionStep(props: {
               })}
             </tbody>
           </table>
+          <p className="-mt-2 text-[11px] text-pearl-dim">
+            Plus the persistence rule: a Medium attack repeated 20 times from one source within 60 s
+            is escalated to High.
+          </p>
           <Outcome d={d} action={props.action} onUndo={props.onUndo} undoing={props.undoing} />
           {family && family.mitigations.length > 0 && !family.is_benign && (
             <p className="text-xs text-pearl-dim">

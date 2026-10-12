@@ -208,3 +208,19 @@ def test_learning_loop_experiment(client, tmp_path):
         assert after["recognized"] > before["recognized"]
         assert after["labels"].get("exfiltration", 0) > 15
     assert client.post("/api/lab/learning/teach", json={"probe_id": before["probe_id"]}).status_code == 409
+
+
+def test_persistent_known_attack_is_escalated_and_blocked(client, make_flow):
+    # Brute force is recognised but never "unusual", so no single flow is high risk.
+    flows = [make_flow("brute_force", seed=i) for i in range(25)]
+    res = post_flows(client, flows)
+    assert res["blocked_sources"] == [flows[0]["src_ip"]]
+    [inc] = [i for i in client.get("/api/incidents").json() if i["family"] == "brute_force"]
+    assert inc["risk_level"] == "high" and inc["status"] == "mitigated"
+    [action] = client.get("/api/actions").json()
+    assert "persistent" in action["reason"]
+
+
+def test_few_known_attack_alerts_are_not_blocked(client, make_flow):
+    res = post_flows(client, [make_flow("brute_force", seed=i) for i in range(5)])
+    assert res["blocked_sources"] == []

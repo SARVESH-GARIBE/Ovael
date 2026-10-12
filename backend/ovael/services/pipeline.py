@@ -132,8 +132,13 @@ async def process(ctx: AppContext, module: str, items: list[dict], *, origin: st
                 if incident is None or incident.id in new_incidents:
                     events.append(("review_item", review))
 
+            persistent = incident.detection_count if incident is not None and r.is_attack else 0
+            if (incident is not None and r.is_attack and incident.risk_level == "medium"
+                    and persistent >= ctx.settings.persistence_alerts):
+                incident.risk_level = "high"  # escalated by the persistence rule
+                events.append(("incident_update", incident))
             action = await ctx.defense.maybe_block(session, r, det.id, incident.id if incident else None,
-                                                   meta.get("src_ip"))
+                                                   meta.get("src_ip"), persistent)
             if action is not None:
                 if incident is not None and action.status in ("applied", "simulated"):
                     incident.status = "mitigated"

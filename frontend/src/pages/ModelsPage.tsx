@@ -20,8 +20,10 @@ interface Metrics {
 
 const SOURCE_NOTE: Record<string, string> = {
   synthetic_bootstrap: 'Trained on synthetic flows. Scores say nothing about real traffic yet.',
+  cicids2017:
+    'Real traffic: CIC-IDS2017 (Sharafaldin et al., 2018). Botnet flows are held out as the unknown attack.',
   weak_rules_v1:
-    'Labels come from tracker-list rules, not human review. The model mostly reproduces the rules.',
+    'Labels come from tracker-list rules. The model never sees the features those rules use, so its score shows that tracking is visible in general page behaviour.',
 };
 
 interface DatasetInfo {
@@ -139,7 +141,13 @@ function ModuleCard({
             <Chip>{source}</Chip>
             <span className="text-xs text-pearl-dim">trained {timeAgo(active.trained_at)}</span>
           </div>
-          {warn && <p className="mt-2 text-xs text-risk-medium">{warn}</p>}
+          {warn && (
+            <p
+              className={`mt-2 text-xs ${source.startsWith('synthetic') ? 'text-risk-medium' : 'text-pearl-dim'}`}
+            >
+              {warn}
+            </p>
+          )}
           <TrainingData module={module} info={dataset} />
           <div className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-4">
             <Stat label="Macro F1" value={pct(m.macro_f1, 1)} />

@@ -17,7 +17,9 @@ Both go through the same `detect(module, features)` call and the same four-row d
 ```bash
 cd backend
 python3.12 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
-.venv/bin/python -m ovael.cli train all          # trains + promotes network-v1 and website-v1
+# optional but recommended: real network data (see "Data and labels")
+.venv/bin/python -m ovael.cli dataset import-cicids data/cicids2017
+.venv/bin/python -m ovael.cli train all          # trains + promotes a network and a website model
 .venv/bin/uvicorn ovael.api.app:app --reload     # http://localhost:8000/api/docs
 ```
 
@@ -31,7 +33,7 @@ Try it:
 curl -XPOST localhost:8000/api/simulate -H 'content-type: application/json' \
      -d '{"scenario":"full_demo","duration_s":30}'
 curl -XPOST localhost:8000/api/scans -H 'content-type: application/json' -d '{"url":"example.com"}'
-.venv/bin/python -m pytest -q                    # 32 tests
+.venv/bin/python -m pytest -q                    # 45 tests
 ```
 
 Website scans need Chromium: `.venv/bin/playwright install chromium`.
@@ -51,7 +53,7 @@ ovael/
   simulator/           synthetic flows through the real pipeline (demo)
   api/                 REST routes, WebSocket /ws, schemas (= OpenAPI contract)
   workers/             Celery app (scans + training queues)
-sensor/sensor.py       packet capture on the protected host -> POST /api/flows
+sandbox/               victim (sensor), normal client; ovael/replay.py replays real flows
 deploy/                nginx load balancer, Prometheus
 ```
 
@@ -65,6 +67,8 @@ detect(module, features) -> {label, confidence, anomaly_score, risk_level, top_f
   (0.99 = more unusual than 99% of normal). Above `OVAEL_ANOMALY_THRESHOLD` it counts as "unusual".
 * A classifier attack label below 50% confidence is treated as *not recognised*. Its family
   becomes `unknown`, and it goes to review instead of auto-defense.
+* The Isolation Forest sees the features on a log scale (rates and byte counts span many orders
+  of magnitude). On CIC-IDS2017 this raised its AUROC from 0.82 to 0.87 for known attacks.
 
 | Classifier | Anomaly detector | risk_level | score band | Network | Website |
 |---|---|---|---|---|---|
@@ -72,6 +76,12 @@ detect(module, features) -> {label, confidence, anomaly_score, risk_level, top_f
 | attack | normal | medium | 50-74 | alert | typical tracker |
 | normal | unusual | suspicious | 25-49 | alert + review | possible unknown tracker |
 | normal | normal | low | 0-24 | nothing | nothing |
+
+**Persistence rule.** On real traffic most known attacks are confidently recognised but not
+"unusual" per flow (brute force, web attacks and port scans almost never are), so the table alone
+would never block them. When one source produces `OVAEL_PERSISTENCE_ALERTS` (default 20) confident
+known-attack alerts inside the 60 s incident window, the incident is escalated to high and becomes
+eligible for auto-defense. The action is logged with the reason "persistent".
 
 Inside a band, the position is `severity_weight × confidence` for attacks and `anomaly_score`
 otherwise. Severity weights per attack family live in `orchestrator/taxonomy.py`, together with
@@ -134,11 +144,50 @@ Full schema: `/api/docs` (OpenAPI at `/api/openapi.json`).
   Read-after-write paths stay on the primary.
 
 ```bash
-cp .env.example .env
-docker compose up -d --build                      # http://localhost
+cp .env.example .env                              # then set real tokens and passwords
+docker compose up -d --build                      # http://localhost:8088
 docker compose up -d --scale api=4 --scale scan-worker=3
+docker compose --profile sandbox up -d            # victim + sensor, defense agent, normal client
+docker compose --profile sandbox run --rm replayer   # replay real CIC-IDS2017 attack flows
 docker compose --profile monitoring up -d         # Prometheus :9090, Grafana :3000
 ```
+
+Verified on 2026-10-12 (Docker 29.7, Compose 2.32, Fedora with SELinux):
+
+* all 9 images build;
+* nginx split requests evenly over 2 replicas, and a third replica joined with no restart;
+* a WebSocket held by one replica received events produced by both;
+* the victim's sensor captured live client traffic (58 real flows, all scored low);
+* the replayer sent 578 real flood flows, and the defense agent added a real iptables DROP rule in
+  the victim's network namespace; undo (admin token) removed it, and was refused without a token;
+* a website scan ran through Celery and the isolated scanner;
+* `/metrics` is refused from outside.
+
+## Sandbox
+
+The `sandbox` profile is the defensive half of a lab, on an internal network (172.28.0.0/16):
+
+| Container | Role |
+|---|---|
+| `victim` | nginx web server plus `sandbox/victim/sensor.py`, which sniffs the sandbox interface, builds flows and posts them to `/api/flows` |
+| `defense-agent` | shares the victim's network namespace with NET_ADMIN; applies and removes iptables rules for the API |
+| `client` | browses the victim with random think time: live normal traffic |
+| `replayer` | `ovael replay`: sends real recorded attack flows (CIC-IDS2017) through the sensor endpoint |
+
+There are no live attack generators. Attack traffic enters as real recorded flows, which also
+makes every run reproducible. The sensor can record labelled flows from your own lab
+(`OVAEL_RECORD_CSV`); import them with `ovael dataset import capture.csv --source lab-1`.
+
+## Research lab (`/lab` in the dashboard)
+
+* **Does it learn?** Show the network model a class it never trained on (real botnet flows),
+  label those flows, retrain (promoted only if not worse on the fixed held-out set), then show it
+  fresh flows of the same class. On CIC-IDS2017: before, 0 of 40 botnet flows recognised (all
+  "benign"); after one round of 40 labelled flows, 28 of 40 fresh flows recognised as botnet, with
+  held-out macro F1 0.9986 -> 0.9988.
+* **Can it be fooled?** Modify an attack's features step by step (slow down, pad packets, spread
+  over sources, mimic normal) and chart how often the classifier recognises it, the anomaly
+  detector flags it, and Ovael raises any alert. Feature-space only; no traffic is sent.
 
 ## Safety
 
@@ -157,13 +206,67 @@ docker compose --profile monitoring up -d         # Prometheus :9090, Grafana :3
 
 ## Data and labels (read this before quoting metrics)
 
-* **Website:** `../dataset_collection/output/website_features.csv` (your crawler). It has no
-  ground-truth labels, so rows get documented weak labels (`ml/labeling.py`): `invasive_tracker`,
-  `tracker` or `benign`. The first model therefore largely reproduces those rules. Labels
-  confirmed in the review queue, and any `manual_review_label` / `security_label` in the CSV,
-  override the weak label.
-* **Network:** if `data/network_flows.csv` exists (24 schema columns + `label`, e.g. recorded by
-  `sensor/sensor.py` with `OVAEL_RECORD_CSV`), the model trains on it. Otherwise it trains on
-  the synthetic bootstrap set (`ml/synthetic.py`). Models are tagged with their `label_source`,
-  and the dashboard shows it. The near-perfect scores on the synthetic set say nothing about
-  real traffic.
+### Network: CIC-IDS2017 (real traffic)
+
+CIC-IDS2017 (Sharafaldin, Lashkari and Ghorbani, ICISSP 2018; Canadian Institute for
+Cybersecurity) is five working days of real lab traffic, with flows labelled per attack. The
+official site requires registration; the same labelled-flow files are mirrored on Hugging Face
+(`bvsam/cic-ids-2017`, `traffic_labels/*.parquet`). Put them in `data/cicids2017/` (git-ignored)
+and run `ovael dataset import-cicids`. The converter (`ml/cicids.py`):
+
+* maps CICFlowMeter columns to our 24 features (microseconds converted to seconds);
+* rebuilds the two "same source in the last 10 s" features from source IP and timestamp. CIC
+  timestamps have one-minute resolution, so these are estimated from per-minute windows. This is
+  an approximation, and it differs from the sensor's exact 10 s window;
+* maps labels to our families, drops Infiltration (36 rows) and Heartbleed (11 rows), and caps
+  classes (benign 80k, attacks 15k each, spread over sub-labels);
+* holds **Bot** out of training entirely (1,966 flows). It is the real "unknown attack" for the
+  Unknown scenario, the learning-loop experiment and the novelty metrics.
+
+Results on 27,462 held-out flows (`network-v5`):
+
+| Metric | Value |
+|---|---|
+| Classifier macro F1 | 0.9986 |
+| Anomaly false alarms on normal traffic (threshold 0.99) | 0.83% |
+| Anomaly AUROC, known attacks vs normal | 0.865 |
+| Anomaly AUROC, held-out botnet vs normal | 0.709 |
+| Held-out botnet flagged unusual at 0.99 | 0% |
+
+Read these with care:
+* CIC-IDS2017 is known to be easy for flow classifiers, and our held-out split is from the same
+  capture days. Near-perfect F1 does not mean the model will transfer to another network.
+* Per-flow features miss botnet traffic almost completely: the classifier calls it benign at
+  99.8% confidence, and the anomaly detector cannot separate it at a usable false-alarm rate.
+  Botnets show up as patterns across many flows (regular beacons), which per-flow features cannot
+  see. The learning loop is what closes the gap.
+
+Without `data/network_flows.csv` the network model falls back to the synthetic set
+(`ml/synthetic.py`) and is labelled `synthetic_bootstrap` everywhere.
+
+### Website: the crawler dataset, with leakage-free training
+
+`../dataset_collection/output/website_features.csv` has no ground-truth labels, so rows get
+documented weak labels from tracker-list and fingerprinting rules (`ml/labeling.py`). To stop the
+model from simply copying those rules, every feature the rules read, and everything derived from
+the same tracker list, is **excluded from the model** (`LABEL_RULE_FEATURES` in
+`feature_extraction/website_schema.py`). The model has to infer tracking from general page
+behaviour: request mix, third-party requests, cookies, storage use, iframes and redirects.
+
+| 5-fold CV, 336 sites | Macro F1 |
+|---|---|
+| Majority-class baseline | 0.35 |
+| With the rule features (copies the rules) | 0.94 |
+| **Leakage-free (shipped)** | **0.85** |
+
+The report card still lists the actual trackers and fingerprinting calls the scanner observed,
+as evidence. Labels confirmed in the review queue, and any `manual_review_label` /
+`security_label` in the CSV, override the weak label.
+
+### Remaining limitations
+
+* The website labels are still rule-derived. Leakage-free training proves the behaviour signal is
+  real, but a human-labelled test set would be the next step.
+* Live attack traffic is replayed from a public dataset, not generated in our own lab.
+* No Postgres read replica or Grafana dashboards are provisioned; the settings and Prometheus
+  scrape config are there.

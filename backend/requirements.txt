@@ -21,6 +21,7 @@ scikit-learn==1.6.1
 numpy==2.2.5
 pandas==2.2.3
 joblib==1.4.2
+pyarrow==19.0.1  # reading CIC-IDS2017 parquet files
 shap==0.47.2
 
 # Website scanner (reuses ../dataset_collection/ovael_crawler)

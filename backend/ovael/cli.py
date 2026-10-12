@@ -4,6 +4,8 @@
     python -m ovael.cli models [network|website]
     python -m ovael.cli promote <module> <version>
     python -m ovael.cli dataset check|import|info [capture.csv] [--source lab-1]
+    python -m ovael.cli dataset import-cicids [dir-with-CIC-IDS2017-labelled-flows]
+    python -m ovael.cli replay --api http://nginx/api/flows --scenario full_demo --duration 60
     python -m ovael.cli init-db
 """
 
@@ -62,6 +64,21 @@ def cmd_dataset(args) -> int:
     if args.action == "info":
         print(json.dumps(dataset_tools.info(s), indent=2))
         return 0
+    if args.action == "import-cicids":
+        from .ml import cicids
+
+        src = Path(args.csv or s.backend_data_dir / "cicids2017")
+        train, unknown = cicids.build(src)
+        dst = Path(s.network_dataset)
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        train.to_csv(dst, index=False)
+        unknown.to_csv(s.network_unknown_dataset, index=False)
+        print(json.dumps({"training_rows": len(train), "path": str(dst),
+                          "labels": {k: int(v) for k, v in train["label"].value_counts().items()},
+                          "held_out_unknown": {"class": cicids.HOLDOUT_CLASS, "rows": len(unknown),
+                                               "path": str(s.network_unknown_dataset)}}, indent=2))
+        print("next: python -m ovael.cli train network --force")
+        return 0
     if not args.csv:
         print("give the CSV to check or import")
         return 2
@@ -72,6 +89,17 @@ def cmd_dataset(args) -> int:
     res = dataset_tools.import_csv(Path(args.csv), Path(s.network_dataset), args.source)
     print(json.dumps(res, indent=2))
     print("next: python -m ovael.cli train network --force")
+    return 0
+
+
+def cmd_replay(args) -> int:
+    import os
+
+    from .replay import replay
+
+    res = replay(get_settings(), args.api, args.scenario, args.duration,
+                 token=args.token or os.environ.get("OVAEL_SENSOR_TOKEN"))
+    print(json.dumps(res, indent=2))
     return 0
 
 
@@ -105,10 +133,16 @@ def main(argv=None) -> int:
     pr.add_argument("version")
     pr.set_defaults(fn=cmd_promote)
     ds = sub.add_parser("dataset", help="check, import or describe recorded network datasets")
-    ds.add_argument("action", choices=["check", "import", "info"])
+    ds.add_argument("action", choices=["check", "import", "info", "import-cicids"])
     ds.add_argument("csv", nargs="?")
     ds.add_argument("--source", default="lab", help="tag stored with every imported row")
     ds.set_defaults(fn=cmd_dataset)
+    rp = sub.add_parser("replay", help="send recorded flows to the sensor endpoint")
+    rp.add_argument("--api", default="http://localhost:8000/api/flows")
+    rp.add_argument("--scenario", default="full_demo")
+    rp.add_argument("--duration", type=float, default=60)
+    rp.add_argument("--token", default=None)
+    rp.set_defaults(fn=cmd_replay)
     sub.add_parser("init-db").set_defaults(fn=cmd_init_db)
     args = p.parse_args(argv)
     return args.fn(args)

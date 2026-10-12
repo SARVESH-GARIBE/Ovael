@@ -7,6 +7,31 @@ excluded, and so are the per-category tracker counts that only a handful of site
 
 from __future__ import annotations
 
+# Features the weak-labelling rules read (ml/labeling.py), plus everything derived from the same
+# tracker list. They are kept OUT of the model: if the model could see them it would only learn to
+# copy the rules (5-fold CV macro F1 0.94, but meaningless). Without them it has to predict the
+# label from general page behaviour (macro F1 0.86 vs a 0.35 majority baseline on 336 sites),
+# which shows tracking is visible in behaviour, not just in a blocklist. The scanner still reports
+# these values as evidence on the report card.
+LABEL_RULE_FEATURES: list[str] = [
+    "tracker_matched_requests",
+    "unique_tracker_domains",
+    "tracker_request_ratio",
+    "third_party_hostnames_not_in_reference",
+    "tracker_requests_cat_advertising",
+    "tracker_requests_cat_analytics",
+    "tracker_requests_cat_ad_motivated_tracking",
+    "tracker_requests_cat_session_replay",
+    "tracker_requests_cat_ad_fraud",
+    "tracker_requests_cat_social_network",
+    "tracker_requests_cat_malware",
+    "third_party_cookies",
+    "canvas_readback_calls",
+    "webgl_unmasked_info_queries",
+    "audio_api_calls",
+    "offline_audio_contexts",
+]
+
 WEBSITE_FEATURES: list[str] = [
     "dom_element_count",
     "total_requests",
@@ -20,31 +45,15 @@ WEBSITE_FEATURES: list[str] = [
     "xhr_fetch_requests",
     "websocket_requests",
     "iframe_requests",
-    "tracker_matched_requests",
-    "unique_tracker_domains",
-    "tracker_request_ratio",
-    "third_party_hostnames_not_in_reference",
-    "tracker_requests_cat_advertising",
-    "tracker_requests_cat_analytics",
-    "tracker_requests_cat_ad_motivated_tracking",
-    "tracker_requests_cat_session_replay",
-    "tracker_requests_cat_ad_fraud",
-    "tracker_requests_cat_social_network",
-    "tracker_requests_cat_malware",
     "total_cookies",
-    "third_party_cookies",
     "samesite_none_cookies",
     "max_cookie_lifetime_days",
     "localstorage_write_count",
     "sessionstorage_write_count",
     "document_cookie_writes",
     "storage_api_calls",
-    "canvas_readback_calls",
     "canvas_text_calls",
-    "webgl_unmasked_info_queries",
     "webgl_api_calls",
-    "audio_api_calls",
-    "offline_audio_contexts",
     "other_fingerprinting_api_calls",
     "redirect_count",
     "client_side_url_changes",

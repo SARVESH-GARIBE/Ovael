@@ -132,7 +132,7 @@ function MiniVictim({ mood }: { mood: 'confused' | 'relieved' }) {
 }
 
 function LearningLoop() {
-  const [label, setLabel] = useState('exfiltration');
+  const [label, setLabel] = useState('botnet');
   const [before, setBefore] = useState<ProbeSummary>();
   const [after, setAfter] = useState<ProbeSummary>();
   const probe = useProbe();
@@ -159,7 +159,7 @@ function LearningLoop() {
         <StepCard
           n={1}
           title="Show it something new"
-          line="Flows of data quietly leaving over UDP. No training class looks like this."
+          line="Real botnet flows from CIC-IDS2017, kept out of training. The model has never seen this class."
           done={Boolean(before)}
         >
           <button

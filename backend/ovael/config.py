@@ -19,7 +19,9 @@ REPO_DIR = BACKEND_DIR.parent
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="OVAEL_", env_file=".env", extra="ignore")
+    # .env is read by docker compose (env_file), not here: a local dev server and the tests must
+    # not silently pick up deployment tokens. Set OVAEL_* variables in the environment instead.
+    model_config = SettingsConfigDict(env_prefix="OVAEL_", extra="ignore")
 
     env: Literal["dev", "test", "prod"] = "dev"
     instance_id: str = socket.gethostname()  # container hostname behind the load balancer
@@ -46,7 +48,11 @@ class Settings(BaseSettings):
     model_dir: Path = BACKEND_DIR / "model_store"
     anomaly_threshold: float = 0.99  # anomaly_score above this = "unusual" (~1% of normal traffic)
     website_dataset: Path = REPO_DIR / "dataset_collection" / "output" / "website_features.csv"
+    backend_data_dir: Path = BACKEND_DIR / "data"
     network_dataset: Path = BACKEND_DIR / "data" / "network_flows.csv"
+    # Real flows of an attack class kept out of training: the "unknown attack" for the
+    # Unknown scenario and the learning-loop experiment.
+    network_unknown_dataset: Path = BACKEND_DIR / "data" / "network_unknown.csv"
     crawler_path: Path = REPO_DIR / "dataset_collection"
 
     # Website scans
@@ -60,6 +66,9 @@ class Settings(BaseSettings):
     # Defense
     defense_mode: Literal["off", "simulate", "agent"] = "simulate"
     sandbox_subnet: str = "172.28.0.0/16"
+    # Persistence rule: this many confident known-attack alerts from one source inside the
+    # incident window escalate the incident to high and allow auto-defense.
+    persistence_alerts: int = 20
     defense_token: str | None = None
 
     # Learning loop

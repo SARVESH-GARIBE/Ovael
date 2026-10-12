@@ -1,7 +1,9 @@
 # ovael.ai - full deployment.
 #
 #   cp .env.example .env               # set tokens and passwords
-#   docker compose up -d --build       # core platform at http://localhost
+#   docker compose up -d --build       # core platform at http://localhost:8088
+#   docker compose --profile sandbox up -d      # + victim/sensor, defense agent, normal client
+#   docker compose --profile sandbox run --rm replayer   # replay real CIC-IDS2017 attack flows
 #   docker compose --profile monitoring up -d   # + Prometheus (http://localhost:9090) and Grafana (:3000)
 #   docker compose up -d --scale api=4 --scale scan-worker=3   # scale the bottleneck
 #
@@ -10,7 +12,12 @@
 #   backend   api, workers <-> postgres, redis
 #   scan_ctl  scan workers <-> scanner             (scanner cannot reach postgres/redis)
 #   scan_out  scanner -> internet
-#   control   sensor / defense agent <-> nginx (flows in, block commands out)
+#   control   sensor / defense agent <-> nginx, api (flows in, block commands out)
+#   sandbox   client <-> victim, internal only (172.28.0.0/16, no route out)
+#
+# (":z" relabels the mount for SELinux hosts such as Fedora; harmless elsewhere.)
+# Real data: ./data (CIC-IDS2017 after `ovael dataset import-cicids`) is mounted read-only, so the
+# models train on it and the replayer replays it. Without it everything falls back to synthetic.
 
 name: ovael
 
@@ -31,6 +38,7 @@ x-app: &app
     OVAEL_AUTO_CREATE_SCHEMA: "false"
   volumes:
     - models:/models
+    - ./data:/app/backend/data:ro,z
   depends_on:
     postgres: { condition: service_healthy }
     redis: { condition: service_healthy }
@@ -44,7 +52,7 @@ services:
       context: ..
       dockerfile: backend/deploy/nginx/Dockerfile
     image: ovael/web:latest
-    ports: ["80:80"]
+    ports: ["${OVAEL_HTTP_PORT:-8088}:80"]
     depends_on: [api]
     networks: [edge, control]
     restart: unless-stopped
@@ -82,7 +90,7 @@ services:
     environment:
       OVAEL_DATABASE_URL: postgresql+asyncpg://ovael:${POSTGRES_PASSWORD:-ovael}@postgres:5432/ovael
     command: sh -c "python -m ovael.cli init-db && python -m ovael.cli train all"
-    volumes: [models:/models]
+    volumes: ["models:/models", "./data:/app/backend/data:ro,z"]
     depends_on:
       postgres: { condition: service_healthy }
     networks: [backend]
@@ -131,11 +139,68 @@ services:
     networks: [backend]
     restart: unless-stopped
 
+  # ------------------------------------------------------------------ sandbox (profile)
+  # Defensive side only. Normal traffic is live (client -> victim, captured by the sensor);
+  # attack traffic enters as replayed real CIC-IDS2017 flows (replayer). No attack generators.
+  victim:
+    profiles: [sandbox]
+    build:
+      context: .
+      dockerfile: sandbox/victim/Dockerfile
+    image: ovael/victim:latest
+    environment:
+      OVAEL_API_URL: http://nginx/api/flows
+      OVAEL_SENSOR_TOKEN: ${OVAEL_SENSOR_TOKEN:-}
+      OVAEL_SANDBOX_SUBNET: 172.28.0.0/16
+    cap_add: [NET_RAW]
+    depends_on: [nginx]
+    networks:
+      sandbox: { ipv4_address: 172.28.0.10 }
+      control: {}
+    restart: unless-stopped
+
+  defense-agent:
+    profiles: [sandbox]
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+      target: defense-agent
+    image: ovael/defense-agent:latest
+    network_mode: "service:victim"   # same network namespace: rules apply to the victim only
+    cap_add: [NET_ADMIN]
+    environment:
+      OVAEL_SANDBOX_SUBNET: 172.28.0.0/16
+      OVAEL_DEFENSE_TOKEN: ${OVAEL_DEFENSE_TOKEN:-}
+      OVAEL_DEFENSE_PROTECTED_IPS: 172.28.0.10,172.28.0.20
+    depends_on: [victim]
+    restart: unless-stopped
+
+  client:
+    profiles: [sandbox]
+    build: ./sandbox/client
+    image: ovael/client:latest
+    environment:
+      TARGET: http://172.28.0.10
+    depends_on: [victim]
+    networks:
+      sandbox: { ipv4_address: 172.28.0.20 }
+    restart: unless-stopped
+
+  replayer:
+    profiles: [sandbox]
+    image: ovael/api:latest
+    env_file: .env
+    command: python -m ovael.cli replay --api http://nginx/api/flows --scenario full_demo --duration 90
+    volumes: ["./data:/app/backend/data:ro,z"]
+    depends_on: [nginx]
+    networks: [control]
+    restart: "no"
+
   # ------------------------------------------------------------------ monitoring (profile)
   prometheus:
     profiles: [monitoring]
     image: prom/prometheus:v3.1.0
-    volumes: [./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro]
+    volumes: ["./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro,z"]
     ports: ["9090:9090"]
     networks: [edge]
 
@@ -151,6 +216,10 @@ networks:
   control: { internal: true }
   scan_ctl: { internal: true }
   scan_out: {}
+  sandbox:
+    internal: true
+    ipam:
+      config: [{ subnet: 172.28.0.0/16 }]
 
 volumes:
   models: {}

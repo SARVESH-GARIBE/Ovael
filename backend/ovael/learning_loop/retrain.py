@@ -30,7 +30,7 @@ def retrain(module: str, settings: Settings, registry: ModelRegistry,
     version = registry.next_version(module)
     candidate = train_bundle(module, train_df, holdout, version=version,
                              threshold=settings.anomaly_threshold, label_source=label_source,
-                             novel=datasets.novel_probe(module),
+                             novel=datasets.novel_probe(module, settings),
                              extra_meta={"reviewed_samples": 0 if reviewed is None else int(len(reviewed))})
     registry.save(candidate)
     new = candidate.metadata["metrics"]
@@ -39,7 +39,7 @@ def retrain(module: str, settings: Settings, registry: ModelRegistry,
     old = None
     if current_version and not always_promote:
         try:
-            old = evaluate(registry.load(module, current_version), holdout, datasets.novel_probe(module))
+            old = evaluate(registry.load(module, current_version), holdout, datasets.novel_probe(module, settings))
         except Exception as exc:  # e.g. the old model was trained on a different feature schema
             log.warning("could not re-evaluate %s on the current held-out set: %s", current_version, exc)
 
