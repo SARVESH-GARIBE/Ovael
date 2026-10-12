@@ -219,7 +219,7 @@ export function NetworkPage() {
               <span className="label">{running ? 'Simulation running' : 'Live'}</span>
               {stage.focus && <RiskBadge level={stage.level} />}
             </div>
-            <div className="h-[200px] sm:h-[340px]">
+            <div className="h-[220px] sm:h-[370px]">
               <Stage state={stage} reducedMotion={reducedMotion} />
             </div>
             <p className="border-t border-midnight-800 px-5 py-3 text-sm text-pearl-muted transition-all duration-300">
