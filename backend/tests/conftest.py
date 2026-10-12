@@ -14,7 +14,7 @@ from ovael.ml.registry import ModelRegistry
 def model_dir(tmp_path_factory):
     """Small but real models for both modules, trained once per test session."""
     d = tmp_path_factory.mktemp("models")
-    s = Settings(model_dir=d, env="test")
+    s = Settings(_env_file=None, model_dir=d, env="test", network_dataset=d / "none.csv", network_unknown_dataset=d / "none2.csv")
     reg = ModelRegistry(d)
 
     real_load = datasets.load_base
@@ -34,8 +34,9 @@ def model_dir(tmp_path_factory):
 
 @pytest.fixture
 def settings(model_dir, tmp_path) -> Settings:
-    return Settings(env="test", model_dir=model_dir, database_url=f"sqlite+aiosqlite:///{tmp_path / 't.db'}",
-                    defense_mode="simulate", retrain_min_new_samples=10_000)
+    return Settings(_env_file=None, env="test", model_dir=model_dir, database_url=f"sqlite+aiosqlite:///{tmp_path / 't.db'}",
+                    defense_mode="simulate", retrain_min_new_samples=10_000,
+                    network_dataset=tmp_path / "none.csv", network_unknown_dataset=tmp_path / "none2.csv")
 
 
 @pytest.fixture

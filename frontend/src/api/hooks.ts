@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   api,
   getJson,
+  getAdminToken,
   unwrap,
   type DefenseAction,
   type Incident,
@@ -188,5 +189,129 @@ export function usePromote() {
         })
       ),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['models'] }),
+  });
+}
+
+export interface ModelSchema {
+  module: Module;
+  version: string;
+  threshold: number;
+  classes: string[];
+  features: Array<{ name: string; description: string; baseline: number | null }>;
+}
+
+export function useModelSchema(module: Module) {
+  return useQuery({
+    queryKey: ['models', module, 'schema'],
+    queryFn: () => getJson<ModelSchema>(`/api/models/${module}/schema`),
+    staleTime: 60_000,
+  });
+}
+
+/* ------------------------------------------------------------------ research lab */
+
+export interface EvasionPoint {
+  strength: number;
+  recognized: number;
+  attack_any: number;
+  confidence: number;
+  unusual: number;
+  caught: number;
+  blocked: number;
+  levels: Record<'high' | 'medium' | 'suspicious' | 'low', number>;
+  top_labels: Record<string, number>;
+}
+
+export interface EvasionResult {
+  attack: string;
+  technique: string;
+  technique_description: string;
+  flows_per_step: number;
+  model_version: string;
+  points: EvasionPoint[];
+  summary: {
+    classifier_breaks_at: number | null;
+    caught_where_classifier_breaks: number | null;
+    unusual_where_classifier_breaks: number | null;
+    fully_evades_at: number | null;
+    caught_at_full_strength: number;
+  };
+}
+
+export interface ProbeSummary {
+  probe_id: string;
+  flows: number;
+  model_version: string;
+  recognized: number;
+  unusual: number;
+  mean_confidence: number;
+  levels: Record<'high' | 'medium' | 'suspicious' | 'low', number>;
+  labels: Record<string, number>;
+  families: Record<string, number>;
+  needs_review: number;
+}
+
+export interface TeachResult {
+  labelled: number;
+  label: string;
+  version: string;
+  promoted: boolean;
+  reason: string;
+  previous_version: string | null;
+  metrics: { macro_f1?: number; anomaly_false_alarm_rate?: number };
+  previous_metrics: { macro_f1?: number } | null;
+}
+
+async function postJson<T>(path: string, body: unknown): Promise<T> {
+  const token = getAdminToken();
+  const res = await fetch(path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok)
+    throw new Error(
+      typeof data.detail === 'string' ? data.detail : `${res.status} ${res.statusText}`
+    );
+  return data as T;
+}
+
+export function useEvasionOptions() {
+  return useQuery({
+    queryKey: ['lab', 'evasion-options'],
+    queryFn: () =>
+      getJson<{ attacks: string[]; techniques: Record<string, string> }>(
+        '/api/lab/evasion/options'
+      ),
+    staleTime: Infinity,
+  });
+}
+
+export function useEvasion() {
+  return useMutation({
+    mutationFn: (body: { attack: string; technique: string; steps?: number; flows?: number }) =>
+      postJson<EvasionResult>('/api/lab/evasion', body),
+  });
+}
+
+export function useProbe() {
+  return useMutation({
+    mutationFn: (flows: number) => postJson<ProbeSummary>('/api/lab/learning/probe', { flows }),
+  });
+}
+
+export function useTeach() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { probe_id: string; label: string }) =>
+      postJson<TeachResult>('/api/lab/learning/teach', body),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['models'] });
+      qc.invalidateQueries({ queryKey: ['review-queue'] });
+    },
   });
 }

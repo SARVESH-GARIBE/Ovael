@@ -69,6 +69,15 @@ async def taxonomy(module: Module | None = None) -> dict:
     }
 
 
+@router.get("/api/datasets", summary="What each module currently trains on")
+async def datasets(ctx: AppContext = Depends(get_ctx)) -> dict:
+    import asyncio
+
+    from ...ml import dataset_tools
+
+    return await asyncio.to_thread(dataset_tools.info, ctx.settings)
+
+
 @router.get("/api/system", summary="Active models, feature schemas and runtime mode")
 async def system(ctx: AppContext = Depends(get_ctx)) -> dict:
     s = ctx.settings

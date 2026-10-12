@@ -27,7 +27,7 @@ from ..ml.registry import ModelNotAvailable
 from ..scanner.url_guard import UnsafeURL
 from ..services.scans import RateLimited
 from . import ws
-from .routes import learning, network, platform, website
+from .routes import lab, learning, network, platform, website
 
 log = logging.getLogger(__name__)
 
@@ -92,7 +92,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def _no_model(_: Request, exc: ModelNotAvailable):
         return JSONResponse({"detail": str(exc)}, status_code=503)
 
-    for r in (network.router, website.router, learning.router, platform.router, ws.router):
+    for r in (network.router, website.router, learning.router, lab.router, platform.router, ws.router):
         app.include_router(r)
     return app
 

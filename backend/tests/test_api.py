@@ -171,3 +171,56 @@ def test_admin_token_enforced(settings, path):
     with TestClient(create_app(settings)) as c:
         assert c.post(path).status_code == 401
         assert c.post(path, headers={"Authorization": "Bearer wrong"}).status_code == 401
+
+
+def test_model_schema_has_baseline(client):
+    s = client.get("/api/models/network/schema").json()
+    assert s["threshold"] > 0.5 and len(s["features"]) == 24
+    assert all("baseline" in f and f["description"] for f in s["features"])
+
+
+def test_block_survives_cache_loss(client, make_flow):
+    flood = [make_flow("dos_flood", seed=i) for i in range(30)]
+    assert post_flows(client, flood)["blocked_sources"]
+    ctx = client.app.state.ctx
+    ctx.cache._mem.clear()  # what a restart does to the in-process cache
+    post_flows(client, [make_flow("dos_flood", seed=200 + i) for i in range(30)])
+    assert len([a for a in client.get("/api/actions").json() if a["status"] == "simulated"]) == 1
+
+
+def test_evasion_sweep(client):
+    r = client.post("/api/lab/evasion", json={"attack": "dos_flood", "technique": "mimic", "steps": 5, "flows": 20})
+    assert r.status_code == 200
+    pts = r.json()["points"]
+    assert len(pts) == 5 and pts[0]["strength"] == 0 and pts[-1]["strength"] == 1
+    assert pts[0]["recognized"] > pts[-1]["recognized"]
+
+
+def test_learning_loop_experiment(client, tmp_path):
+    before = client.post("/api/lab/learning/probe", json={"flows": 30}).json()
+    assert before["flows"] == 30 and before["recognized"] < 0.5  # new behaviour is not recognised
+    taught = client.post("/api/lab/learning/teach", json={"probe_id": before["probe_id"], "label": "exfiltration"})
+    assert taught.status_code == 200, taught.text
+    body = taught.json()
+    assert body["labelled"] == 30 and body["version"] != before["model_version"]
+    if body["promoted"]:
+        after = client.post("/api/lab/learning/probe", json={"flows": 30}).json()
+        assert after["recognized"] > before["recognized"]
+        assert after["labels"].get("exfiltration", 0) > 15
+    assert client.post("/api/lab/learning/teach", json={"probe_id": before["probe_id"]}).status_code == 409
+
+
+def test_persistent_known_attack_is_escalated_and_blocked(client, make_flow):
+    # Brute force is recognised but never "unusual", so no single flow is high risk.
+    flows = [make_flow("brute_force", seed=i) for i in range(25)]
+    res = post_flows(client, flows)
+    assert res["blocked_sources"] == [flows[0]["src_ip"]]
+    [inc] = [i for i in client.get("/api/incidents").json() if i["family"] == "brute_force"]
+    assert inc["risk_level"] == "high" and inc["status"] == "mitigated"
+    [action] = client.get("/api/actions").json()
+    assert "persistent" in action["reason"]
+
+
+def test_few_known_attack_alerts_are_not_blocked(client, make_flow):
+    res = post_flows(client, [make_flow("brute_force", seed=i) for i in range(5)])
+    assert res["blocked_sources"] == []

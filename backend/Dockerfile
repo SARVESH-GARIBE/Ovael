@@ -8,13 +8,16 @@
 FROM python:3.12-slim AS base
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
-RUN useradd --create-home --uid 10001 ovael
+RUN useradd --create-home --uid 10001 ovael \
+    && mkdir -p /models && chown ovael /models   # named volume inherits this ownership
 COPY backend/requirements.txt /app/backend/requirements.txt
 RUN pip install -r /app/backend/requirements.txt
 COPY backend/ovael /app/backend/ovael
 COPY backend/pyproject.toml /app/backend/
 # Tranco popularity list: resolves bare names ("rummycircle") and ranks sites in the smart report.
 COPY dataset_collection/top-1m.csv /app/dataset_collection/top-1m.csv
+# Malware host list (URLhaus) and tracker reference: used by the smart report and the scanner.
+COPY dataset_collection/reference /app/dataset_collection/reference
 WORKDIR /app/backend
 ENV OVAEL_MODEL_DIR=/models OVAEL_CRAWLER_PATH=/app/dataset_collection
 
@@ -32,7 +35,6 @@ FROM base AS scanner
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 RUN playwright install --with-deps chromium && chmod -R a+rX /ms-playwright
 COPY dataset_collection/ovael_crawler /app/dataset_collection/ovael_crawler
-COPY dataset_collection/reference /app/dataset_collection/reference
 USER ovael
 EXPOSE 9200
 CMD ["uvicorn", "ovael.scanner.service:app", "--host", "0.0.0.0", "--port", "9200"]

@@ -18,6 +18,7 @@ from dataclasses import asdict, dataclass, field
 from ..config import Settings
 from ..ml.registry import ModelRegistry
 from ..orchestrator import decide, family_for
+from ..orchestrator.taxonomy import LEARNED, UNKNOWN
 
 
 @dataclass
@@ -66,6 +67,8 @@ class DetectionEngine:
             # Classifier says normal but the anomaly detector disagrees: a possible unknown attack.
             unrecognised = guessed or (not is_attack and is_unusual)
             family = family_for(module, "unknown" if unrecognised else pred.label)
+            if is_attack and family is UNKNOWN[module]:
+                family = LEARNED[module]  # confidently recognised, but a class reviewers added
             d = decide(is_attack=is_attack, is_unusual=is_unusual, confidence=pred.confidence,
                        anomaly_score=pred.anomaly_score, family=family,
                        low_confidence_threshold=low_conf)

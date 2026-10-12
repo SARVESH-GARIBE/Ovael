@@ -8,6 +8,7 @@ import { pct, timeAgo, titleCase } from '../lib/format';
 const REASONS: Record<string, string> = {
   normal_but_unusual: 'Classifier says normal, anomaly detector says unusual',
   low_confidence: 'Classifier was unsure',
+  lab_probe: 'Learning-loop experiment flow',
 };
 
 function Row({ item, classes }: { item: ReviewItem; classes: string[] }) {

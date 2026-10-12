@@ -67,7 +67,7 @@ describe('deriveStage', () => {
     expect(deriveStage([{ at: now, d: det({}) }], blocked, now).attacker).toBe('attacking');
     const s = deriveStage(
       [
-        { at: now - 2500, d: det({}) },
+        { at: now - 4000, d: det({}) },
         { at: now, d: det({ blocked: true }) },
       ],
       blocked,

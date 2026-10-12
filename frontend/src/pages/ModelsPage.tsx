@@ -1,6 +1,8 @@
 import { RefreshCw } from 'lucide-react';
 import type { Module, ModelVersion } from '../api/client';
+import { getJson } from '../api/client';
 import { usePromote, useModels, useRetrain } from '../api/hooks';
+import { useQuery } from '@tanstack/react-query';
 import { useLiveEvents } from '../api/live';
 import { useState } from 'react';
 import { Chip, Empty, Section, Stat } from '../components/ui';
@@ -18,11 +20,81 @@ interface Metrics {
 
 const SOURCE_NOTE: Record<string, string> = {
   synthetic_bootstrap: 'Trained on synthetic flows. Scores say nothing about real traffic yet.',
+  cicids2017:
+    'Real traffic: CIC-IDS2017 (Sharafaldin et al., 2018). Botnet flows are held out as the unknown attack.',
   weak_rules_v1:
-    'Labels come from tracker-list rules, not human review. The model mostly reproduces the rules.',
+    'Labels come from tracker-list rules. The model never sees the features those rules use, so its score shows that tracking is visible in general page behaviour.',
 };
 
-function ModuleCard({ module, versions }: { module: Module; versions: ModelVersion[] }) {
+interface DatasetInfo {
+  path: string | null;
+  label_source: string;
+  synthetic: boolean;
+  rows: number;
+  labels: Record<string, number>;
+  sources: Record<string, number>;
+  error?: string;
+}
+
+function TrainingData({ module, info }: { module: Module; info?: DatasetInfo }) {
+  if (!info) return null;
+  if (info.error) return <p className="mt-4 text-xs text-risk-high">{info.error}</p>;
+  const total = Object.values(info.labels).reduce((a, b) => a + b, 0) || 1;
+  return (
+    <div className="mt-5 rounded-xl border border-midnight-800 p-4">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div className="label">Training data</div>
+        <div className="font-mono text-xs text-pearl-dim">
+          {info.rows.toLocaleString()} rows · {info.label_source}
+        </div>
+      </div>
+      <div className="mt-3 flex h-2 gap-[2px] overflow-hidden rounded-full">
+        {Object.entries(info.labels).map(([label, n], i) => (
+          <div
+            key={label}
+            title={`${titleCase(label)}: ${n}`}
+            style={{
+              width: `${(n / total) * 100}%`,
+              backgroundColor: i % 2 ? '#3f6285' : '#5B88B2',
+            }}
+          />
+        ))}
+      </div>
+      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-pearl-dim">
+        {Object.entries(info.labels).map(([label, n]) => (
+          <span key={label}>
+            {titleCase(label)} <span className="font-mono">{n.toLocaleString()}</span>
+          </span>
+        ))}
+      </div>
+      {Object.keys(info.sources).length > 0 && (
+        <p className="mt-2 text-[11px] text-pearl-dim">
+          From:{' '}
+          {Object.entries(info.sources)
+            .map(([k, v]) => `${k} (${v})`)
+            .join(', ')}
+        </p>
+      )}
+      {module === 'network' && info.synthetic && (
+        <p className="mt-3 text-xs text-pearl-muted">
+          To train on real traffic: record flows with the sensor (or convert a CICFlowMeter export),
+          then run <code className="font-mono text-pearl">ovael dataset import capture.csv</code>{' '}
+          and <code className="font-mono text-pearl">ovael train network --force</code>.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function ModuleCard({
+  module,
+  versions,
+  dataset,
+}: {
+  module: Module;
+  versions: ModelVersion[];
+  dataset?: DatasetInfo;
+}) {
   const retrain = useRetrain();
   const promote = usePromote();
   const [note, setNote] = useState<string>();
@@ -69,7 +141,14 @@ function ModuleCard({ module, versions }: { module: Module; versions: ModelVersi
             <Chip>{source}</Chip>
             <span className="text-xs text-pearl-dim">trained {timeAgo(active.trained_at)}</span>
           </div>
-          {warn && <p className="mt-2 text-xs text-risk-medium">{warn}</p>}
+          {warn && (
+            <p
+              className={`mt-2 text-xs ${source.startsWith('synthetic') ? 'text-risk-medium' : 'text-pearl-dim'}`}
+            >
+              {warn}
+            </p>
+          )}
+          <TrainingData module={module} info={dataset} />
           <div className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-4">
             <Stat label="Macro F1" value={pct(m.macro_f1, 1)} />
             <Stat label="Accuracy" value={pct(m.accuracy, 1)} />
@@ -140,6 +219,10 @@ function ModuleCard({ module, versions }: { module: Module; versions: ModelVersi
 }
 
 export function ModelsPage() {
+  const datasets = useQuery({
+    queryKey: ['models', 'datasets'],
+    queryFn: () => getJson<Record<Module, DatasetInfo>>('/api/datasets'),
+  });
   const { data } = useModels();
   return (
     <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-6 p-5 lg:p-8">
@@ -151,7 +234,12 @@ export function ModelsPage() {
         </p>
       </header>
       {(['network', 'website'] as const).map((m) => (
-        <ModuleCard key={m} module={m} versions={(data ?? []).filter((v) => v.module === m)} />
+        <ModuleCard
+          key={m}
+          module={m}
+          versions={(data ?? []).filter((v) => v.module === m)}
+          dataset={datasets.data?.[m]}
+        />
       ))}
     </div>
   );

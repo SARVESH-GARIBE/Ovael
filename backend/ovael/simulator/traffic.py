@@ -17,8 +17,13 @@ import time
 
 import numpy as np
 
+from sqlalchemy import select
+
+from ..api.schemas import ActionOut
 from ..core.context import AppContext
-from ..ml.synthetic import ATTACKER_IPS, sample_flow
+from ..db.models import DefenseAction
+from ..ml.flow_source import get_flow_source
+from ..ml.synthetic import ATTACKER_IPS
 from ..services import pipeline
 
 log = logging.getLogger(__name__)
@@ -56,11 +61,28 @@ class Simulator:
         self.stop()
         self.task = asyncio.create_task(self._run(scenario, duration_s), name=f"simulate-{scenario}")
         self.status = {"running": True, "scenario": scenario, "duration_s": duration_s,
-                       "started_at": time.time(), "phase": None}
+                       "started_at": time.time(), "phase": None,
+                       "flows": get_flow_source(self.ctx.settings).name}
         return self.status
+
+    async def _reset_sandbox(self) -> None:
+        """Each run starts clean: blocks left on the simulated attackers by earlier runs are lifted
+        (and logged as undone by the simulator), otherwise the attack would never be seen."""
+        async with self.ctx.db.session() as session:
+            stale = list(await session.scalars(select(DefenseAction).where(
+                DefenseAction.target_ip.in_(list(ATTACKER_IPS.values())),
+                DefenseAction.status.in_(("applied", "simulated")))))
+            for a in stale:
+                await self.ctx.defense.undo(session, a.id, "simulator reset")
+            await session.commit()
+        for a in stale:
+            await self.ctx.bus.publish("defense_action", ActionOut.model_validate(a).model_dump(mode="json"))
 
     async def _run(self, scenario: str, duration_s: float) -> None:
         rng = np.random.default_rng()
+        source = get_flow_source(self.ctx.settings)
+        sample_flow = source.sample
+        await self._reset_sandbox()
         phases = SCENARIOS[scenario]
         total = sum(p[1] for p in phases)
         try:

@@ -27,18 +27,25 @@ def load_base(module: str, settings: Settings) -> tuple[pd.DataFrame, str]:
     if module == "network":
         path = Path(settings.network_dataset)
         if path.exists():
-            df = pd.read_csv(path)
+            df = pd.read_csv(path, low_memory=False)
             if "label" not in df:
                 raise ValueError(f"{path} has no 'label' column")
-            log.info("network dataset %s: %d rows", path, len(df))
-            return df, "sandbox_capture"
+            source = ",".join(sorted(df["source"].astype(str).unique())) if "source" in df else "sandbox_capture"
+            log.info("network dataset %s: %d rows (%s)", path, len(df), source)
+            return df, source
         log.warning("no recorded network dataset at %s; using the synthetic bootstrap set", path)
         return synthetic.generate(), "synthetic_bootstrap"
     raise ValueError(f"unknown module {module!r}")
 
 
-def novel_probe(module: str) -> pd.DataFrame | None:
-    """Rows of a behaviour no training class covers, used to measure novelty detection."""
-    if module == "network":
-        return synthetic.generate(n_per_class=300, seed=99, classes=["novel"])
-    return None
+def novel_probe(module: str, settings: Settings | None = None) -> pd.DataFrame | None:
+    """Rows of a behaviour no training class covers, used to measure novelty detection.
+
+    With real data this is the held-out attack class (real CIC-IDS2017 botnet flows); otherwise
+    the synthetic exfiltration-like class.
+    """
+    if module != "network":
+        return None
+    if settings is not None and Path(settings.network_unknown_dataset).exists():
+        return pd.read_csv(settings.network_unknown_dataset, low_memory=False)
+    return synthetic.generate(n_per_class=300, seed=99, classes=["novel"])

@@ -7,6 +7,7 @@ from sqlalchemy import select
 
 from ...core.context import AppContext
 from ...db.models import AuditLog, ReviewItem
+from ...feature_extraction import describe
 from ...ml.registry import ModelNotAvailable
 from ...services import learning
 from ..deps import get_ctx, require_admin
@@ -60,6 +61,19 @@ async def reject(item_id: str, body: ReviewReject, ctx: AppContext = Depends(get
 async def list_models(ctx: AppContext = Depends(get_ctx), module: Module | None = None) -> list[dict]:
     mods = [module] if module else ["network", "website"]
     return [v for m in mods for v in ctx.registry.list_versions(m)]
+
+
+@router.get("/models/{module}/schema", summary="Feature schema of the active model, with the normal baseline")
+async def model_schema(module: Module, ctx: AppContext = Depends(get_ctx)) -> dict:
+    bundle = ctx.registry.active(module)
+    return {
+        "module": module,
+        "version": bundle.version,
+        "threshold": bundle.threshold,
+        "classes": bundle.classes,
+        "features": [{"name": f, "description": describe(module, f), "baseline": bundle.baseline.get(f)}
+                     for f in bundle.features],
+    }
 
 
 @router.post("/models/{module}/retrain", response_model=RetrainResult, status_code=202,

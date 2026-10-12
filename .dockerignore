@@ -1,0 +1,16 @@
+# Keep the build context small: dependencies, local data and caches never go into images.
+.git
+**/node_modules
+**/__pycache__
+**/*.pyc
+frontend/dist
+backend/.venv
+backend/data
+backend/model_store
+backend/*.db
+backend/*.db-*
+backend/.env
+dataset_collection/output_smoke
+dataset_collection/output/*.jsonl
+dataset_collection/output/*.docx
+dataset_collection/output/*.log

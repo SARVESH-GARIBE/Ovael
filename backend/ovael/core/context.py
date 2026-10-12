@@ -63,4 +63,5 @@ async def build_context(settings: Settings, *, listen: bool = True) -> AppContex
     from .jobs import make_job_runner
 
     ctx.jobs = make_job_runner(ctx)
+    await ctx.defense.warm(db)
     return ctx

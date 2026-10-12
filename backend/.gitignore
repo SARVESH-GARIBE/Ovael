@@ -9,3 +9,4 @@ __pycache__/
 *.db-wal
 model_store/
 data/
+*.egg-info/

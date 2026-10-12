@@ -174,7 +174,9 @@ def test_retrain_promotes_only_when_not_worse(tmp_path, monkeypatch):
 
     monkeypatch.setattr(datasets, "load_base",
                         lambda m, s: (synthetic.generate(n_per_class=150, seed=5), "synthetic_bootstrap"))
-    s, reg = Settings(model_dir=tmp_path, env="test"), ModelRegistry(tmp_path)
+    s = Settings(_env_file=None, model_dir=tmp_path, env="test", network_dataset=tmp_path / "x.csv",
+                 network_unknown_dataset=tmp_path / "y.csv")
+    reg = ModelRegistry(tmp_path)
     first = retrain("network", s, reg)
     assert first["promoted"] and reg.active_version("network") == "network-v1"
 

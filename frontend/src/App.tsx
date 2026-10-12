@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/AppShell';
 import { NotFoundPage } from './components/NotFoundPage';
+import { LabPage } from './pages/LabPage';
 import { ModelsPage } from './pages/ModelsPage';
 import { NetworkPage } from './pages/NetworkPage';
 import { ReviewPage } from './pages/ReviewPage';
@@ -12,6 +13,7 @@ export const App: React.FC = () => (
       <Route index element={<NetworkPage />} />
       <Route path="website" element={<WebsitePage />} />
       <Route path="review" element={<ReviewPage />} />
+      <Route path="lab" element={<LabPage />} />
       <Route path="models" element={<ModelsPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>
