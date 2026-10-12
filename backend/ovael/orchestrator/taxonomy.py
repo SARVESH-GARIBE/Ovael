@@ -195,6 +195,20 @@ UNKNOWN = {
     ),
 }
 
+# A class that reviewers introduced (e.g. "exfiltration") has no hand-written entry yet. Once the
+# model recognises it confidently it is a known attack, just not one we have described.
+LEARNED = {
+    m: AttackFamily(
+        id="learned", module=m, name="Learned attack", severity_weight=0.7,
+        summary="A class the model learned from analyst-confirmed examples in the review queue.",
+        how_it_works=["Analysts confirmed examples of this behaviour", "The retrained model now recognises it",
+                      "It is alerted on like any known attack"],
+        indicators=[], mitigations=["Write a taxonomy entry for it so it can be described and auto-blocked"],
+        kill_chain="", impact="", auto_defense=False,
+    )
+    for m in ("network", "website")
+}
+
 _BY_LABEL: dict[tuple[str, str], AttackFamily] = {
     (f.module, label.lower()): f for f in FAMILIES for label in [*f.labels, f.id]
 }
@@ -211,4 +225,5 @@ def is_benign_label(module: str, label: str) -> bool:
 def families(module: str | None = None) -> list[AttackFamily]:
     items = [f for f in FAMILIES if module in (None, f.module)]
     items += [u for m, u in UNKNOWN.items() if module in (None, m)]
+    items += [u for m, u in LEARNED.items() if module in (None, m)]
     return items

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { Boxes, ClipboardCheck, Globe, KeyRound, Network } from 'lucide-react';
+import { Boxes, ClipboardCheck, FlaskConical, Globe, KeyRound, Network } from 'lucide-react';
 import { getAdminToken, setAdminToken } from '../api/client';
 import { useStats } from '../api/hooks';
 import { useLiveStatus } from '../api/live';
@@ -9,6 +9,7 @@ const NAV = [
   { to: '/', label: 'Network', icon: Network, end: true },
   { to: '/website', label: 'Website', icon: Globe },
   { to: '/review', label: 'Review', icon: ClipboardCheck, badge: 'reviews' as const },
+  { to: '/lab', label: 'Lab', icon: FlaskConical },
   { to: '/models', label: 'Models', icon: Boxes },
 ];
 

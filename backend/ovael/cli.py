@@ -3,6 +3,7 @@
     python -m ovael.cli train network|website|all [--force]
     python -m ovael.cli models [network|website]
     python -m ovael.cli promote <module> <version>
+    python -m ovael.cli dataset check|import|info [capture.csv] [--source lab-1]
     python -m ovael.cli init-db
 """
 
@@ -50,6 +51,30 @@ def cmd_promote(args) -> int:
     return 0
 
 
+def cmd_dataset(args) -> int:
+    from pathlib import Path
+
+    import pandas as pd
+
+    from .ml import dataset_tools
+
+    s = get_settings()
+    if args.action == "info":
+        print(json.dumps(dataset_tools.info(s), indent=2))
+        return 0
+    if not args.csv:
+        print("give the CSV to check or import")
+        return 2
+    if args.action == "check":
+        report = dataset_tools.check(pd.read_csv(args.csv))
+        print(json.dumps(report, indent=2))
+        return 0 if report["ok"] else 1
+    res = dataset_tools.import_csv(Path(args.csv), Path(s.network_dataset), args.source)
+    print(json.dumps(res, indent=2))
+    print("next: python -m ovael.cli train network --force")
+    return 0
+
+
 def cmd_init_db(_) -> int:
     from .db.session import Database
 
@@ -79,6 +104,11 @@ def main(argv=None) -> int:
     pr.add_argument("module", choices=["network", "website"])
     pr.add_argument("version")
     pr.set_defaults(fn=cmd_promote)
+    ds = sub.add_parser("dataset", help="check, import or describe recorded network datasets")
+    ds.add_argument("action", choices=["check", "import", "info"])
+    ds.add_argument("csv", nargs="?")
+    ds.add_argument("--source", default="lab", help="tag stored with every imported row")
+    ds.set_defaults(fn=cmd_dataset)
     sub.add_parser("init-db").set_defaults(fn=cmd_init_db)
     args = p.parse_args(argv)
     return args.fn(args)

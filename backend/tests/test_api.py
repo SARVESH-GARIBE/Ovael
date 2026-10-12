@@ -186,3 +186,25 @@ def test_block_survives_cache_loss(client, make_flow):
     ctx.cache._mem.clear()  # what a restart does to the in-process cache
     post_flows(client, [make_flow("dos_flood", seed=200 + i) for i in range(30)])
     assert len([a for a in client.get("/api/actions").json() if a["status"] == "simulated"]) == 1
+
+
+def test_evasion_sweep(client):
+    r = client.post("/api/lab/evasion", json={"attack": "dos_flood", "technique": "mimic", "steps": 5, "flows": 20})
+    assert r.status_code == 200
+    pts = r.json()["points"]
+    assert len(pts) == 5 and pts[0]["strength"] == 0 and pts[-1]["strength"] == 1
+    assert pts[0]["recognized"] > pts[-1]["recognized"]
+
+
+def test_learning_loop_experiment(client, tmp_path):
+    before = client.post("/api/lab/learning/probe", json={"flows": 30}).json()
+    assert before["flows"] == 30 and before["recognized"] < 0.5  # new behaviour is not recognised
+    taught = client.post("/api/lab/learning/teach", json={"probe_id": before["probe_id"], "label": "exfiltration"})
+    assert taught.status_code == 200, taught.text
+    body = taught.json()
+    assert body["labelled"] == 30 and body["version"] != before["model_version"]
+    if body["promoted"]:
+        after = client.post("/api/lab/learning/probe", json={"flows": 30}).json()
+        assert after["recognized"] > before["recognized"]
+        assert after["labels"].get("exfiltration", 0) > 15
+    assert client.post("/api/lab/learning/teach", json={"probe_id": before["probe_id"]}).status_code == 409
