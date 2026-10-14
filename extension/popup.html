@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ovael</title>
+    <link rel="stylesheet" href="ui/ui.css" />
+    <style>
+      body { width: 360px; padding: 12px; }
+      header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+      .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--line); display: grid; place-items: center; font-weight: 700; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+      section { margin-top: 10px; }
+      footer { display: flex; gap: 6px; margin-top: 12px; }
+      footer .btn { flex: 1; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">o</div>
+      <div class="grow">
+        <div class="label">What this site shares</div>
+        <div id="domain" class="trunc" style="font-weight: 600; font-size: 14px">…</div>
+      </div>
+      <div id="badge"></div>
+    </header>
+    <main id="main"></main>
+    <footer>
+      <button class="btn" id="dashboard">All sites</button>
+      <button class="btn" id="pause">Pause</button>
+      <button class="btn" id="scan">Full scan</button>
+    </footer>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

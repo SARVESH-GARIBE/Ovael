@@ -1,0 +1,10 @@
+{
+ "tracker_reference": "DuckDuckGo Tracker Data Set (CC BY-NC-SA 4.0)",
+ "tracker_built_with": {
+  "tracker-radar": "9ce6785f8b474c0d182c2f4cc5064288ab30615663a1c33a411894b011a0b470-6253f5a053513120c61ad8221dc30a0e2cdbfeb9",
+  "tracker-surrogates": "2575c6e058fb02420399fe459418319af2fb93a7"
+ },
+ "trackers": 999,
+ "entity_domains": 5216,
+ "psl_rules": 6871
+}

@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Globe, Loader2, Search } from 'lucide-react';
 import type { RiskLevel, ScanDetail } from '../api/client';
 import { useFamily, useScan, useScans, useSubmitScan } from '../api/hooks';
@@ -161,6 +162,17 @@ export function WebsitePage() {
   const submit = useSubmitScan();
   const scan = useScan(scanId);
   const recent = useScans();
+  const [params] = useSearchParams();
+  const linked = useRef(false);
+
+  // /website?url=example.com (the browser extension's "Full scan" button) scans straight away.
+  useEffect(() => {
+    const target = params.get('url')?.trim();
+    if (!target || linked.current) return;
+    linked.current = true;
+    setUrl(target);
+    submit.mutate(target, { onSuccess: (s) => setScanId(s.id) });
+  }, [params, submit]);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();

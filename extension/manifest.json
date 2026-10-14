@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Ovael Privacy Monitor",
+  "short_name": "Ovael",
+  "version": "0.1.0",
+  "description": "Measures what every website you visit shares with third parties: trackers, data sent, cookies, storage, cache and fingerprinting, scored by the Ovael website model.",
+  "minimum_chrome_version": "111",
+  "permissions": ["webRequest", "webNavigation", "cookies", "storage", "tabs", "unlimitedStorage"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "Ovael: what this site shares" },
+  "options_page": "dashboard.html",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/instrument.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/bridge.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ]
+}

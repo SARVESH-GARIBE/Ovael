@@ -242,3 +242,19 @@ def test_review_suggestions_and_accept_all(client):
     assert client.get("/api/review-queue?module=network").json() == []
     again = client.post("/api/review-queue/confirm-batch", json={"items": decisions}).json()
     assert again["confirmed"] == 0 and again["skipped"] == len(queue)
+
+
+def test_extension_scores_visits_without_storing_them(client):
+    before = len(client.get("/api/detections", params={"module": "website", "limit": 200}).json())
+    visits = [{"domain": "tracky.example", "features": {"canvas_readback_calls": 8, "tracker_matched_requests": 40,
+                                                        "third_party_requests": 120, "unique_third_party_domains": 30,
+                                                        "third_party_cookies": 9, "dom_element_count": None}},
+              {"domain": "plain.example", "features": {"total_requests": 4, "first_party_requests": 4}}]
+    r = client.post("/api/extension/score", json={"visits": visits})
+    assert r.status_code == 200
+    out = r.json()
+    assert [o["domain"] for o in out] == ["tracky.example", "plain.example"]
+    assert all(o["risk_level"] in ("low", "suspicious", "medium", "high") and o["summary"] for o in out)
+    after = len(client.get("/api/detections", params={"module": "website", "limit": 200}).json())
+    assert after == before  # nothing about a user's browsing is saved
+    assert client.post("/api/extension/score", json={"visits": []}).status_code == 422

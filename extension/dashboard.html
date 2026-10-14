@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ovael Privacy Monitor</title>
+    <link rel="stylesheet" href="ui/ui.css" />
+    <style>
+      body { padding: 24px 16px 48px; }
+      .wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+      .top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+      h1 { font-size: 22px; margin: 0; letter-spacing: -0.01em; }
+      .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+      .cols { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; align-items: start; }
+      @media (max-width: 900px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+      table { width: 100%; border-collapse: collapse; }
+      th { text-align: left; font-weight: 600; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); padding: 6px 8px; cursor: pointer; white-space: nowrap; }
+      th.num, td.num { text-align: right; }
+      td { padding: 8px; border-top: 1px solid var(--line); vertical-align: middle; }
+      tr.site { cursor: pointer; }
+      tr.site:hover td, tr.site.sel td { background: #0e203c; }
+      .tablewrap { overflow-x: auto; }
+      #detail { position: sticky; top: 16px; }
+      .settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+      .settings label { display: flex; flex-direction: column; gap: 4px; }
+      .check { flex-direction: row !important; align-items: center; gap: 8px !important; }
+      .status { font-size: 11px; }
+      .feat { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="top">
+        <div class="grow">
+          <div class="label">Ovael privacy monitor</div>
+          <h1>Everything your browsing shares</h1>
+        </div>
+        <span id="status" class="status dim"></span>
+        <button class="btn" id="rescore">Re-score with model</button>
+        <button class="btn" id="export">Export JSON</button>
+        <button class="btn danger" id="clear">Clear history</button>
+        <button class="btn" id="toggleSettings">Settings</button>
+      </div>
+
+      <section id="settings" class="card" hidden>
+        <div class="settings">
+          <label><span class="label">Ovael backend</span><input class="input" id="backendUrl" /></label>
+          <label><span class="label">Ovael website (for full scans)</span><input class="input" id="frontendUrl" /></label>
+          <label><span class="label">Never record these domains (one per line)</span><textarea class="input" id="excluded" rows="3"></textarea></label>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label class="check"><input type="checkbox" id="scoring" /> Score visits with the website model</label>
+            <label class="check"><input type="checkbox" id="paused" /> Pause monitoring</label>
+            <button class="btn primary" id="saveSettings">Save</button>
+          </div>
+        </div>
+        <p class="dim" style="margin: 10px 0 0; font-size: 11px">
+          History stays in this browser. When scoring is on, the backend receives only the site's domain
+          and numeric feature counts: no addresses, page content or cookie values.
+        </p>
+      </section>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="cols">
+        <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0">
+          <section class="card">
+            <div class="row" style="margin-bottom: 8px">
+              <span class="label grow">Sites you visited</span>
+              <input class="input" id="search" placeholder="Filter sites" style="max-width: 220px" />
+            </div>
+            <div class="tablewrap"><table id="sites"></table></div>
+          </section>
+          <section class="card">
+            <div class="label" style="margin-bottom: 8px">Who receives your data, across all sites</div>
+            <ul class="list" id="companies"></ul>
+          </section>
+        </div>
+        <aside id="detail" class="card"></aside>
+      </div>
+    </div>
+    <script type="module" src="dashboard.js"></script>
+  </body>
+</html>
